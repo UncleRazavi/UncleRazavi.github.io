@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Projects - My Personal Website</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            margin: 0;
+            background-color: #f4f6fa;
+            color: #222;
+        }
+        nav {
+            background: #fff;
+            padding: 20px 40px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.03);
+            margin-bottom: 40px;
+        }
+        nav a {
+            margin-right: 20px;
+            text-decoration: none;
+            color: #007acc;
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+        nav a:hover {
+            color: #005a99;
+            text-decoration: underline;
+        }
+        .projects-container {
+            max-width: 700px;
+            margin: 40px auto;
+            background: #fff;
+            border-radius: 12px;
+            box-shadow: 0 4px 24px rgba(0,0,0,0.07);
+            padding: 40px 32px;
+        }
+        h1 {
+            font-size: 2.2rem;
+            margin-bottom: 24px;
+            color: #1a365d;
+            letter-spacing: 1px;
+        }
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+        li {
+            background: #eaf1fb;
+            border-left: 5px solid #007acc;
+            margin-bottom: 22px;
+            padding: 22px 24px 18px 24px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.03);
+            transition: box-shadow 0.2s;
+        }
+        li:hover {
+            box-shadow: 0 6px 24px rgba(0,122,204,0.08);
+        }
+        strong {
+            color: #005a99;
+            font-size: 1.15rem;
+        }
+        a {
+            color: #007acc;
+            text-decoration: none;
+            font-weight: 500;
+        }
+        a:hover {
+            text-decoration: underline;
+            color: #003d66;
+        }
+        @media (max-width: 700px) {
+            .projects-container {
+                padding: 24px 8px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <a href="index.html">Home</a>
+        <a href="about.html">About</a>
+        <a href="projects.html">Projects</a>
+    </nav>
+
+    <div class="projects-container">
+        <h1>My Projects</h1>
+        <ul>
+            <li>
+                <strong>Computational Neuroscience</strong><br>
+                Computational neuroscience project exploring the human brain’s robustness to visual noise. I was a part of a pod at Neuromatch Academy (pod Lively anat).
+            </li>
+            <li>
+                <strong>Eurogene Project</strong><br>
+                An exploration of genomes from diverse ancient and modern populations.<br>
+                Check it out on <a href="https://github.com/UncleRazavi/Eurogene-Project" target="_blank">GitHub</a>.
+            </li>
+        </ul>
+    </div>
+</body>
+</html>
