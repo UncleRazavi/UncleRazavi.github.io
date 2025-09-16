@@ -3,25 +3,33 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-family: 'Fira Code', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 body {
     line-height: 1.6;
-    background-color: #f4f4f9;
-    color: #333;
+    background-color: #0d1117;
+    color: #c9d1d9;
     transition: background-color 0.3s, color 0.3s;
+    background-image: url('../images/background.jpg');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
 }
 
+/* Links */
 a {
     text-decoration: none;
-    color: #007bff;
+    color: #58a6ff;
+    transition: color 0.2s;
 }
 
 a:hover {
+    color: #1f6feb;
     text-decoration: underline;
 }
 
+/* Container */
 .container {
     width: 90%;
     max-width: 1200px;
@@ -31,9 +39,9 @@ a:hover {
 
 /* Header */
 header {
-    background-color: #fff;
+    background-color: rgba(24, 24, 27, 0.95);
     padding: 1rem 0;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    box-shadow: 0 2px 10px rgba(0,0,0,0.3);
     position: sticky;
     top: 0;
     z-index: 1000;
@@ -45,14 +53,17 @@ header nav {
     align-items: center;
 }
 
-header nav ul {
-    list-style: none;
-    display: flex;
-    gap: 1rem;
+header nav a {
+    margin-right: 1.5rem;
+    font-weight: 500;
 }
 
-header nav ul li {
-    display: inline;
+header nav button {
+    background: none;
+    border: none;
+    color: #58a6ff;
+    font-size: 1.2rem;
+    cursor: pointer;
 }
 
 /* Hero Section */
@@ -62,9 +73,9 @@ header nav ul li {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    background: url('../images/background.jpg') no-repeat center center/cover;
     text-align: center;
-    color: #fff;
+    color: #c9d1d9;
+    text-shadow: 0 0 10px rgba(0,0,0,0.6);
 }
 
 .hero h1 {
@@ -74,6 +85,7 @@ header nav ul li {
 
 .hero p {
     font-size: 1.2rem;
+    max-width: 700px;
 }
 
 /* Sections */
@@ -85,55 +97,60 @@ section h2 {
     text-align: center;
     margin-bottom: 2rem;
     font-size: 2rem;
+    color: #58a6ff;
 }
 
 /* Project Cards */
 .project-card {
-    background-color: #fff;
+    background-color: rgba(12, 14, 17, 0.85);
+    color: #c9d1d9;
     padding: 1.5rem;
-    border-radius: 10px;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-    transition: transform 0.2s;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.4);
+    margin-bottom: 1.5rem;
+    transition: transform 0.2s, box-shadow 0.2s;
 }
 
 .project-card:hover {
     transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(0,0,0,0.6);
 }
 
 /* Footer */
 footer {
     text-align: center;
     padding: 2rem 0;
-    background-color: #222;
-    color: #fff;
+    background-color: #161b22;
+    color: #8b949e;
 }
 
 /* Dark Mode */
 body.dark-mode {
-    background-color: #121212;
-    color: #eee;
+    background-color: #0d1117;
+    color: #c9d1d9;
 }
 
 body.dark-mode header {
-    background-color: #1f1f1f;
+    background-color: rgba(24, 24, 27, 0.95);
 }
 
 body.dark-mode a {
-    color: #1e90ff;
+    color: #58a6ff;
 }
-/* Contact Form Styles */
+
+/* Contact Form */
 .contact-container {
     max-width: 700px;
     margin: 40px auto;
     padding: 40px 32px;
-    background-color: #fff;
+    background-color: rgba(24, 24, 27, 0.9);
     border-radius: 12px;
-    box-shadow: 0 4px 24px rgba(0,0,0,0.07);
+    box-shadow: 0 4px 24px rgba(0,0,0,0.5);
 }
 
 .contact-container h1 {
     margin-bottom: 1rem;
-    color: #1a365d;
+    color: #58a6ff;
 }
 
 .contact-form {
@@ -151,21 +168,24 @@ body.dark-mode a {
 .contact-form textarea {
     padding: 12px 16px;
     border-radius: 8px;
-    border: 1px solid #ccc;
+    border: 1px solid #30363d;
+    background-color: #0d1117;
+    color: #c9d1d9;
     font-size: 1rem;
     width: 100%;
-    transition: border-color 0.2s;
+    transition: border-color 0.2s, background-color 0.3s;
 }
 
 .contact-form input:focus,
 .contact-form textarea:focus {
-    border-color: #007acc;
+    border-color: #58a6ff;
     outline: none;
+    background-color: #161b22;
 }
 
 .contact-form button {
     padding: 12px 16px;
-    background-color: #007acc;
+    background-color: #238636;
     color: #fff;
     font-weight: 600;
     border: none;
@@ -175,12 +195,20 @@ body.dark-mode a {
 }
 
 .contact-form button:hover {
-    background-color: #005a99;
+    background-color: #2ea043;
 }
 
 /* Responsive */
 @media (max-width: 700px) {
     .contact-container {
         padding: 24px 16px;
+    }
+
+    .hero h1 {
+        font-size: 2.2rem;
+    }
+
+    .hero p {
+        font-size: 1rem;
     }
 }
