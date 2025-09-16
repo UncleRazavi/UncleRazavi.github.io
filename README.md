@@ -4,9 +4,8 @@ Welcome to my personal website repository! This project serves as an online port
 
 ## Overview
 
-This repository hosts a static website built using HTML, CSS, and JavaScript. It offers visitors a glimpse into my background, interests, and work. The site is deployed via GitHub Pages and can be accessed at:
+This repository hosts a static website built using HTML, CSS, and JavaScript. It offers visitors a glimpse into my background, interests, and work. The site is deployed via GitHub Pages
 
-https://UncleRazavi.github.io
 
 ## Contact
 
