@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Hossein Razavi - Personal Website</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            margin: 0;
+            background-color: #f4f6fa;
+            color: #222;
+            background-image: url('background.jpg'); 
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+        nav {
+            background: #fff;
+            padding: 20px 40px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.03);
+            margin-bottom: 40px;
+        }
+        nav a {
+            margin-right: 20px;
+            text-decoration: none;
+            color: #007acc;
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+        nav a:hover {
+            color: #005a99;
+            text-decoration: underline;
+        }
+        .main-container {
+            max-width: 650px;
+            margin: 60px auto;
+            background: #fff;
+            border-radius: 14px;
+            box-shadow: 0 4px 24px rgba(0,0,0,0.07);
+            padding: 48px 36px;
+            text-align: center;
+        }
+        h1 {
+            color: #1a365d;
+            font-size: 2.5rem;
+            margin-bottom: 18px;
+            letter-spacing: 1px;
+        }
+        h2 {
+            color: #007acc;
+            font-size: 1.3rem;
+            margin-bottom: 24px;
+            font-weight: 400;
+        }
+        p {
+            font-size: 1.15rem;
+            line-height: 1.7;
+            color: #444;
+            margin-bottom: 18px;
+        }
+        .cta-btn {
+            display: inline-block;
+            margin-top: 18px;
+            padding: 12px 32px;
+            background: linear-gradient(90deg, #007acc 60%, #005a99 100%);
+            color: #fff;
+            border: none;
+            border-radius: 6px;
+            font-size: 1.1rem;
+            font-weight: 500;
+            text-decoration: none;
+            box-shadow: 0 2px 8px rgba(0,122,204,0.08);
+            transition: background 0.2s, box-shadow 0.2s;
+        }
+        .cta-btn:hover {
+            background: linear-gradient(90deg, #005a99 60%, #007acc 100%);
+            box-shadow: 0 6px 24px rgba(0,122,204,0.13);
+        }
+        @media (max-width: 700px) {
+            .main-container {
+                padding: 28px 8px;
+            }
+            nav {
+                padding: 16px 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <a href="index.html">Home</a>
+        <a href="about.html">About</a>
+        <a href="projects.html">Projects</a>
+    </nav>
+    <div class="main-container">
+        <h1>Hossein Razavi</h1>
+        <h2>Undergraduate Student | Electrical & Electronic Engineering</h2>
+        <p>
+            Welcome to my personal website! I am currently pursuing my undergraduate studies at K.N. Toosi University, with a focus on electrical and electronic engineering. My interests include data science, neuroscience, signal processing, and digital electronics.
+        </p>
+        <p>
+            I am passionate about technology and interdisciplinary research to solve real-world problems. Here, you can learn more <a href="about.html" style="color:#007acc;text-decoration:underline;">about me</a> and explore some of my <a href="projects.html" style="color:#007acc;text-decoration:underline;">projects</a>.
+        </p>
+        <a class="cta-btn" href="projects.html">View My Projects</a>
+    </div>
+</body>
+</html>
