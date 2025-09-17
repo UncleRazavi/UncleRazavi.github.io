@@ -21,7 +21,7 @@ Feel free to reach out via the contact form on the website or connect with me th
 To run the website locally:
 
 1. Clone the repository:
-
+   ```
    git clone https://github.com/UncleRazavi/UncleRazavi.github.io.git
-
+   ```
 2. Open index.html in your browser to view the site locally.
