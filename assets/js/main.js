@@ -1,32 +1,4 @@
 // ==========================
-// Dark Mode Toggle with Icon
-// ==========================
-const darkModeBtn = document.getElementById('dark-mode-toggle');
-
-const toggleDarkMode = () => {
-    document.body.classList.toggle('dark-mode');
-    if (darkModeBtn) {
-        darkModeBtn.textContent = document.body.classList.contains('dark-mode') ? '☀️' : '🌙';
-    }
-    localStorage.setItem('theme', document.body.classList.contains('dark-mode') ? 'dark' : 'light');
-};
-
-// Load preference on page load
-document.addEventListener('DOMContentLoaded', () => {
-    if (localStorage.getItem('theme') === 'dark') {
-        document.body.classList.add('dark-mode');
-        if (darkModeBtn) darkModeBtn.textContent = '☀️';
-    } else if (darkModeBtn) {
-        darkModeBtn.textContent = '🌙';
-    }
-});
-
-// Toggle dark mode on button click
-if (darkModeBtn) {
-    darkModeBtn.addEventListener('click', toggleDarkMode);
-}
-
-// ==========================
 // Smooth Scrolling for Internal Links
 // ==========================
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
@@ -67,7 +39,7 @@ const appearOptions = {
     rootMargin: '0px 0px -50px 0px'
 };
 
-const appearOnScroll = new IntersectionObserver(function(entries, observer) {
+const appearOnScroll = new IntersectionObserver((entries, observer) => {
     entries.forEach(entry => {
         if (!entry.isIntersecting) return;
         entry.target.classList.add('appear');
@@ -80,7 +52,9 @@ faders.forEach(fader => {
     appearOnScroll.observe(fader);
 });
 
-
+// ==========================
+// Typing Effect for Hero Title
+// ==========================
 const heroTitle = document.querySelector('.hero h1');
 if (heroTitle) {
     const text = heroTitle.textContent;
@@ -97,3 +71,49 @@ if (heroTitle) {
     };
     type();
 }
+
+// ==========================
+// Back-to-Top Button
+// ==========================
+const backToTopBtn = document.createElement('button');
+backToTopBtn.id = 'back-to-top';
+backToTopBtn.textContent = '⬆';
+document.body.appendChild(backToTopBtn);
+
+backToTopBtn.style.cssText = `
+    position: fixed;
+    bottom: 40px;
+    right: 40px;
+    padding: 12px 16px;
+    font-size: 18px;
+    display: none;
+    border: none;
+    border-radius: 6px;
+    background-color: #007acc;
+    color: #fff;
+    cursor: pointer;
+    z-index: 1000;
+`;
+
+window.addEventListener('scroll', () => {
+    if (window.scrollY > 300) backToTopBtn.style.display = 'block';
+    else backToTopBtn.style.display = 'none';
+});
+
+backToTopBtn.addEventListener('click', () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+});
+
+// ==========================
+// Optional: Skill Bar Animation
+// ==========================
+const skillBars = document.querySelectorAll('.skill-bar');
+skillBars.forEach(bar => {
+    const progress = bar.querySelector('.progress');
+    const value = progress.dataset.progress;
+    progress.style.width = '0%';
+    setTimeout(() => {
+        progress.style.width = value;
+        progress.style.transition = 'width 2s ease-in-out';
+    }, 500);
+});
