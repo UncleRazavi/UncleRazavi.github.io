@@ -1,6 +1,0 @@
-﻿---
-layout: post
-title: "My First Blog"
-date: 2025-09-18
----
-This is my first blog 
