@@ -8,22 +8,27 @@
     <script defer src="{{ "/assets/js/main.js" | relative_url }}"></script>
 </head>
 <body>
-    <!-- Header / Navigation -->
     <header>
-        <nav class="container">
-            <a href="{{ "/" | relative_url }}">Home</a>
-            <a href="{{ "/about.html" | relative_url }}">About</a>
-            <a href="{{ "/projects.html" | relative_url }}">Projects</a>
-            <a href="{{ "/contact.html" | relative_url }}">Contact</a>
-            <button id="dark-mode-toggle" style="margin-left:auto;">🌙</button>
-        </nav>
+        <div class="container" style="display: flex; justify-content: space-between; align-items: center; padding: 15px 30px;">
+            <!-- Logo / Name -->
+            <a href="{{ "/" | relative_url }}" style="font-size: 1.5rem; font-weight: bold; text-decoration: none; color: #333;">
+                Hossein Razavi
+            </a>
+            <!-- Navigation -->
+            <nav>
+                <ul style="display: flex; list-style: none; margin: 0; padding: 0; gap: 25px;">
+                    <li><a href="{{ "/about.html" | relative_url }}" style="text-decoration: none; color: #333; font-weight: 500;">About</a></li>
+                    <li><a href="{{ "/projects.html" | relative_url }}" style="text-decoration: none; color: #333; font-weight: 500;">Projects</a></li>
+                    <li><a href="{{ "/blog.html" | relative_url }}" style="text-decoration: none; color: #333; font-weight: 500;">Blog</a></li>
+                    <li><a href="{{ "/contact.html" | relative_url }}" style="text-decoration: none; color: #333; font-weight: 500;">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
     </header>
-
     <!-- Main Content -->
     <main class="container">
         {{ content }}
     </main>
-
     <!-- Footer -->
     <footer>
         <p>2025 Hossein Razavi.</p>
