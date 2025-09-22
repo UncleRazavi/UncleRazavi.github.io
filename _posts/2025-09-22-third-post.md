@@ -14,7 +14,7 @@ In a perpetually connected world of scrolling, streaming, and swiping, boredom i
   - Revisit memories  
   - Imagine possibilities  
 
-This mental drift isn’t aimless—it’s **fertile ground** for insight and innovation.
+This mental drift isn’t aimless it’s **fertile ground** for insight and innovation.
 
 ---
 
@@ -36,3 +36,4 @@ Facing these thoughts is essential. It’s how we move beyond being a mere **str
 - Allow your mind to drift.  
 
 That stillness may be the **gateway** to your most unique and **truest self**.
+
