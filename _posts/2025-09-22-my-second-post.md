@@ -1,4 +1,3 @@
-![Evolution of Religious and Philosophical Ideas](http://axnegar.fahares.com/axnegar/2511ed518c517b884229a.jpg)
 
 A visual representation of the evolution and interplay of religious and philosophical ideas across several ancient civilizations, focusing on how different cultures conceptualized and influenced the idea of God or the divine.
 
@@ -35,3 +34,7 @@ A visual representation of the evolution and interplay of religious and philosop
 
 ### Summary
 This diagram illustrates how the concept of **God** evolved through cultural exchange and **religious syncretism** across Egypt, Canaan, Babylon, Persia, Greece, and Rome. These interactions led to the major religious ideas that still shape the world today.
+
+<p align="center">
+  <img src="https://github.com/UncleRazavi/UncleRazavi.github.io/blob/main/_posts/photo_2024-08-18_12-23-55.jpg" width="800">
+</p>
