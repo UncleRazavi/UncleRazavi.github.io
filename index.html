@@ -33,6 +33,30 @@
             <a class="cta-btn" href="projects.html">View My Projects</a>
         </section>
     </main>
+    <!-- Blog Section -->
+    <section class="container" style="margin-top: 60px;">
+        <h2 style="font-size: 2rem; margin-bottom: 20px; text-align: center;">Latest Blog Posts</h2>
+        <ul style="list-style: none; padding: 0;">
+          {% for post in site.posts limit:3 %}
+            <li style="margin-bottom: 25px; padding: 20px; border: 1px solid #ddd; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.05);">
+              <a href="{{ post.url }}" style="font-size: 20px; font-weight: bold; color: #007acc; text-decoration: none;">
+                {{ post.title }}
+              </a>
+              <p style="margin: 5px 0; color: #666; font-size: 14px;">
+                {{ post.date | date: "%B %d, %Y" }}
+              </p>
+              <p style="color: #333; font-size: 15px;">
+                {{ post.excerpt | strip_html | truncatewords: 25 }}
+              </p>
+              <a href="{{ post.url }}" style="color: #007acc; font-size: 14px; font-weight: bold;">Read more →</a>
+            </li>
+          {% endfor %}
+        </ul>
+
+        <div style="text-align: center; margin-top: 20px;">
+            <a href="blog.html" style="font-size: 16px; font-weight: bold; color: white; background: #007acc; padding: 10px 20px; border-radius: 8px; text-decoration: none;">View All Posts</a>
+        </div>
+    </section>
 
     <!-- Footer -->
     <footer>
@@ -40,4 +64,5 @@
     </footer>
 </body>
 </html>
+
 
