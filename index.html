@@ -1,47 +1,74 @@
 ---
 layout: default
-title: Hossein Razavi - Personal Website
+title: Hossein Razavi - Electrical Engineering, Data Science & Neuroscience
 ---
 
-<section class="main-container" style="background-image: url('assets/images/background.jpg'); background-size: cover; background-position: center;">
-    <h1>Hossein Razavi</h1>
-    <h2>Undergraduate Student | Electrical & Electronic Engineering</h2>
-    <p>
-        Welcome to my personal website! I am currently pursuing my undergraduate studies at K.N. Toosi University, with a focus on electrical and electronic engineering. My interests include data science, neuroscience, signal processing, and digital electronics.
-    </p>
-    <p>
-        I am passionate about technology and interdisciplinary research to solve real-world problems. Here, you can learn more <a href="{{ "/about.html" | relative_url }}">about me</a> and explore some of my <a href="{{ "/projects.html" | relative_url }}">projects</a>.
-    </p>
-    <a class="cta-btn" href="{{ "/projects.html" | relative_url }}">View My Projects</a>
+<section class="hero-section">
+    <div class="container hero-content">
+        <div class="profile-avatar">
+            
+        </div>
+
+        <h1>Hossein Razavi</h1>
+        <h2 class="subtitle">Undergraduate Student | Electrical & Electronic Engineering</h2>
+        <p class="bio-intro">
+            Welcome to my personal website! I am currently pursuing my undergraduate studies at **K.N. Toosi University**. My academic passion lies at the intersection of **Electrical Engineering** with **Data Science**, **Neuroscience**, and **Signal Processing**.
+        </p>
+        
+        <div class="quick-links">
+            <a href="https://github.com/UncleRazavi" target="_blank" title="GitHub">GitHub</a>
+            <span class="link-separator">|</span>
+            <a href="https://www.linkedin.com/in/hossein-razavi-485a84288" target="_blank" title="LinkedIn">LinkedIn</a>
+        </div>
+
+        <div class="cta-group">
+            <a class="cta-btn primary" href="{{ "/projects.html" | relative_url }}">Explore My Projects</a>
+            <a class="cta-btn secondary" href="{{ "/about.html" | relative_url }}">More About Me →</a>
+        </div>
+    </div>
 </section>
 
-<!-- Blog Section -->
-<section class="container" style="margin-top: 60px;">
-    <h2 style="font-size: 2rem; margin-bottom: 20px; text-align: center;">Latest Blog Posts</h2>
-    <ul style="list-style: none; padding: 0;">
-      {% for post in site.posts limit:3 %}
-        <li style="margin-bottom: 25px; padding: 20px; border: 1px solid #ddd; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.05);">
-          <a href="{{ post.url | relative_url }}" style="font-size: 20px; font-weight: bold; color: #007acc; text-decoration: none;">
-            {{ post.title }}
-          </a>
-          <p style="margin: 5px 0; color: #666; font-size: 14px;">
-            {{ post.date | date: "%B %d, %Y" }}
-          </p>
-          <p style="color: #333; font-size: 15px;">
-            {{ post.excerpt | strip_html | truncatewords: 25 }}
-          </p>
-          <a href="{{ post.url | relative_url }}" style="color: #007acc; font-size: 14px; font-weight: bold;">Read more →</a>
+<section class="container skills-focus-section">
+    <h3>Key Focus Areas </h3>
+    <ul class="focus-list">
+        <li>Data Science & ML</li>
+        <li>Neuroscience & BCI</li>
+        <li>Signal Processing (DSP)</li>
+        <li>Digital Electronics </li>
+    </ul>
+</section>
+
+---
+
+<section class="container blog-preview-section">
+    <h2 class="section-heading">Latest Insights & Blog Posts</h2>
+    <ul class="post-list">
+        {% for post in site.posts limit:3 %}
+        <li class="post-card">
+            <a href="{{ post.url | relative_url }}" class="post-title-link">
+                {{ post.title }}
+            </a>
+            <p class="post-meta">
+                <time datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: "%B %d, %Y" }}</time>
+            </p>
+            <p class="post-excerpt">
+                {{ post.excerpt | strip_html | truncatewords: 25 }}
+            </p>
+            <a href="{{ post.url | relative_url }}" class="read-more-link">Read more →</a>
         </li>
-      {% endfor %}
+        {% else %}
+        <p class="no-posts">No blog posts published yet. Check back soon!</p>
+        {% endfor %}
     </ul>
 
-    <div style="text-align: center; margin-top: 20px;">
-        <a href="{{ "/blog.html" | relative_url }}" style="font-size: 16px; font-weight: bold; color: white; background: #007acc; padding: 10px 20px; border-radius: 8px; text-decoration: none;">View All Posts</a>
+    <div class="section-footer">
+        <a href="{{ "/blog.html" | relative_url }}" class="button-link">View All Posts</a>
     </div>
-        <!-- Telegram Library Link -->
-    <p style="margin-top: 20px; font-size: 16px; text-align: center;">
-         Check out my document library on Telegram: 
-        <a href="https://t.me/HRslibrary" target="_blank" style="color: #007acc; font-weight: bold;">HRs Library</a>
-    </p>
-</section>
 
+    <div class="telegram-link-box">
+        <p>
+             Check out my academic document library on Telegram: 
+            <a href="https://t.me/HRslibrary" target="_blank" class="telegram-link">HRs Library</a>
+        </p>
+    </div>
+</section>
