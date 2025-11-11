@@ -1,59 +1,62 @@
 /* ============================= */
-/*        Global Styles          */
+/* Global Styles 1998      */
 /* ============================= */
 
+/* Using a Monospace font stack for the classic programmer/terminal feel */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: 'Fira Code', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    transition: background-color 0.3s, color 0.3s, border-color 0.3s;
+    font-family: 'Courier New', Courier, monospace, 'Lucida Console', Monaco;
+    /* Removed smooth transitions for that instant, blocky feel */
 }
 
-/* Default Colors (Light Mode) */
+/* Default Colors (Classic Desktop Theme) */
 :root {
-    --bg-color: #f4f6f8;
-    --text-color: #1e1e1e;
-    --primary-color: #007acc;
-    --primary-hover: #005a99;
-    --secondary-color: #666;
-    --card-bg: rgba(255, 255, 255, 0.95);
-    --input-bg: #f4f6f8;
-    --input-focus-bg: #e9eef5;
-    --footer-bg: #f1f3f6;
+    --bg-color: #c0c0c0; /* Standard Windows 95/98 gray */
+    --text-color: #000000;
+    --primary-color: #000080; /* Deep blue for links and headers */
+    --primary-hover: #1084d0; /* A slightly brighter active blue */
+    --secondary-color: #6a6a6a; /* Darker gray for text/accents */
+    --card-bg: #ffffff; /* White card background */
+    --input-bg: #e0e0e0; /* Input field background (sunken effect base) */
+    --footer-bg: #a0a0a0; /* Darker gray footer */
+    
+    /* 3D Border Colors */
+    --border-light: #ffffff;
+    --border-dark: #000000;
 }
 
-/* Dark Mode Variables */
+/* Dark Mode (High Contrast Terminal Style - if needed) */
 .dark-mode {
-    --bg-color: #1e1e1e;
-    --text-color: #f4f6f8;
-    --primary-color: #4aa3ff;
-    --primary-hover: #1e90ff;
-    --secondary-color: #ccc;
-    --card-bg: rgba(30, 30, 30, 0.95);
-    --input-bg: #2c2c2c;
-    --input-focus-bg: #3a3a3a;
-    --footer-bg: #2a2a2a;
+    --bg-color: #000000;
+    --text-color: #00ff00; /* Neon green text */
+    --primary-color: #00c000;
+    --primary-hover: #00ff00;
+    --secondary-color: #007000;
+    --card-bg: #111111;
+    --input-bg: #000000;
+    --input-focus-bg: #002200;
+    --footer-bg: #0a0a0a;
+    --border-light: #00c000;
+    --border-dark: #003300;
 }
 
 body {
-    line-height: 1.6;
+    line-height: 1.5;
     background-color: var(--bg-color);
     color: var(--text-color);
-    background-image: url('../images/background.jpg');
-    background-size: cover;
-    background-position: center;
-    background-attachment: fixed;
+    /* Removed large background image for a faster, starker feel */
 }
 
 /* ============================= */
-/*           Links               */
+/* Links               */
 /* ============================= */
 
 a {
     text-decoration: none;
     color: var(--primary-color);
-    transition: color 0.2s;
+    /* No transitions */
 }
 
 a:hover {
@@ -62,24 +65,27 @@ a:hover {
 }
 
 /* ============================= */
-/*         Container             */
+/* Container            */
 /* ============================= */
 
 .container {
     width: 90%;
-    max-width: 1200px;
+    max-width: 1000px; /* Made max-width slightly smaller for the era */
     margin: auto;
-    padding: 2rem 0;
+    padding: 2rem 1rem;
 }
 
 /* ============================= */
-/*           Header              */
+/* Header              */
 /* ============================= */
 
 header {
-    background-color: var(--card-bg);
-    padding: 1rem 0;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    background-color: var(--bg-color);
+    padding: 0.5rem 0;
+    /* Use strong 3D border for the title bar look */
+    border: 3px solid var(--border-dark);
+    border-right-color: var(--border-light);
+    border-bottom-color: var(--border-light);
     position: sticky;
     top: 0;
     z-index: 1000;
@@ -89,162 +95,294 @@ header nav {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    /* Navigation links are inside the container for spacing */
 }
 
 header nav a {
-    margin-right: 1.5rem;
-    font-weight: 500;
-}
-
-header nav button {
-    display: none; /* Dark mode button removed */
-}
-
-/* ============================= */
-/*        Hero Section           */
-/* ============================= */
-
-.hero {
-    height: 80vh;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
+    margin-right: 1rem;
+    padding: 0.5rem 0.75rem;
+    font-weight: bold;
     color: var(--text-color);
-    text-shadow: 0 0 5px rgba(255,255,255,0.4);
+    /* Gives the link a flat button look */
+    border: 1px solid transparent; 
 }
 
-.hero h1 {
-    font-size: 3rem;
-    margin-bottom: 1rem;
+header nav a:hover {
+    color: var(--primary-color);
+    text-decoration: none;
+    /* Sunken look on hover */
+    border: 1px solid var(--secondary-color);
 }
 
-.hero p {
-    font-size: 1.2rem;
-    max-width: 700px;
+header nav .active {
+    background-color: var(--card-bg);
+    color: var(--primary-color);
+    /* Use an inverse/pressed look for the active link */
+    border: 1px solid var(--secondary-color);
 }
+
 
 /* ============================= */
-/*           Sections            */
+/* Buttons / CTAs        */
 /* ============================= */
 
-section {
-    padding: 4rem 0;
-}
-
-section h2 {
+.cta-btn, .button-link, .cta-link {
+    display: inline-block;
+    padding: 8px 16px;
+    margin: 8px 4px;
+    font-weight: bold;
     text-align: center;
-    margin-bottom: 2rem;
-    font-size: 2rem;
+    cursor: pointer;
+    text-transform: uppercase;
+    
+    /* The classic 3D-raised button effect */
+    background-color: var(--bg-color);
+    border: 2px outset var(--border-light); /* Light top/left */
+    border-bottom: 2px outset var(--border-dark); /* Dark bottom/right */
+    color: var(--text-color);
+    box-shadow: 1px 1px 0 var(--border-dark); /* Small shadow below */
+    text-decoration: none;
+}
+
+.cta-btn:hover, .button-link:hover, .cta-link:hover {
+    /* The classic 3D-pressed button effect */
+    background-color: var(--bg-color);
+    border: 2px inset var(--border-dark); /* Dark top/left (pressed) */
+    border-bottom: 2px inset var(--border-light); /* Light bottom/right (pressed) */
+    text-decoration: none;
+}
+
+.cta-btn.primary {
+    background-color: var(--primary-color);
+    color: var(--border-light);
+    border: 2px outset var(--primary-hover);
+    border-bottom: 2px outset var(--border-dark);
+}
+
+.cta-btn.primary:hover {
+    background-color: var(--primary-hover);
+    border: 2px inset var(--border-dark);
+}
+
+
+/* ============================= */
+/* Hero Section           */
+/* ============================= */
+
+.hero-section {
+    padding: 4rem 0;
+    text-align: center;
+    background-color: var(--card-bg);
+    /* Simple solid background, no gradient or image */
+    border: 3px solid var(--border-dark);
+    margin: 2rem auto;
+}
+
+.hero-content h1 {
+    font-size: 2.5rem;
+    margin-bottom: 0.5rem;
     color: var(--primary-color);
 }
 
+.hero-content .subtitle {
+    font-size: 1.2rem;
+    margin-bottom: 1.5rem;
+    font-style: italic;
+    color: var(--secondary-color);
+}
+
+.profile-avatar {
+    margin: 0 auto 1.5rem;
+    width: 120px;
+    height: 120px;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    line-height: 120px;
+    text-align: center;
+    font-size: 0.8rem;
+    /* Boxy 3D Frame for the image placeholder */
+    border: 3px solid var(--border-dark);
+    border-right-color: var(--border-light);
+    border-bottom-color: var(--border-light);
+}
+
 /* ============================= */
-/*         Project Cards         */
+/* Sections            */
 /* ============================= */
+
+section {
+    padding: 2rem 0;
+    margin: 1rem 0;
+}
+
+.section-heading, section h2 {
+    text-align: left;
+    margin-bottom: 1.5rem;
+    font-size: 1.8rem;
+    /* Use a classic section divider look */
+    border-bottom: 2px solid var(--secondary-color);
+    padding-bottom: 0.5rem;
+    color: var(--text-color);
+}
+
+/* ============================= */
+/* Project Cards        */
+/* ============================= */
+
+.project-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+}
 
 .project-card {
     background-color: var(--card-bg);
     color: var(--text-color);
     padding: 1.5rem;
-    border-radius: 12px;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
     margin-bottom: 1.5rem;
-    transition: transform 0.2s, box-shadow 0.2s;
+    
+    /* 3D Sunken/Recessed Effect for the card content area */
+    border: 2px inset var(--border-dark); /* Dark top/left, Light bottom/right */
+    
+    /* Removed smooth hover/transform effects */
 }
 
-.project-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+.project-card h2 {
+    font-size: 1.4rem;
+    color: var(--primary-color);
+    margin-bottom: 0.75rem;
+    border-bottom: 1px dashed var(--secondary-color);
+    padding-bottom: 0.25rem;
+}
+
+.project-meta .tech-stack,
+.project-meta .key-tags {
+    list-style: none;
+    padding-left: 0;
+    font-size: 0.9rem;
+    margin-top: 1rem;
+}
+
+.project-meta li {
+    padding: 2px 0;
+}
+
+.project-image-placeholder {
+    height: 150px;
+    background-color: var(--input-bg);
+    color: var(--secondary-color);
+    text-align: center;
+    line-height: 150px;
+    margin-top: 1rem;
+    /* Simple 1px gray border for the internal window look */
+    border: 1px solid var(--secondary-color); 
 }
 
 /* ============================= */
-/*           Footer              */
+/* About Page Styles     */
+/* ============================= */
+
+.profile-summary {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+    margin-bottom: 2rem;
+}
+
+.skills-focus-section {
+    background-color: var(--input-bg);
+    border: 2px solid var(--secondary-color);
+    padding: 1.5rem;
+    margin: 2rem auto;
+}
+
+.focus-list {
+    list-style: square;
+    padding-left: 20px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+/* ============================= */
+/* Footer              */
 /* ============================= */
 
 footer {
     text-align: center;
-    padding: 2rem 0;
+    padding: 1rem 0;
     background-color: var(--footer-bg);
     color: var(--secondary-color);
+    font-size: 0.9rem;
+    /* Use a clear separation line */
+    border-top: 3px solid var(--border-dark);
 }
 
 /* ============================= */
-/*       Contact Form            */
+/* Contact Form          */
 /* ============================= */
 
 .contact-container {
-    max-width: 700px;
+    max-width: 600px;
     margin: 40px auto;
     padding: 40px 32px;
     background-color: var(--card-bg);
-    border-radius: 12px;
-    box-shadow: 0 4px 24px rgba(0,0,0,0.1);
-}
-
-.contact-container h1 {
-    margin-bottom: 1rem;
-    color: var(--primary-color);
-}
-
-.contact-form {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-    margin-top: 2rem;
-}
-
-.contact-form label {
-    font-weight: 600;
+    /* Classic 3D window style */
+    border: 3px solid var(--border-dark);
+    border-right-color: var(--border-light);
+    border-bottom-color: var(--border-light);
 }
 
 .contact-form input,
 .contact-form textarea {
-    padding: 12px 16px;
-    border-radius: 8px;
-    border: 1px solid #ccc;
+    padding: 6px 8px;
+    /* No border-radius */
+    border: none;
     background-color: var(--input-bg);
     color: var(--text-color);
     font-size: 1rem;
-    width: 100%;
+    
+    /* Sunken field effect (inward bevel) */
+    border: 2px inset var(--border-dark); 
 }
 
 .contact-form input:focus,
 .contact-form textarea:focus {
-    border-color: var(--primary-color);
-    outline: none;
-    background-color: var(--input-focus-bg);
+    /* No change on focus, just the standard inset look */
+    border: 2px inset var(--border-dark); 
+    outline: 1px dotted var(--primary-color);
+    background-color: var(--card-bg);
 }
 
-.contact-form button {
-    padding: 12px 16px;
-    background-color: var(--primary-color);
-    color: #fff;
-    font-weight: 600;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-}
-
-.contact-form button:hover {
-    background-color: var(--primary-hover);
-}
 
 /* ============================= */
-/*          Responsive           */
+/* Responsive           */
 /* ============================= */
 
-@media (max-width: 700px) {
-    .contact-container {
-        padding: 24px 16px;
+@media (max-width: 768px) {
+    .container {
+        width: 95%;
+    }
+    
+    .hero-content h1 {
+        font-size: 2rem;
+    }
+    
+    header nav {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    
+    header nav a {
+        margin: 0.25rem 0;
     }
 
-    .hero h1 {
-        font-size: 2.2rem;
+    .project-grid {
+        grid-template-columns: 1fr;
     }
-
-    .hero p {
-        font-size: 1rem;
+    
+    .profile-summary {
+        flex-direction: column;
+        text-align: center;
     }
 }
