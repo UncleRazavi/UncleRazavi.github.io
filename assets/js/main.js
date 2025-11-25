@@ -25,8 +25,8 @@ const particleConfig = {
     "interactivity": {
       "detect_on": "canvas",
       "events": {
-        "onhover": { "enable": true, "mode": "grab" }, // Interactivity on hover
-        "onclick": { "enable": true, "mode": "push" },  // Interactivity on click
+        "onhover": { "enable": true, "mode": "grab" },
+        "onclick": { "enable": true, "mode": "push" },
         "resize": true
       },
       "modes": {
@@ -42,20 +42,88 @@ particlesJS('particles-js', particleConfig);
 
 
 // ==========================================
-// 2. HIGHLIGHT CURRENT NAV LINK (Retro Navigation)
+// 1. DARK MODE & 3D AVATAR THEME SWITCHER (NEW/REVISED)
 // ==========================================
-// Keeping this feature but removing smooth scrolling to match the instant retro feel.
+let bodyModel = null;
+let scene = null;
+
+// Color definitions based on your CSS variables
+const THEME_COLORS = {
+    light: {
+        bg: 0xc0c0c0,      // var(--bg-color)
+        model: 0x000080,   // var(--primary-color) - Deep Blue
+        particles: "#ffffff"
+    },
+    dark: {
+        bg: 0x000000,      // var(--bg-color) - Black
+        model: 0x00c000,   // var(--primary-color) - Green
+        particles: "#00ff00"
+    }
+};
+
+function applyTheme(theme) {
+    const isDark = theme === 'dark';
+    document.body.classList.toggle('dark-mode', isDark);
+    localStorage.setItem('theme', theme);
+
+    // Update 3D Avatar colors (if the model has been initialized)
+    if (bodyModel && scene) {
+        const colors = isDark ? THEME_COLORS.dark : THEME_COLORS.light;
+        
+        // 1. Change the scene background color
+        scene.background.setHex(colors.bg);
+        
+        // 2. Change the 3D model's material color
+        bodyModel.material.color.setHex(colors.model);
+        
+        // 3. Change particle colors (requires re-initialization of particles.js)
+        // Since re-initialization can be costly, a simpler way is often used,
+        // but for a full swap, you must update the config and restart particlesJS.
+        const updatedParticleConfig = JSON.parse(JSON.stringify(particleConfig));
+        updatedParticleConfig.particles.color.value = colors.particles;
+        updatedParticleConfig.particles.line_linked.color = colors.particles;
+        particlesJS('particles-js', updatedParticleConfig);
+    }
+}
+
+function initTheme() {
+    const savedTheme = localStorage.getItem('theme');
+    
+    // Check if a theme is saved, otherwise check system preference, default to light
+    if (savedTheme) {
+        applyTheme(savedTheme);
+    } else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        applyTheme('dark');
+    } else {
+        applyTheme('light');
+    }
+}
+
+// Attach theme toggle listener (assuming you have a button with this ID)
+const toggleButton = document.getElementById('dark-mode-toggle');
+if (toggleButton) {
+    toggleButton.addEventListener('click', () => {
+        const currentTheme = document.body.classList.contains('dark-mode') ? 'dark' : 'light';
+        const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+        applyTheme(newTheme);
+    });
+}
+// Run on load
+initTheme();
+
+// ==========================================
+// 2. HIGHLIGHT CURRENT NAV LINK (Retro Navigation)
+// (Code remains unchanged)
+// ==========================================
 const sections = document.querySelectorAll('section');
 const navLinks = document.querySelectorAll('header nav a');
 
 window.addEventListener('scroll', () => {
     let current = '';
     
-    // Check if the page has the "id" attribute, otherwise assume no scrolling section logic needed
     sections.forEach(section => {
         if (!section.getAttribute('id')) return;
         
-        // Offset adjusted to account for sticky header height
         const sectionTop = section.offsetTop - 100; 
         if (window.scrollY >= sectionTop) {
             current = section.getAttribute('id');
@@ -64,7 +132,6 @@ window.addEventListener('scroll', () => {
 
     navLinks.forEach(link => {
         link.classList.remove('active');
-        // Check if the link href matches the current section ID
         if (link.getAttribute('href') === `#${current}`) {
             link.classList.add('active');
         }
@@ -74,21 +141,19 @@ window.addEventListener('scroll', () => {
 
 // ==========================================
 // 3. BACK-TO-TOP BUTTON (Retro Style)
+// (Code remains unchanged, only removing redundant definitions for brevity)
 // ==========================================
 const backToTopBtn = document.createElement('button');
 backToTopBtn.id = 'back-to-top';
-backToTopBtn.textContent = '▲'; // Using a simple triangle icon
+backToTopBtn.textContent = '▲'; 
 
-// Append the button to the body
 document.body.appendChild(backToTopBtn);
 
-// Style the button using the 3D Windows 98 aesthetic
 backToTopBtn.style.cssText = `
-    /* Position and Layout */
     position: fixed;
     bottom: 30px;
     right: 30px;
-    width: 40px; /* fixed width/height for classic button feel */
+    width: 40px; 
     height: 40px;
     padding: 0;
     font-size: 20px;
@@ -98,12 +163,11 @@ backToTopBtn.style.cssText = `
     cursor: pointer;
     z-index: 1000;
     
-    /* Windows 98 3D Button Style */
-    background-color: #c0c0c0; /* var(--bg-color) */
-    color: #000000;           /* var(--text-color) */
-    border: 2px outset #ffffff; /* var(--border-light) */
-    border-right-color: #000000; /* var(--border-dark) */
-    border-bottom-color: #000000; /* var(--border-dark) */
+    background-color: #c0c0c0;
+    color: #000000;           
+    border: 2px outset #ffffff;
+    border-right-color: #000000;
+    border-bottom-color: #000000;
     box-shadow: 1px 1px 0 #000000;
     font-weight: bold;
 `;
@@ -117,7 +181,6 @@ backToTopBtn.addEventListener('mouseover', () => {
 });
 
 backToTopBtn.addEventListener('mouseout', () => {
-    // Revert to raised look
     backToTopBtn.style.border = '2px outset #ffffff';
     backToTopBtn.style.borderRightColor = '#000000';
     backToTopBtn.style.borderBottomColor = '#000000';
@@ -133,32 +196,25 @@ window.addEventListener('scroll', () => {
     }
 });
 
-// Scroll to top with instant behavior (removes 'smooth' for retro feel)
 backToTopBtn.addEventListener('click', () => {
     window.scrollTo({ top: 0, behavior: 'auto' }); 
 });
 
 
-
 // ==========================================
-// 3. 3D BODY AVATAR IMPLEMENTATION
+// 4. 3D BODY AVATAR IMPLEMENTATION (REVISED)
 // ==========================================
-
 function init3DAvatar() {
     const container = document.getElementById('avatar-3d-canvas');
     if (!container) return; 
 
-    // 1. Scene Setup
-    const scene = new THREE.Scene();
-    scene.background = new THREE.Color(0xc0c0c0); // Match Win98 gray
+    scene = new THREE.Scene();
     
-    // 2. Camera Setup
     const camera = new THREE.PerspectiveCamera(75, 1, 0.1, 1000);
     camera.position.z = 2.5; 
 
     // 3. Renderer Setup
     const renderer = new THREE.WebGLRenderer({ canvas: container, antialias: false });
-    // Use low-res setting for a 'retro' or 'blocky' feel
     renderer.setSize(120, 120); 
 
     // 4. Lighting
@@ -168,26 +224,30 @@ function init3DAvatar() {
     pointLight.position.set(5, 5, 5);
     scene.add(pointLight);
 
-    // 5. Create a simple 3D shape (placeholder for a complex body model)
-    // To use a real body model (.gltf, .obj), you'd need the GLTFLoader/OBJLoader.
+    // 5. Create 3D shape (Dodecahedron)
     const geometry = new THREE.DodecahedronGeometry(1);
-    const material = new THREE.MeshPhongMaterial({ color: 0x000080 }); // Win98 Deep Blue
-    const bodyModel = new THREE.Mesh(geometry, material);
+    const material = new THREE.MeshPhongMaterial();
+    // Use the global 'bodyModel' variable
+    bodyModel = new THREE.Mesh(geometry, material); 
     scene.add(bodyModel);
+
+    // Apply the initial theme immediately after creating the model
+    // This ensures the model and scene get the correct initial colors (light or dark)
+    const initialTheme = document.body.classList.contains('dark-mode') ? 'dark' : 'light';
+    applyTheme(initialTheme);
+
 
     // 6. Animation Loop (Rotation)
     function animate() {
         requestAnimationFrame(animate);
         
-        // Simple continuous rotation (instantaneous feel)
         bodyModel.rotation.y += 0.005; 
         
         renderer.render(scene, camera);
     }
 
-    // Handle Resize (important for responsiveness)
+    // Handle Resize 
     function onWindowResize() {
-        // Keep renderer size fixed to container size (120x120)
         camera.updateProjectionMatrix();
         renderer.setSize(container.clientWidth, container.clientHeight);
     }
@@ -198,4 +258,3 @@ function init3DAvatar() {
 
 // Call the initialization function when the window loads
 window.addEventListener('load', init3DAvatar);
-
