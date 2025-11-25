@@ -13,36 +13,50 @@
 }
 
 /* Default Colors (Classic Desktop Theme) */
+/* ============================= */
+/* REAL WINDOWS 98 COLOR PALETTE */
+/* ============================= */
+
 :root {
-    /* Main Theme Colors */
-    --bg-color: #c0c0c0;       /* Standard Windows 95/98 gray */
-    --text-color: #000000;
-    --primary-color: #000080;  /* Deep blue for links and headers */
-    --primary-hover: #1084d0;  /* A slightly brighter active blue */
-    --secondary-color: #6a6a6a; /* Darker gray for text/accents */
-    
-    /* UI Component Colors */
-    --card-bg: #ffffff;        /* White card background */
-    --input-bg: #e0e0e0;       /* Input field background (sunken effect base) */
-    --footer-bg: #a0a0a0;      /* Darker gray footer */
-    
-    /* 3D Border Colors */
-    --border-light: #ffffff;   /* Highlight color (top/left) */
-    --border-dark: #000000;    /* Shadow color (bottom/right) */
+    /* Main Theme Colors (Win98) */
+    --bg-color: #C0C0C0;            /* Desktop / Window background */
+    --text-color: #000000;          /* Standard text */
+    --primary-color: #0000FF;       /* Classic hyperlink blue */
+    --primary-hover: #FF0000;       /* Hover red - Windows 98 style */
+    --secondary-color: #808080;     /* Disabled text / gray */
+
+    /* UI Element Colors */
+    --card-bg: #FFFFFF;             /* Window content area */
+    --input-bg: #FFFFFF;            /* Edit fields (white) */
+    --footer-bg: #C0C0C0;
+
+    /* Authentic Windows 98 3D Borders */
+    --border-light: #FFFFFF;        /* Top/Left highlight */
+    --border-mid: #DFDFDF;          /* Intermediate highlight */
+    --border-shadow: #808080;       /* Bottom/Right shadow */
+    --border-dark: #000000;         /* Deep shadow (chiseled) */
 }
 
-/* Dark Mode (High Contrast Terminal Style - triggered by .dark-mode class) */
+/* ============================= */
+/* DARK MODE (Still Retro Themed) */
+/* ============================= */
+
 .dark-mode {
-    --bg-color: #000000;
-    --text-color: #00ff00; /* Bright Green */
-    --primary-color: #00c000; /* Darker Green */
-    --primary-hover: #00ff00;
-    --secondary-color: #007000;
-    --card-bg: #111111;
-    --input-bg: #000000;
-    --footer-bg: #0a0a0a;
-    --border-light: #00c000;
-    --border-dark: #003300;
+    --bg-color: #1A1A1A;           /* Dark grey background */
+    --text-color: #E0E0E0;         /* Light grey text */
+    --primary-color: #B0B0B0;      /* Grey links */
+    --primary-hover: #FFFFFF;      /* White hover */
+    --secondary-color: #909090;    /* Subtle grey */
+
+    --card-bg: #2A2A2A;            /* Dark panel */
+    --input-bg: #1A1A1A;           /* Sunken dark fields */
+    --footer-bg: #2A2A2A;
+
+    /* Greyscale 3D borders (Win98-style) */
+    --border-light: #E0E0E0;
+    --border-mid: #B5B5B5;
+    --border-shadow: #505050;
+    --border-dark: #000000;
 }
 
 body {
@@ -430,3 +444,4 @@ footer {
         text-align: center;
     }
 }
+
