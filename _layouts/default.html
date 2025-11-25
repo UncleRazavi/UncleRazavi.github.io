@@ -2,36 +2,45 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>{{ page.title }}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ page.title | default: site.title }}</title>
+    
     <link rel="stylesheet" href="{{ "/assets/css/main.css" | relative_url }}">
-    <script defer src="{{ "/assets/js/main.js" | relative_url }}"></script>
 </head>
 <body>
+    
+    <div id="particles-js"></div> 
+    
     <header>
-        <div class="container" style="display: flex; justify-content: space-between; align-items: center; padding: 15px 30px;">
-            <!-- Logo / Name -->
-            <a href="{{ "/" | relative_url }}" style="font-size: 1.5rem; font-weight: bold; text-decoration: none; color: #333;">
-                Hossein Razavi
-            </a>
-            <!-- Navigation -->
-            <nav>
-                <ul style="display: flex; list-style: none; margin: 0; padding: 0; gap: 25px;">
-                    <li><a href="{{ "/about.html" | relative_url }}" style="text-decoration: none; color: #333; font-weight: 500;">About</a></li>
-                    <li><a href="{{ "/projects.html" | relative_url }}" style="text-decoration: none; color: #333; font-weight: 500;">Projects</a></li>
-                    <li><a href="{{ "/blog.html" | relative_url }}" style="text-decoration: none; color: #333; font-weight: 500;">Blog</a></li>
-                    <li><a href="{{ "/contact.html" | relative_url }}" style="text-decoration: none; color: #333; font-weight: 500;">Contact</a></li>
-                </ul>
+        <div class="container"> 
+            <nav style="display: flex; justify-content: space-between; align-items: center;">
+                <a href="{{ "/" | relative_url }}" class="site-title-link">
+                    Hossein Razavi
+                </a>
+                
+                <div>
+                    <a href="{{ "/about.html" | relative_url }}">About</a>
+                    <a href="{{ "/projects.html" | relative_url }}">Projects</a>
+                    <a href="{{ "/blog.html" | relative_url }}">Blog</a>
+                    <a href="{{ "/contact.html" | relative_url }}">Contact</a>
+                </div>
             </nav>
         </div>
     </header>
-    <!-- Main Content -->
+    
     <main class="container">
         {{ content }}
     </main>
-    <!-- Footer -->
+    
     <footer>
-        <p>2025 Hossein Razavi.</p>
+        <p>© 2025 Hossein Razavi. All Rights Reserved.</p>
     </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    
+    <script src="{{ "/assets/js/main.js" | relative_url }}"></script>
+    
 </body>
 </html>
