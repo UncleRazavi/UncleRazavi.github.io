@@ -1,260 +1,206 @@
+// =============================
+// PARTICLES CONFIG
+// =============================
 const particleConfig = {
-    "particles": {
-      "number": { "value": 80, "density": { "enable": true, "value_area": 800 } },
-      "color": { "value": "#ffffff" }, // White particles contrast well with the grey/dark theme
-      "shape": { "type": "circle" },
-      "opacity": { "value": 0.5, "random": false },
-      "size": { "value": 3, "random": true },
-      "line_linked": { 
-        "enable": true, 
-        "distance": 150, 
-        "color": "#ffffff", 
-        "opacity": 0.4, 
-        "width": 1 
-      },
-      "move": {
-        "enable": true,
-        "speed": 6,
-        "direction": "none",
-        "random": false,
-        "straight": false,
-        "out_mode": "out",
-        "bounce": false,
-      }
+    particles: {
+        number: { value: 80, density: { enable: true, value_area: 800 } },
+        color: { value: "#ffffff" },
+        shape: { type: "circle" },
+        opacity: { value: 0.5, random: false },
+        size: { value: 3, random: true },
+        line_linked: { enable: true, distance: 150, color: "#ffffff", opacity: 0.4, width: 1 },
+        move: { enable: true, speed: 6, direction: "none", random: false, straight: false, out_mode: "out", bounce: false }
     },
-    "interactivity": {
-      "detect_on": "canvas",
-      "events": {
-        "onhover": { "enable": true, "mode": "grab" },
-        "onclick": { "enable": true, "mode": "push" },
-        "resize": true
-      },
-      "modes": {
-        "grab": { "distance": 200, "line_linked": { "opacity": 1 } },
-        "push": { "particles_nb": 4 }
-      }
+    interactivity: {
+        detect_on: "canvas",
+        events: { onhover: { enable: true, mode: "grab" }, onclick: { enable: true, mode: "push" }, resize: true },
+        modes: { grab: { distance: 200, line_linked: { opacity: 1 } }, push: { particles_nb: 4 } }
     },
-    "retina_detect": true
+    retina_detect: true
 };
-
-// Initialize the particles background
 particlesJS('particles-js', particleConfig);
 
+// =============================
+// CREATE DRAGGABLE WINDOWS
+// =============================
+const windowsData = [
+    { id: 'avatar', title: '3D Avatar' },
+    { id: 'fractal', title: 'Fractal (Mandelbrot)' },
+    { id: 'fourier', title: 'Fourier Series' },
+    { id: 'vector', title: 'Vector Field' }
+];
 
-// ==========================================
-// 1. DARK MODE & 3D AVATAR THEME SWITCHER (NEW/REVISED)
-// ==========================================
-let bodyModel = null;
-let scene = null;
+windowsData.forEach((win, i) => {
+    const w = document.createElement('div');
+    w.className = 'win98-window';
+    w.style.top = `${50 + i*30}px`;
+    w.style.left = `${50 + i*30}px`;
+    w.id = `win-${win.id}`;
 
-// Color definitions based on your CSS variables
-const THEME_COLORS = {
-    light: {
-        bg: 0xc0c0c0,      // var(--bg-color)
-        model: 0x000080,   // var(--primary-color) - Deep Blue
-        particles: "#ffffff"
-    },
-    dark: {
-        bg: 0x000000,      // var(--bg-color) - Black
-        model: 0x00c000,   // var(--primary-color) - Green
-        particles: "#00ff00"
-    }
-};
+    // Title bar
+    const title = document.createElement('div');
+    title.className = 'win98-title';
+    title.textContent = win.title;
 
-function applyTheme(theme) {
-    const isDark = theme === 'dark';
-    document.body.classList.toggle('dark-mode', isDark);
-    localStorage.setItem('theme', theme);
+    const closeBtn = document.createElement('div');
+    closeBtn.className = 'win98-close';
+    closeBtn.textContent = 'X';
+    closeBtn.onclick = () => w.style.display = 'none';
+    title.appendChild(closeBtn);
 
-    // Update 3D Avatar colors (if the model has been initialized)
-    if (bodyModel && scene) {
-        const colors = isDark ? THEME_COLORS.dark : THEME_COLORS.light;
-        
-        // 1. Change the scene background color
-        scene.background.setHex(colors.bg);
-        
-        // 2. Change the 3D model's material color
-        bodyModel.material.color.setHex(colors.model);
-        
-        // 3. Change particle colors (requires re-initialization of particles.js)
-        // Since re-initialization can be costly, a simpler way is often used,
-        // but for a full swap, you must update the config and restart particlesJS.
-        const updatedParticleConfig = JSON.parse(JSON.stringify(particleConfig));
-        updatedParticleConfig.particles.color.value = colors.particles;
-        updatedParticleConfig.particles.line_linked.color = colors.particles;
-        particlesJS('particles-js', updatedParticleConfig);
-    }
-}
+    w.appendChild(title);
 
-function initTheme() {
-    const savedTheme = localStorage.getItem('theme');
-    
-    // Check if a theme is saved, otherwise check system preference, default to light
-    if (savedTheme) {
-        applyTheme(savedTheme);
-    } else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
-        applyTheme('dark');
-    } else {
-        applyTheme('light');
-    }
-}
+    // Content
+    const content = document.createElement('div');
+    content.className = 'win98-content';
+    w.appendChild(content);
 
-// Attach theme toggle listener (assuming you have a button with this ID)
-const toggleButton = document.getElementById('dark-mode-toggle');
-if (toggleButton) {
-    toggleButton.addEventListener('click', () => {
-        const currentTheme = document.body.classList.contains('dark-mode') ? 'dark' : 'light';
-        const newTheme = currentTheme === 'light' ? 'dark' : 'light';
-        applyTheme(newTheme);
-    });
-}
-// Run on load
-initTheme();
+    document.body.appendChild(w);
 
-// ==========================================
-// 2. HIGHLIGHT CURRENT NAV LINK (Retro Navigation)
-// (Code remains unchanged)
-// ==========================================
-const sections = document.querySelectorAll('section');
-const navLinks = document.querySelectorAll('header nav a');
+    // Make window draggable
+    makeDraggable(w, title);
 
-window.addEventListener('scroll', () => {
-    let current = '';
-    
-    sections.forEach(section => {
-        if (!section.getAttribute('id')) return;
-        
-        const sectionTop = section.offsetTop - 100; 
-        if (window.scrollY >= sectionTop) {
-            current = section.getAttribute('id');
-        }
+    // Initialize each window content
+    if(win.id === 'avatar') init3DAvatar(content);
+    if(win.id === 'fractal') initFractal(content);
+    if(win.id === 'fourier') initFourier(content);
+    if(win.id === 'vector') initVectorField(content);
+});
+
+// =============================
+// DRAG FUNCTION
+// =============================
+function makeDraggable(win, handle) {
+    let offsetX, offsetY, isDown = false;
+
+    handle.addEventListener('mousedown', (e) => {
+        isDown = true;
+        offsetX = e.clientX - win.offsetLeft;
+        offsetY = e.clientY - win.offsetTop;
+        win.style.cursor = 'grabbing';
     });
 
-    navLinks.forEach(link => {
-        link.classList.remove('active');
-        if (link.getAttribute('href') === `#${current}`) {
-            link.classList.add('active');
-        }
+    document.addEventListener('mouseup', () => { isDown = false; win.style.cursor = 'grab'; });
+    document.addEventListener('mousemove', (e) => {
+        if(!isDown) return;
+        win.style.left = `${e.clientX - offsetX}px`;
+        win.style.top = `${e.clientY - offsetY}px`;
     });
-});
+}
 
+// =============================
+// 3D AVATAR
+// =============================
+let avatarModel, avatarScene;
+function init3DAvatar(container) {
+    avatarScene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(75, container.clientWidth/container.clientHeight, 0.1, 1000);
+    camera.position.z = 2.5;
+    const renderer = new THREE.WebGLRenderer({ antialias: false });
+    renderer.setSize(container.clientWidth, container.clientHeight);
+    container.appendChild(renderer.domElement);
 
-// ==========================================
-// 3. BACK-TO-TOP BUTTON (Retro Style)
-// (Code remains unchanged, only removing redundant definitions for brevity)
-// ==========================================
-const backToTopBtn = document.createElement('button');
-backToTopBtn.id = 'back-to-top';
-backToTopBtn.textContent = '▲'; 
+    const ambientLight = new THREE.AmbientLight(0xffffff,0.5);
+    const pointLight = new THREE.PointLight(0xffffff,1.5); pointLight.position.set(5,5,5);
+    avatarScene.add(ambientLight, pointLight);
 
-document.body.appendChild(backToTopBtn);
+    const geo = new THREE.DodecahedronGeometry(1);
+    const mat = new THREE.MeshPhongMaterial({ color: 0x000080 });
+    avatarModel = new THREE.Mesh(geo, mat);
+    avatarScene.add(avatarModel);
 
-backToTopBtn.style.cssText = `
-    position: fixed;
-    bottom: 30px;
-    right: 30px;
-    width: 40px; 
-    height: 40px;
-    padding: 0;
-    font-size: 20px;
-    line-height: 40px;
-    text-align: center;
-    display: none;
-    cursor: pointer;
-    z-index: 1000;
-    
-    background-color: #c0c0c0;
-    color: #000000;           
-    border: 2px outset #ffffff;
-    border-right-color: #000000;
-    border-bottom-color: #000000;
-    box-shadow: 1px 1px 0 #000000;
-    font-weight: bold;
-`;
-
-// Add hover effect via JavaScript to simulate the 'pressed' look
-backToTopBtn.addEventListener('mouseover', () => {
-    backToTopBtn.style.border = '2px inset #000000';
-    backToTopBtn.style.borderRightColor = '#ffffff';
-    backToTopBtn.style.borderBottomColor = '#ffffff';
-    backToTopBtn.style.boxShadow = 'none';
-});
-
-backToTopBtn.addEventListener('mouseout', () => {
-    backToTopBtn.style.border = '2px outset #ffffff';
-    backToTopBtn.style.borderRightColor = '#000000';
-    backToTopBtn.style.borderBottomColor = '#000000';
-    backToTopBtn.style.boxShadow = '1px 1px 0 #000000';
-});
-
-// Logic to show/hide button on scroll
-window.addEventListener('scroll', () => {
-    if (window.scrollY > 300) {
-        backToTopBtn.style.display = 'block';
-    } else {
-        backToTopBtn.style.display = 'none';
-    }
-});
-
-backToTopBtn.addEventListener('click', () => {
-    window.scrollTo({ top: 0, behavior: 'auto' }); 
-});
-
-
-// ==========================================
-// 4. 3D BODY AVATAR IMPLEMENTATION (REVISED)
-// ==========================================
-function init3DAvatar() {
-    const container = document.getElementById('avatar-3d-canvas');
-    if (!container) return; 
-
-    scene = new THREE.Scene();
-    
-    const camera = new THREE.PerspectiveCamera(75, 1, 0.1, 1000);
-    camera.position.z = 2.5; 
-
-    // 3. Renderer Setup
-    const renderer = new THREE.WebGLRenderer({ canvas: container, antialias: false });
-    renderer.setSize(120, 120); 
-
-    // 4. Lighting
-    const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
-    scene.add(ambientLight);
-    const pointLight = new THREE.PointLight(0xffffff, 1.5);
-    pointLight.position.set(5, 5, 5);
-    scene.add(pointLight);
-
-    // 5. Create 3D shape (Dodecahedron)
-    const geometry = new THREE.DodecahedronGeometry(1);
-    const material = new THREE.MeshPhongMaterial();
-    // Use the global 'bodyModel' variable
-    bodyModel = new THREE.Mesh(geometry, material); 
-    scene.add(bodyModel);
-
-    // Apply the initial theme immediately after creating the model
-    // This ensures the model and scene get the correct initial colors (light or dark)
-    const initialTheme = document.body.classList.contains('dark-mode') ? 'dark' : 'light';
-    applyTheme(initialTheme);
-
-
-    // 6. Animation Loop (Rotation)
-    function animate() {
-        requestAnimationFrame(animate);
-        
-        bodyModel.rotation.y += 0.005; 
-        
-        renderer.render(scene, camera);
-    }
-
-    // Handle Resize 
-    function onWindowResize() {
-        camera.updateProjectionMatrix();
-        renderer.setSize(container.clientWidth, container.clientHeight);
-    }
-    window.addEventListener('resize', onWindowResize);
-
+    function animate() { requestAnimationFrame(animate); avatarModel.rotation.y+=0.005; renderer.render(avatarScene,camera);}
     animate();
+
+    window.addEventListener('resize', ()=>{ camera.aspect=container.clientWidth/container.clientHeight; camera.updateProjectionMatrix(); renderer.setSize(container.clientWidth,container.clientHeight); });
 }
 
-// Call the initialization function when the window loads
-window.addEventListener('load', init3DAvatar);
+// =============================
+// FRACTAL (Mandelbrot) 
+// =============================
+function initFractal(container) {
+    const canvas = document.createElement('canvas');
+    canvas.width = container.clientWidth;
+    canvas.height = container.clientHeight;
+    container.appendChild(canvas);
+    const ctx = canvas.getContext('2d');
+
+    function drawMandelbrot() {
+        const width = canvas.width;
+        const height = canvas.height;
+        const maxIter = 50;
+
+        for(let px=0; px<width; px++) {
+            for(let py=0; py<height; py++){
+                let x0 = (px-width/2)*4/width;
+                let y0 = (py-height/2)*4/height;
+                let x=0, y=0, iter=0;
+                while(x*x+y*y<4 && iter<maxIter){
+                    let xt=x*x-y*y+x0;
+                    y=2*x*y+y0; x=xt;
+                    iter++;
+                }
+                const color = iter===maxIter?0:255-iter*5;
+                ctx.fillStyle=`rgb(${color},${color},${color})`;
+                ctx.fillRect(px,py,1,1);
+            }
+        }
+    }
+    drawMandelbrot();
+}
+
+// =============================
+// FOURIER SERIES PLOT
+// =============================
+function initFourier(container) {
+    const canvas = document.createElement('canvas');
+    canvas.width = container.clientWidth;
+    canvas.height = container.clientHeight;
+    container.appendChild(canvas);
+    const ctx = canvas.getContext('2d');
+
+    function draw() {
+        ctx.clearRect(0,0,canvas.width,canvas.height);
+        ctx.strokeStyle='#0000FF';
+        ctx.beginPath();
+        const N=50;
+        for(let i=0;i<canvas.width;i++){
+            let x=i/canvas.width*2*Math.PI*2;
+            let y=0;
+            for(let k=1;k<=N;k+=2) y += (4/Math.PI)*(1/k)*Math.sin(k*x);
+            y = canvas.height/2 - y*20;
+            if(i===0) ctx.moveTo(i,y); else ctx.lineTo(i,y);
+        }
+        ctx.stroke();
+        requestAnimationFrame(draw);
+    }
+    draw();
+}
+
+// =============================
+// VECTOR FIELD
+// =============================
+function initVectorField(container) {
+    const canvas = document.createElement('canvas');
+    canvas.width = container.clientWidth;
+    canvas.height = container.clientHeight;
+    container.appendChild(canvas);
+    const ctx = canvas.getContext('2d');
+
+    function drawField() {
+        ctx.clearRect(0,0,canvas.width,canvas.height);
+        ctx.strokeStyle='#000000';
+        for(let x=0;x<canvas.width;x+=20){
+            for(let y=0;y<canvas.height;y+=20){
+                const dx = Math.sin(y/20)*10;
+                const dy = Math.cos(x/20)*10;
+                ctx.beginPath();
+                ctx.moveTo(x,y);
+                ctx.lineTo(x+dx, y+dy);
+                ctx.stroke();
+            }
+        }
+        requestAnimationFrame(drawField);
+    }
+    drawField();
+}
