@@ -249,20 +249,34 @@ header nav .active {
     color: var(--secondary-color);
 }
 
+/* ============================= */
+/* Hero Section & Profile        */
+/* ============================= */
+
+/* ... (hero-section, h1, subtitle are unchanged) ... */
+
 .profile-avatar {
     margin: 0 auto 1.5rem;
     width: 120px;
     height: 120px;
-    background-color: var(--bg-color);
-    line-height: 120px;
-    text-align: center;
-    font-size: 0.8rem;
+    
+    overflow: hidden; 
+    position: relative; /* Ensure text inside (if any) positions correctly */
+    
     /* Boxy 3D Frame for the image placeholder (Raised) */
     border: 3px outset var(--border-light);
     border-right-color: var(--border-dark);
     border-bottom-color: var(--border-dark);
 }
 
+/* NEW CSS for the 3D Canvas */
+#avatar-3d-canvas {
+    display: block;
+    width: 100%;
+    height: 100%;
+    /* OPTIONAL: Adds a slight border to the canvas inside the frame for definition */
+    border: 1px solid var(--secondary-color);
+}
 /* ============================= */
 /* Cards & Lists                 */
 /* ============================= */
@@ -402,4 +416,5 @@ footer {
         text-align: center;
     }
 }
+
 
