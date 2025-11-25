@@ -95,7 +95,26 @@ a:hover {
     padding-bottom: 0.5rem;
     color: var(--text-color);
 }
+.profile-avatar .avatar-img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover; 
+    border: none;
+    
+    /* NEW: Add a quick transition for the hover effect */
+    transition: filter 0.2s ease-in-out; 
+    
+    /* OPTIONAL: Default filter to ensure the image looks slightly 'old' or less vibrant */
+    filter: grayscale(10%); 
+}
 
+.profile-avatar .avatar-img:hover {
+    /* Applies a full grayscale filter */
+    filter: grayscale(100%); 
+    /* OPTIONAL: Add a quick, noticeable scale up */
+    transform: scale(1.05);
+}
 /* ============================= */
 /* Layout & Container            */
 /* ============================= */
@@ -383,3 +402,4 @@ footer {
         text-align: center;
     }
 }
+
