@@ -1,7 +1,6 @@
 /* ============================= */
 /* Global Styles & Variables 1998 */
 /* ============================= */
-
 * {
     margin: 0;
     padding: 0;
@@ -9,111 +8,355 @@
     font-family: 'Courier New', Courier, monospace, 'Lucida Console', Monaco;
 }
 
-/* Colors */
 :root {
-    --bg-color: #C0C0C0;
+    --bg-color: #c0c0c0;
     --text-color: #000000;
-    --primary-color: #0000FF;
-    --primary-hover: #FF0000;
-    --secondary-color: #808080;
+    --primary-color: #000080;
+    --primary-hover: #1084d0;
+    --secondary-color: #6a6a6a;
 
-    --card-bg: #FFFFFF;
-    --input-bg: #FFFFFF;
-    --footer-bg: #C0C0C0;
+    --card-bg: #ffffff;
+    --input-bg: #e0e0e0;
+    --footer-bg: #a0a0a0;
 
-    --border-light: #FFFFFF;
-    --border-mid: #DFDFDF;
-    --border-shadow: #808080;
+    --border-light: #ffffff;
     --border-dark: #000000;
+}
+
+/* Dark Mode */
+.dark-mode {
+    --bg-color: #000000;
+    --text-color: #00ff00;
+    --primary-color: #00c000;
+    --primary-hover: #00ff00;
+    --secondary-color: #007000;
+
+    --card-bg: #111111;
+    --input-bg: #000000;
+    --footer-bg: #0a0a0a;
+
+    --border-light: #00c000;
+    --border-dark: #003300;
 }
 
 body {
     line-height: 1.5;
     background-color: var(--bg-color);
     color: var(--text-color);
-    overflow-x: hidden;
 }
 
-/* Particles background */
+/* ============================= */
+/* Particles Background          */
+/* ============================= */
 #particles-js {
     position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
     z-index: -1;
     background-color: var(--bg-color);
 }
 
-/* Windows container */
-.win98-window {
-    position: absolute;
-    background-color: var(--card-bg);
-    border: 3px outset var(--border-light);
-    border-right-color: var(--border-dark);
-    border-bottom-color: var(--border-dark);
-    padding: 0;
-    width: 400px;
-    height: 300px;
-    box-shadow: 2px 2px 0 var(--border-dark);
-    cursor: grab;
-    user-select: none;
-    z-index: 10;
+.hero-section, section, footer, header {
+    position: relative; 
+    z-index: 1;
 }
 
-/* Window Title Bar */
-.win98-title {
-    background: linear-gradient(to bottom, var(--border-light), var(--border-mid));
+/* ============================= */
+/* Links & Headings              */
+/* ============================= */
+a {
+    text-decoration: none;
+    color: var(--primary-color);
+}
+
+a:hover {
+    color: var(--primary-hover);
+    text-decoration: underline;
+}
+
+.section-heading, section h2 {
+    text-align: left;
+    margin-bottom: 1.5rem;
+    font-size: 1.8rem;
+    border-bottom: 2px solid var(--secondary-color);
+    padding-bottom: 0.5rem;
     color: var(--text-color);
-    font-weight: bold;
-    padding: 4px 8px;
-    cursor: grab;
-    border-bottom: 2px inset var(--border-dark);
+}
+
+/* ============================= */
+/* Profile Avatar                */
+/* ============================= */
+.profile-avatar .avatar-img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border: none;
+    transition: filter 0.2s ease-in-out;
+    filter: grayscale(10%);
+}
+
+.profile-avatar .avatar-img:hover {
+    filter: grayscale(100%);
+    transform: scale(1.05);
+}
+
+/* ============================= */
+/* Layout & Containers           */
+/* ============================= */
+.container {
+    width: 90%;
+    max-width: 1000px;
+    margin: auto;
+    padding: 2rem 1rem;
+}
+
+/* ============================= */
+/* Header & Navigation           */
+/* ============================= */
+header {
+    background-color: var(--bg-color);
+    padding: 0.5rem 0;
+    border: 3px solid var(--border-dark);
+    border-right-color: var(--border-light);
+    border-bottom-color: var(--border-light);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+header nav {
     display: flex;
     justify-content: space-between;
     align-items: center;
 }
 
-/* Window Content */
-.win98-content {
-    width: 100%;
-    height: calc(100% - 24px);
-    background-color: var(--card-bg);
-    overflow: hidden;
+header nav a {
+    margin-right: 1rem;
+    padding: 0.5rem 0.75rem;
+    font-weight: bold;
+    color: var(--text-color);
+    border: 1px solid transparent;
 }
 
-/* Close Button */
-.win98-close {
+header nav a:hover {
+    color: var(--primary-color);
+    border: 1px inset var(--border-dark);
+}
+
+header nav .active {
+    background-color: var(--card-bg);
+    color: var(--primary-color);
+    border: 1px inset var(--border-dark);
+}
+
+#dark-mode-toggle {
+    display: inline-block;
+    padding: 4px 8px;
+    font-size: 1.2rem;
+    cursor: pointer;
     background-color: var(--bg-color);
     border: 2px outset var(--border-light);
     border-right-color: var(--border-dark);
     border-bottom-color: var(--border-dark);
-    width: 18px;
-    height: 18px;
-    text-align: center;
-    line-height: 14px;
-    font-weight: bold;
-    cursor: pointer;
-    font-size: 12px;
+    box-shadow: 1px 1px 0 var(--border-dark);
+    color: var(--text-color);
+    margin-left: auto;
 }
-.win98-close:hover {
+
+#dark-mode-toggle:hover {
+    border: 2px inset var(--border-dark);
+    border-right-color: var(--border-light);
+    border-bottom-color: var(--border-light);
+    box-shadow: none;
+}
+
+/* ============================= */
+/* Buttons / CTAs                */
+/* ============================= */
+.cta-btn, .button-link, .cta-link {
+    display: inline-block;
+    padding: 8px 16px;
+    margin: 8px 4px;
+    font-weight: bold;
+    text-align: center;
+    cursor: pointer;
+    text-transform: uppercase;
+    color: var(--text-color);
+    background-color: var(--bg-color);
+    border: 2px outset var(--border-light);
+    border-right-color: var(--border-dark);
+    border-bottom-color: var(--border-dark);
+    box-shadow: 1px 1px 0 var(--border-dark);
+}
+
+.cta-btn:hover, .button-link:hover, .cta-link:hover {
+    border: 2px inset var(--border-dark);
+    border-right-color: var(--border-light);
+    border-bottom-color: var(--border-light);
+    box-shadow: none;
+    text-decoration: none;
+}
+
+.cta-btn.primary {
+    background-color: var(--primary-color);
+    color: var(--border-light);
+    border-color: var(--primary-color);
+    border-top-color: var(--primary-hover);
+    border-left-color: var(--primary-hover);
+}
+
+.cta-btn.primary:hover {
+    background-color: var(--primary-hover);
+    border: 2px inset var(--border-dark);
+    border-right-color: var(--border-light);
+    border-bottom-color: var(--border-light);
+}
+
+/* ============================= */
+/* Hero Section & Avatar         */
+/* ============================= */
+.hero-section {
+    padding: 4rem 0;
+    text-align: center;
+    background-color: var(--card-bg);
+    border: 3px outset var(--border-light);
+    border-right-color: var(--border-dark);
+    border-bottom-color: var(--border-dark);
+    margin: 2rem auto;
+}
+
+.hero-content h1 {
+    font-size: 2.5rem;
+    margin-bottom: 0.5rem;
+    color: var(--primary-color);
+}
+
+.hero-content .subtitle {
+    font-size: 1.2rem;
+    margin-bottom: 1.5rem;
+    font-style: italic;
+    color: var(--secondary-color);
+}
+
+.profile-avatar {
+    margin: 0 auto 1.5rem;
+    width: 120px;
+    height: 120px;
+    overflow: hidden;
+    position: relative;
+    border: 3px outset var(--border-light);
+    border-right-color: var(--border-dark);
+    border-bottom-color: var(--border-dark);
+}
+
+#avatar-3d-canvas {
+    display: block;
+    width: 100%;
+    height: 100%;
+    border: 1px solid var(--secondary-color);
+}
+
+/* ============================= */
+/* Cards & Lists                 */
+/* ============================= */
+.skills-focus-section {
+    background-color: var(--input-bg);
+    border: 2px inset var(--border-dark);
+    padding: 1.5rem;
+    margin: 2rem auto;
+}
+
+.focus-list {
+    list-style: square;
+    padding-left: 20px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.project-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+}
+
+.project-card {
+    background-color: var(--card-bg);
+    color: var(--text-color);
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
     border: 2px inset var(--border-dark);
 }
 
-/* Tooltips */
-.win98-tooltip {
-    position: absolute;
-    padding: 2px 4px;
-    background-color: var(--card-bg);
-    color: var(--text-color);
-    border: 2px outset var(--border-light);
-    font-size: 11px;
-    pointer-events: none;
-    display: none;
-    z-index: 999;
+.project-card h2 {
+    font-size: 1.4rem;
+    color: var(--primary-color);
+    margin-bottom: 0.75rem;
+    border-bottom: 1px dashed var(--secondary-color);
+    padding-bottom: 0.25rem;
 }
 
-/* Responsive */
+.project-image-placeholder {
+    height: 150px;
+    background-color: var(--input-bg);
+    color: var(--secondary-color);
+    text-align: center;
+    line-height: 150px;
+    margin-top: 1rem;
+    border: 2px inset var(--border-dark);
+}
+
+/* ============================= */
+/* Contact Form & Inputs         */
+/* ============================= */
+.contact-container {
+    max-width: 600px;
+    margin: 40px auto;
+    padding: 40px 32px;
+    background-color: var(--card-bg);
+    border: 3px outset var(--border-light);
+    border-right-color: var(--border-dark);
+    border-bottom-color: var(--border-dark);
+}
+
+.contact-form input,
+.contact-form textarea {
+    width: 100%;
+    padding: 6px 8px;
+    border: 2px inset var(--border-dark);
+    background-color: var(--input-bg);
+    color: var(--text-color);
+    font-size: 1rem;
+}
+
+.contact-form input:focus,
+.contact-form textarea:focus {
+    background-color: var(--card-bg);
+    outline: 1px dotted var(--primary-color);
+}
+
+/* ============================= */
+/* Footer                        */
+/* ============================= */
+footer {
+    text-align: center;
+    padding: 1rem 0;
+    background-color: var(--footer-bg);
+    color: var(--secondary-color);
+    font-size: 0.9rem;
+    border-top: 3px outset var(--border-light);
+    border-bottom: 3px outset var(--border-dark);
+}
+
+/* ============================= */
+/* Responsive                    */
+/* ============================= */
 @media (max-width: 768px) {
-    .win98-window { width: 90%; height: 250px; }
+    .container { width: 95%; }
+    .hero-content h1 { font-size: 2rem; }
+    header nav { flex-direction: column; align-items: flex-start; }
+    header nav a { margin: 0.25rem 0; }
+    .project-grid { grid-template-columns: 1fr; }
+    .profile-summary { flex-direction: column; text-align: center; }
 }
