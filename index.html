@@ -3,11 +3,25 @@ layout: default
 title: Hossein Razavi - Electrical Engineering, Data Science & Neuroscience
 ---
 
-<!-- ================= HERO SECTION ================ -->
+<header>
+    <div class="container">
+        <nav aria-label="Main Navigation">
+            <a href="{{ '/' | relative_url }}" class="nav-brand">H. Razavi</a>
+            
+            <a href="{{ '/' | relative_url }}" class="active" aria-current="page">Home</a>
+            <a href="{{ '/about.html' | relative_url }}">About</a>
+            <a href="{{ '/projects.html' | relative_url }}">Projects</a>
+            <a href="{{ '/blog.html' | relative_url }}">Blog</a>
+            <a href="{{ '/contact.html' | relative_url }}">Contact</a>
+            
+            <button id="dark-mode-toggle" aria-label="Toggle Dark Mode">☾</button>
+        </nav>
+    </div>
+</header>
+
 <section class="hero-section">
     <div class="container hero-content">
 
-        <!-- Avatar Image -->
         <div class="profile-avatar">
             <img 
                 src="{{ '/assets/img/avatar.jpg' | relative_url }}" 
@@ -16,15 +30,13 @@ title: Hossein Razavi - Electrical Engineering, Data Science & Neuroscience
             >
         </div>
 
-        <!-- 3D Avatar -->
-        <div class="profile-avatar">
+        <div class="profile-avatar avatar-3d-wrapper">
             <canvas id="avatar-3d-canvas"></canvas>
             <p class="avatar-loading-text">
-                (3D Model Loading...)
+                (3D Model Placeholder)
             </p>
         </div>
 
-        <!-- Main Hero Text -->
         <h1>Hossein Razavi</h1>
         <h2 class="subtitle">Undergraduate Student | Electrical & Electronic Engineering</h2>
 
@@ -35,25 +47,22 @@ title: Hossein Razavi - Electrical Engineering, Data Science & Neuroscience
             <strong>Neuroscience</strong>, and <strong>Signal Processing</strong>.
         </p>
 
-        <!-- Social Links -->
         <div class="quick-links">
-            <a href="https://github.com/UncleRazavi" target="_blank" title="GitHub">GitHub</a>
-            <span class="link-separator">|</span>
-            <a href="https://www.linkedin.com/in/hossein-razavi-485a84288" target="_blank" title="LinkedIn">LinkedIn</a>
+            <a href="https://github.com/UncleRazavi" target="_blank" title="GitHub Profile" aria-label="GitHub Profile">GitHub</a>
+            <span class="link-separator" aria-hidden="true">|</span>
+            <a href="https://www.linkedin.com/in/hossein-razavi-485a84288" target="_blank" title="LinkedIn Profile" aria-label="LinkedIn Profile">LinkedIn</a>
         </div>
 
-        <!-- CTA Buttons -->
         <div class="cta-group">
             <a class="cta-btn primary" href="{{ '/projects.html' | relative_url }}">Explore My Projects</a>
-            <a class="cta-btn secondary" href="{{ '/about.html' | relative_url }}">More About Me →</a>
+            <a class="cta-btn" href="{{ '/about.html' | relative_url }}">More About Me →</a> 
         </div>
 
     </div>
 </section>
 
-<!-- ================= FOCUS AREAS ================ -->
-<section class="container skills-focus-section">
-    <h3>Key Focus Areas</h3>
+<section class="container skills-focus-section" aria-labelledby="focus-areas-heading">
+    <h2 id="focus-areas-heading">Key Focus Areas</h2>
     <ul class="focus-list">
         <li>Data Science & ML</li>
         <li>Neuroscience & BCI</li>
@@ -62,7 +71,6 @@ title: Hossein Razavi - Electrical Engineering, Data Science & Neuroscience
     </ul>
 </section>
 
-<!-- ================= BLOG SECTION ================ -->
 <section class="container blog-preview-section">
     <h2 class="section-heading">Latest Insights & Blog Posts</h2>
 
@@ -74,6 +82,7 @@ title: Hossein Razavi - Electrical Engineering, Data Science & Neuroscience
             </a>
 
             <p class="post-meta">
+                Published on 
                 <time datetime="{{ post.date | date_to_xmlschema }}">
                     {{ post.date | date: "%B %d, %Y" }}
                 </time>
@@ -83,7 +92,7 @@ title: Hossein Razavi - Electrical Engineering, Data Science & Neuroscience
                 {{ post.excerpt | strip_html | truncatewords: 25 }}
             </p>
 
-            <a href="{{ post.url | relative_url }}" class="read-more-link">Read more →</a>
+            <a href="{{ post.url | relative_url }}" class="read-more-link" aria-label="Read more about {{ post.title }}">Read more →</a>
         </li>
 
         {% else %}
@@ -98,7 +107,131 @@ title: Hossein Razavi - Electrical Engineering, Data Science & Neuroscience
     <div class="telegram-link-box">
         <p>
             Check out my academic document library on Telegram:
-            <a href="https://t.me/HRslibrary" target="_blank" class="telegram-link">HRs Library</a>
+            <a href="https://t.me/HRslibrary" target="_blank" class="telegram-link" title="Open HRs Library on Telegram">HRs Library</a>
         </p>
     </div>
 </section>
+
+<footer>
+    <div class="container">
+        &copy; 2024 Hossein Razavi. Powered by the spirit of **Windows 98**.
+    </div>
+</footer>---
+layout: default
+title: Hossein Razavi - Electrical Engineering, Data Science & Neuroscience
+---
+
+<header>
+    <div class="container">
+        <nav aria-label="Main Navigation">
+            <a href="{{ '/' | relative_url }}" class="nav-brand">H. Razavi</a>
+            
+            <a href="{{ '/' | relative_url }}" class="active" aria-current="page">Home</a>
+            <a href="{{ '/about.html' | relative_url }}">About</a>
+            <a href="{{ '/projects.html' | relative_url }}">Projects</a>
+            <a href="{{ '/blog.html' | relative_url }}">Blog</a>
+            <a href="{{ '/contact.html' | relative_url }}">Contact</a>
+            
+            <button id="dark-mode-toggle" aria-label="Toggle Dark Mode">☾</button>
+        </nav>
+    </div>
+</header>
+
+<section class="hero-section">
+    <div class="container hero-content">
+
+        <div class="profile-avatar">
+            <img 
+                src="{{ '/assets/img/avatar.jpg' | relative_url }}" 
+                alt="Hossein Razavi Profile Picture" 
+                class="avatar-img"
+            >
+        </div>
+
+        <div class="profile-avatar avatar-3d-wrapper">
+            <canvas id="avatar-3d-canvas"></canvas>
+            <p class="avatar-loading-text">
+                (3D Model Placeholder)
+            </p>
+        </div>
+
+        <h1>Hossein Razavi</h1>
+        <h2 class="subtitle">Undergraduate Student | Electrical & Electronic Engineering</h2>
+
+        <p class="bio-intro">
+            Welcome to my personal website! I am currently pursuing my undergraduate studies at 
+            <strong>K.N. Toosi University</strong>. My academic passion lies at the intersection 
+            of <strong>Electrical Engineering</strong> with <strong>Data Science</strong>, 
+            <strong>Neuroscience</strong>, and <strong>Signal Processing</strong>.
+        </p>
+
+        <div class="quick-links">
+            <a href="https://github.com/UncleRazavi" target="_blank" title="GitHub Profile" aria-label="GitHub Profile">GitHub</a>
+            <span class="link-separator" aria-hidden="true">|</span>
+            <a href="https://www.linkedin.com/in/hossein-razavi-485a84288" target="_blank" title="LinkedIn Profile" aria-label="LinkedIn Profile">LinkedIn</a>
+        </div>
+
+        <div class="cta-group">
+            <a class="cta-btn primary" href="{{ '/projects.html' | relative_url }}">Explore My Projects</a>
+            <a class="cta-btn" href="{{ '/about.html' | relative_url }}">More About Me →</a> 
+        </div>
+
+    </div>
+</section>
+
+<section class="container skills-focus-section" aria-labelledby="focus-areas-heading">
+    <h2 id="focus-areas-heading">Key Focus Areas</h2>
+    <ul class="focus-list">
+        <li>Data Science & ML</li>
+        <li>Neuroscience & BCI</li>
+        <li>Signal Processing (DSP)</li>
+        <li>Digital Electronics</li>
+    </ul>
+</section>
+
+<section class="container blog-preview-section">
+    <h2 class="section-heading">Latest Insights & Blog Posts</h2>
+
+    <ul class="post-list">
+        {% for post in site.posts limit:3 %}
+        <li class="post-card">
+            <a href="{{ post.url | relative_url }}" class="post-title-link">
+                {{ post.title }}
+            </a>
+
+            <p class="post-meta">
+                Published on 
+                <time datetime="{{ post.date | date_to_xmlschema }}">
+                    {{ post.date | date: "%B %d, %Y" }}
+                </time>
+            </p>
+
+            <p class="post-excerpt">
+                {{ post.excerpt | strip_html | truncatewords: 25 }}
+            </p>
+
+            <a href="{{ post.url | relative_url }}" class="read-more-link" aria-label="Read more about {{ post.title }}">Read more →</a>
+        </li>
+
+        {% else %}
+        <p class="no-posts">No blog posts published yet. Check back soon!</p>
+        {% endfor %}
+    </ul>
+
+    <div class="section-footer">
+        <a href="{{ '/blog.html' | relative_url }}" class="button-link">View All Posts</a>
+    </div>
+
+    <div class="telegram-link-box">
+        <p>
+            Check out my academic document library on Telegram:
+            <a href="https://t.me/HRslibrary" target="_blank" class="telegram-link" title="Open HRs Library on Telegram">HRs Library</a>
+        </p>
+    </div>
+</section>
+
+<footer>
+    <div class="container">
+        &copy; 2024 Hossein Razavi. Powered by the spirit of **Windows 98**.
+    </div>
+</footer>
