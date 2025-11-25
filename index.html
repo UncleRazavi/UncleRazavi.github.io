@@ -3,6 +3,7 @@ layout: default
 title: Hossein Razavi - Electrical Engineering, Data Science & Neuroscience
 ---
 
+<!-- ================= HERO SECTION ================ -->
 <section class="hero-section">
     <div class="container hero-content">
 
@@ -18,84 +19,86 @@ title: Hossein Razavi - Electrical Engineering, Data Science & Neuroscience
         <!-- 3D Avatar -->
         <div class="profile-avatar">
             <canvas id="avatar-3d-canvas"></canvas>
-            <p style="font-size: 0.75rem; color: var(--secondary-color); margin-top: 10px;">
+            <p class="avatar-loading-text">
                 (3D Model Loading...)
             </p>
         </div>
 
+        <!-- Main Hero Text -->
+        <h1>Hossein Razavi</h1>
+        <h2 class="subtitle">Undergraduate Student | Electrical & Electronic Engineering</h2>
+
+        <p class="bio-intro">
+            Welcome to my personal website! I am currently pursuing my undergraduate studies at 
+            <strong>K.N. Toosi University</strong>. My academic passion lies at the intersection 
+            of <strong>Electrical Engineering</strong> with <strong>Data Science</strong>, 
+            <strong>Neuroscience</strong>, and <strong>Signal Processing</strong>.
+        </p>
+
+        <!-- Social Links -->
+        <div class="quick-links">
+            <a href="https://github.com/UncleRazavi" target="_blank" title="GitHub">GitHub</a>
+            <span class="link-separator">|</span>
+            <a href="https://www.linkedin.com/in/hossein-razavi-485a84288" target="_blank" title="LinkedIn">LinkedIn</a>
+        </div>
+
+        <!-- CTA Buttons -->
+        <div class="cta-group">
+            <a class="cta-btn primary" href="{{ '/projects.html' | relative_url }}">Explore My Projects</a>
+            <a class="cta-btn secondary" href="{{ '/about.html' | relative_url }}">More About Me →</a>
+        </div>
+
     </div>
 </section>
-            </p>
-        </div>
-        <h1>Hossein Razavi</h1>
-        ```
-          
-        </div>
-        <h1>Hossein Razavi</h1>
-        <h1>Hossein Razavi</h1>
-        <h2 class="subtitle">Undergraduate Student | Electrical & Electronic Engineering</h2>
-        <p class="bio-intro">
-            Welcome to my personal website! I am currently pursuing my undergraduate studies at <strong>K.N. Toosi University</strong>. My academic passion lies at the intersection of <strong>Electrical Engineering</strong> with <strong>Data Science</strong>, <strong>Neuroscience</strong>, and <strong>Signal Processing</strong>.
-        </p>
-        
-        <div class="quick-links">
-            <a href="https://github.com/UncleRazavi" target="_blank" title="GitHub">GitHub</a>
-            <span class="link-separator">|</span>
-            <a href="https://www.linkedin.com/in/hossein-razavi-485a84288" target="_blank" title="LinkedIn">LinkedIn</a>
-        </div>
 
-        <div class="cta-group">
-            <a class="cta-btn primary" href="{{ "/projects.html" | relative_url }}">Explore My Projects</a>
-            <a class="cta-btn secondary" href="{{ "/about.html" | relative_url }}">More About Me →</a>
-        </div>
-    </div>
-</section>
-
----
-
+<!-- ================= FOCUS AREAS ================ -->
 <section class="container skills-focus-section">
-    <h3>Key Focus Areas</h3>
-    <ul class="focus-list">
-        <li>Data Science & ML</li>
-        <li>Neuroscience & BCI</li>
-        <li>Signal Processing (DSP)</li>
-        <li>Digital Electronics</li>
-    </ul>
+    <h3>Key Focus Areas</h3>
+    <ul class="focus-list">
+        <li>Data Science & ML</li>
+        <li>Neuroscience & BCI</li>
+        <li>Signal Processing (DSP)</li>
+        <li>Digital Electronics</li>
+    </ul>
 </section>
 
----
-
+<!-- ================= BLOG SECTION ================ -->
 <section class="container blog-preview-section">
-    <h2 class="section-heading">Latest Insights & Blog Posts</h2>
-    <ul class="post-list">
-        {% for post in site.posts limit:3 %}
-        <li class="post-card">
-            <a href="{{ post.url | relative_url }}" class="post-title-link">
-                {{ post.title }}
-            </a>
-            <p class="post-meta">
-                <time datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: "%B %d, %Y" }}</time>
-            </p>
-            <p class="post-excerpt">
-                {{ post.excerpt | strip_html | truncatewords: 25 }}
-            </p>
-            <a href="{{ post.url | relative_url }}" class="read-more-link">Read more →</a>
-        </li>
-        {% else %}
-        <p class="no-posts">No blog posts published yet. Check back soon!</p>
-        {% endfor %}
-    </ul>
+    <h2 class="section-heading">Latest Insights & Blog Posts</h2>
 
-    <div class="section-footer">
-        <a href="{{ "/blog.html" | relative_url }}" class="button-link">View All Posts</a>
-    </div>
+    <ul class="post-list">
+        {% for post in site.posts limit:3 %}
+        <li class="post-card">
+            <a href="{{ post.url | relative_url }}" class="post-title-link">
+                {{ post.title }}
+            </a>
 
-    <div class="telegram-link-box">
-        <p>
-            Check out my academic document library on Telegram: 
-            <a href="https://t.me/HRslibrary" target="_blank" class="telegram-link">HRs Library</a>
-        </p>
-    </div>
+            <p class="post-meta">
+                <time datetime="{{ post.date | date_to_xmlschema }}">
+                    {{ post.date | date: "%B %d, %Y" }}
+                </time>
+            </p>
+
+            <p class="post-excerpt">
+                {{ post.excerpt | strip_html | truncatewords: 25 }}
+            </p>
+
+            <a href="{{ post.url | relative_url }}" class="read-more-link">Read more →</a>
+        </li>
+
+        {% else %}
+        <p class="no-posts">No blog posts published yet. Check back soon!</p>
+        {% endfor %}
+    </ul>
+
+    <div class="section-footer">
+        <a href="{{ '/blog.html' | relative_url }}" class="button-link">View All Posts</a>
+    </div>
+
+    <div class="telegram-link-box">
+        <p>
+            Check out my academic document library on Telegram:
+            <a href="https://t.me/HRslibrary" target="_blank" class="telegram-link">HRs Library</a>
+        </p>
+    </div>
 </section>
-
-
