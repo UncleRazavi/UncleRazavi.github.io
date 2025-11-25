@@ -140,15 +140,62 @@ backToTopBtn.addEventListener('click', () => {
 
 
 
-/* // *** REMOVED: Smooth Scrolling ***
-// Retro design favors instant navigation.
+// ==========================================
+// 3. 3D BODY AVATAR IMPLEMENTATION
+// ==========================================
 
-// *** REMOVED: Fade-in Sections on Scroll (Intersection Observer) ***
-// Animations conflict with the stark, blocky retro aesthetic. 
+function init3DAvatar() {
+    const container = document.getElementById('avatar-3d-canvas');
+    if (!container) return; 
 
-// *** REMOVED: Typing Effect for Hero Title ***
-// Animations conflict with the stark, blocky retro aesthetic. 
+    // 1. Scene Setup
+    const scene = new THREE.Scene();
+    scene.background = new THREE.Color(0xc0c0c0); // Match Win98 gray
+    
+    // 2. Camera Setup
+    const camera = new THREE.PerspectiveCamera(75, 1, 0.1, 1000);
+    camera.position.z = 2.5; 
 
-// *** REMOVED: Skill Bar Animation ***
-// Animations conflict with the stark, blocky retro aesthetic. 
-*/
+    // 3. Renderer Setup
+    const renderer = new THREE.WebGLRenderer({ canvas: container, antialias: false });
+    // Use low-res setting for a 'retro' or 'blocky' feel
+    renderer.setSize(120, 120); 
+
+    // 4. Lighting
+    const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
+    scene.add(ambientLight);
+    const pointLight = new THREE.PointLight(0xffffff, 1.5);
+    pointLight.position.set(5, 5, 5);
+    scene.add(pointLight);
+
+    // 5. Create a simple 3D shape (placeholder for a complex body model)
+    // To use a real body model (.gltf, .obj), you'd need the GLTFLoader/OBJLoader.
+    const geometry = new THREE.DodecahedronGeometry(1);
+    const material = new THREE.MeshPhongMaterial({ color: 0x000080 }); // Win98 Deep Blue
+    const bodyModel = new THREE.Mesh(geometry, material);
+    scene.add(bodyModel);
+
+    // 6. Animation Loop (Rotation)
+    function animate() {
+        requestAnimationFrame(animate);
+        
+        // Simple continuous rotation (instantaneous feel)
+        bodyModel.rotation.y += 0.005; 
+        
+        renderer.render(scene, camera);
+    }
+
+    // Handle Resize (important for responsiveness)
+    function onWindowResize() {
+        // Keep renderer size fixed to container size (120x120)
+        camera.updateProjectionMatrix();
+        renderer.setSize(container.clientWidth, container.clientHeight);
+    }
+    window.addEventListener('resize', onWindowResize);
+
+    animate();
+}
+
+// Call the initialization function when the window loads
+window.addEventListener('load', init3DAvatar);
+
