@@ -5,35 +5,46 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: 'Courier New', Courier, monospace, 'Lucida Console', Monaco;
+    /* Consolidate font-family for consistency */
+    font-family: 'Courier New', Courier, monospace, 'Lucida Console', Monaco; 
 }
 
+/* Updated :root variables for better contrast and reusability */
 :root {
-    --bg-color: #c0c0c0;
-    --text-color: #000000;
-    --primary-color: #000080;
-    --primary-hover: #1084d0;
-    --secondary-color: #6a6a6a;
+    /* General Colors */
+    --bg-color: #c0c0c0; /* Gray Background */
+    --text-color: #000000; /* Black Text */
+    --primary-color: #000080; /* Windows Blue */
+    --primary-hover: #1084d0; /* Brighter Blue */
+    --secondary-color: #6a6a6a; /* Dark Gray */
 
-    --card-bg: #ffffff;
-    --input-bg: #e0e0e0;
-    --footer-bg: #a0a0a0;
+    /* Component Colors */
+    --card-bg: #ffffff; /* White Cards */
+    --input-bg: #e0e0e0; /* Light Gray Input/Highlight */
+    --footer-bg: #a0a0a0; /* Footer/Toolbar Gray */
+    --win98-title-bg: var(--primary-color); /* Title bar blue */
+    --win98-title-text: #ffffff;
 
+    /* 3D Border Effects */
     --border-light: #ffffff;
     --border-dark: #000000;
+    --shadow-inset: inset -1px -1px var(--border-light), inset 1px 1px var(--border-dark);
+    --shadow-outset: 1px 1px 0 var(--border-dark);
 }
 
 /* Dark Mode */
 .dark-mode {
     --bg-color: #000000;
-    --text-color: #00ff00;
-    --primary-color: #00c000;
+    --text-color: #00ff00; /* Neon Green */
+    --primary-color: #00c000; /* Darker Neon Green */
     --primary-hover: #00ff00;
-    --secondary-color: #007000;
+    --secondary-color: #007000; /* Very Dark Green */
 
     --card-bg: #111111;
     --input-bg: #000000;
     --footer-bg: #0a0a0a;
+    --win98-title-bg: var(--primary-color);
+    --win98-title-text: var(--text-color);
 
     --border-light: #00c000;
     --border-dark: #003300;
@@ -43,6 +54,8 @@ body {
     line-height: 1.5;
     background-color: var(--bg-color);
     color: var(--text-color);
+    /* Improved text rendering */
+    text-rendering: optimizeLegibility; 
 }
 
 /* ============================= */
@@ -53,7 +66,8 @@ body {
     top: 0; left: 0;
     width: 100%; height: 100%;
     z-index: -1;
-    background-color: var(--bg-color);
+    /* Use transparent background here, or it will override body's bg-color transition */
+    background-color: transparent; 
 }
 
 .hero-section, section, footer, header {
@@ -67,6 +81,7 @@ body {
 a {
     text-decoration: none;
     color: var(--primary-color);
+    transition: color 0.1s ease; /* Smooth color transition */
 }
 
 a:hover {
@@ -78,27 +93,64 @@ a:hover {
     text-align: left;
     margin-bottom: 1.5rem;
     font-size: 1.8rem;
-    border-bottom: 2px solid var(--secondary-color);
+    /* 90s style divider */
+    border-bottom: 3px double var(--secondary-color); 
     padding-bottom: 0.5rem;
     color: var(--text-color);
 }
+.section-heading + h3 {
+    margin-top: -1rem; /* Adjust for better spacing if a section heading is followed by an h3 */
+}
+
 
 /* ============================= */
 /* Profile Avatar                */
 /* ============================= */
+.profile-avatar {
+    margin: 0 auto 1.5rem;
+    width: 120px;
+    height: 120px;
+    overflow: hidden;
+    position: relative;
+    /* Win98-style 3D border */
+    border: 3px outset var(--border-light);
+    border-right-color: var(--border-dark);
+    border-bottom-color: var(--border-dark);
+}
+
 .profile-avatar .avatar-img {
     display: block;
     width: 100%;
     height: 100%;
     object-fit: cover;
     border: none;
-    transition: filter 0.2s ease-in-out;
+    transition: filter 0.3s ease-in-out, transform 0.3s ease-in-out;
     filter: grayscale(10%);
 }
 
 .profile-avatar .avatar-img:hover {
-    filter: grayscale(100%);
+    filter: grayscale(100%) brightness(1.2); /* Enhanced hover effect */
     transform: scale(1.05);
+}
+
+/* 3D Model Placeholder Styling */
+#avatar-3d-canvas {
+    display: block;
+    width: 100%;
+    height: 100%;
+    border: 1px solid var(--secondary-color);
+    background-color: var(--input-bg);
+}
+
+.avatar-loading-text {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    width: 100%;
+    transform: translateY(-50%);
+    font-size: 0.8rem;
+    color: var(--secondary-color);
+    text-align: center;
 }
 
 /* ============================= */
@@ -117,6 +169,7 @@ a:hover {
 header {
     background-color: var(--bg-color);
     padding: 0.5rem 0;
+    /* Win98 3D border */
     border: 3px solid var(--border-dark);
     border-right-color: var(--border-light);
     border-bottom-color: var(--border-light);
@@ -129,46 +182,59 @@ header nav {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    gap: 1rem; /* Added gap for better spacing */
 }
 
 header nav a {
-    margin-right: 1rem;
+    /* Removed redundant margin-right for better flex control */
+    margin-right: 0; 
     padding: 0.5rem 0.75rem;
     font-weight: bold;
     color: var(--text-color);
     border: 1px solid transparent;
+    flex-shrink: 0; /* Prevent links from shrinking */
 }
 
 header nav a:hover {
     color: var(--primary-color);
+    /* Inset border for "pressed" effect */
     border: 1px inset var(--border-dark);
+    text-decoration: none;
 }
 
 header nav .active {
     background-color: var(--card-bg);
     color: var(--primary-color);
+    /* Inset border for "pressed" effect */
     border: 1px inset var(--border-dark);
 }
 
+/* Dark Mode Toggle Button */
 #dark-mode-toggle {
     display: inline-block;
     padding: 4px 8px;
     font-size: 1.2rem;
     cursor: pointer;
     background-color: var(--bg-color);
+    /* Win98 outset button look */
     border: 2px outset var(--border-light);
     border-right-color: var(--border-dark);
     border-bottom-color: var(--border-dark);
     box-shadow: 1px 1px 0 var(--border-dark);
     color: var(--text-color);
     margin-left: auto;
+    flex-shrink: 0;
+    transition: all 0.1s ease;
 }
 
-#dark-mode-toggle:hover {
+#dark-mode-toggle:hover,
+#dark-mode-toggle:focus {
+    /* Inset effect for "pressed" state */
     border: 2px inset var(--border-dark);
     border-right-color: var(--border-light);
     border-bottom-color: var(--border-light);
     box-shadow: none;
+    outline: none; /* Remove default focus ring */
 }
 
 /* ============================= */
@@ -184,33 +250,42 @@ header nav .active {
     text-transform: uppercase;
     color: var(--text-color);
     background-color: var(--bg-color);
+    /* Win98 outset button look */
     border: 2px outset var(--border-light);
     border-right-color: var(--border-dark);
     border-bottom-color: var(--border-dark);
     box-shadow: 1px 1px 0 var(--border-dark);
+    transition: all 0.1s ease;
 }
 
-.cta-btn:hover, .button-link:hover, .cta-link:hover {
+.cta-btn:hover, .button-link:hover, .cta-link:hover,
+.cta-btn:focus, .button-link:focus, .cta-link:focus { /* Added focus state for accessibility */
+    /* Inset effect for "pressed" state */
     border: 2px inset var(--border-dark);
     border-right-color: var(--border-light);
     border-bottom-color: var(--border-light);
     box-shadow: none;
     text-decoration: none;
+    outline: none;
 }
 
 .cta-btn.primary {
     background-color: var(--primary-color);
     color: var(--border-light);
+    /* Primary buttons have a slightly different border color for contrast */
     border-color: var(--primary-color);
     border-top-color: var(--primary-hover);
     border-left-color: var(--primary-hover);
+    box-shadow: 1px 1px 0 var(--border-dark);
 }
 
-.cta-btn.primary:hover {
+.cta-btn.primary:hover,
+.cta-btn.primary:focus {
     background-color: var(--primary-hover);
     border: 2px inset var(--border-dark);
     border-right-color: var(--border-light);
     border-bottom-color: var(--border-light);
+    box-shadow: none;
 }
 
 /* ============================= */
@@ -220,6 +295,7 @@ header nav .active {
     padding: 4rem 0;
     text-align: center;
     background-color: var(--card-bg);
+    /* Win98 3D window/box look */
     border: 3px outset var(--border-light);
     border-right-color: var(--border-dark);
     border-bottom-color: var(--border-dark);
@@ -227,34 +303,30 @@ header nav .active {
 }
 
 .hero-content h1 {
-    font-size: 2.5rem;
+    font-size: 2.8rem; /* Slightly larger */
     margin-bottom: 0.5rem;
     color: var(--primary-color);
 }
 
 .hero-content .subtitle {
-    font-size: 1.2rem;
+    font-size: 1.3rem; /* Slightly larger */
     margin-bottom: 1.5rem;
     font-style: italic;
     color: var(--secondary-color);
 }
 
-.profile-avatar {
-    margin: 0 auto 1.5rem;
-    width: 120px;
-    height: 120px;
-    overflow: hidden;
-    position: relative;
-    border: 3px outset var(--border-light);
-    border-right-color: var(--border-dark);
-    border-bottom-color: var(--border-dark);
+.quick-links {
+    margin: 1.5rem 0;
+    font-size: 1.1rem;
 }
 
-#avatar-3d-canvas {
-    display: block;
-    width: 100%;
-    height: 100%;
-    border: 1px solid var(--secondary-color);
+.link-separator {
+    margin: 0 0.75rem;
+    color: var(--secondary-color);
+}
+
+.cta-group {
+    margin-top: 2rem;
 }
 
 /* ============================= */
@@ -262,6 +334,7 @@ header nav .active {
 /* ============================= */
 .skills-focus-section {
     background-color: var(--input-bg);
+    /* Inset border for a "recessed" panel look */
     border: 2px inset var(--border-dark);
     padding: 1.5rem;
     margin: 2rem auto;
@@ -272,12 +345,14 @@ header nav .active {
     padding-left: 20px;
     display: flex;
     flex-wrap: wrap;
-    gap: 20px;
+    gap: 15px 30px; /* Adjusted gap */
+    font-size: 1.1rem;
 }
 
 .project-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    /* Improved minmax for better flow on mid-size screens */
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); 
     gap: 20px;
 }
 
@@ -285,15 +360,23 @@ header nav .active {
     background-color: var(--card-bg);
     color: var(--text-color);
     padding: 1.5rem;
-    margin-bottom: 1.5rem;
+    margin-bottom: 0; /* Removed redundant margin-bottom due to grid gap */
+    /* Inset border for a component look */
     border: 2px inset var(--border-dark);
+    transition: transform 0.2s ease;
+}
+
+.project-card:hover {
+    transform: translateY(-2px); /* Subtle lift on hover */
+    box-shadow: 4px 4px 0 var(--secondary-color);
 }
 
 .project-card h2 {
     font-size: 1.4rem;
     color: var(--primary-color);
     margin-bottom: 0.75rem;
-    border-bottom: 1px dashed var(--secondary-color);
+    /* Dashed divider */
+    border-bottom: 1px dashed var(--secondary-color); 
     padding-bottom: 0.25rem;
 }
 
@@ -304,7 +387,67 @@ header nav .active {
     text-align: center;
     line-height: 150px;
     margin-top: 1rem;
+    /* Recessed look */
     border: 2px inset var(--border-dark);
+    font-style: italic;
+}
+
+/* Blog List */
+.post-list {
+    list-style: none;
+    padding: 0;
+    margin-bottom: 2rem;
+}
+
+.post-card {
+    padding: 1rem;
+    margin-bottom: 1rem;
+    border: 1px solid var(--secondary-color);
+    background-color: var(--card-bg);
+    transition: border-color 0.2s ease;
+}
+
+.post-card:hover {
+    border-color: var(--primary-color);
+    box-shadow: 2px 2px 0 var(--secondary-color);
+}
+
+.post-title-link {
+    display: block;
+    font-size: 1.2rem;
+    font-weight: bold;
+    margin-bottom: 0.25rem;
+}
+
+.post-meta {
+    font-size: 0.9rem;
+    color: var(--secondary-color);
+    margin-bottom: 0.5rem;
+}
+
+.read-more-link {
+    font-style: italic;
+    font-size: 0.95rem;
+}
+
+.no-posts {
+    padding: 1rem;
+    border: 1px dashed var(--secondary-color);
+    text-align: center;
+    background-color: var(--input-bg);
+}
+
+.telegram-link-box {
+    text-align: center;
+    margin-top: 2rem;
+    padding: 1rem;
+    border: 2px outset var(--border-light);
+    border-right-color: var(--border-dark);
+    border-bottom-color: var(--border-dark);
+    background-color: var(--input-bg);
+}
+.telegram-link {
+    font-weight: bold;
 }
 
 /* ============================= */
@@ -315,26 +458,113 @@ header nav .active {
     margin: 40px auto;
     padding: 40px 32px;
     background-color: var(--card-bg);
+    /* Win98 3D window/box look */
     border: 3px outset var(--border-light);
     border-right-color: var(--border-dark);
     border-bottom-color: var(--border-dark);
+}
+
+.contact-form label {
+    display: block;
+    margin-bottom: 0.25rem;
+    font-weight: bold;
+}
+
+.contact-form div {
+    margin-bottom: 1rem; /* Added spacing between form elements */
 }
 
 .contact-form input,
 .contact-form textarea {
     width: 100%;
     padding: 6px 8px;
-    border: 2px inset var(--border-dark);
+    /* Recessed input field look */
+    border: 2px inset var(--border-dark); 
     background-color: var(--input-bg);
     color: var(--text-color);
     font-size: 1rem;
+    /* Use the same retro font for inputs */
+    font-family: var(--font-family); 
 }
 
 .contact-form input:focus,
 .contact-form textarea:focus {
+    /* Better focus state */
     background-color: var(--card-bg);
-    outline: 1px dotted var(--primary-color);
+    outline: 2px dotted var(--primary-color);
+    border-color: var(--primary-color); 
 }
+
+/* ============================= */
+/* Win98 Window Style (for Fractal) */
+/* ============================= */
+
+.win98-window {
+    position: absolute;
+    min-width: 350px;
+    background: var(--bg-color);
+    border: 3px solid;
+    border-style: solid;
+    /* Use the standard 3D border */
+    border-top-color: var(--border-light);
+    border-left-color: var(--border-light);
+    border-right-color: var(--border-dark);
+    border-bottom-color: var(--border-dark);
+    /* Make the window slightly easier to drag */
+    cursor: grab; 
+    z-index: 2000; 
+    box-shadow: 5px 5px 0 var(--border-dark);
+}
+
+.win98-title {
+    background-color: var(--win98-title-bg);
+    color: var(--win98-title-text);
+    padding: 4px 8px;
+    font-weight: bold;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    user-select: none;
+    cursor: inherit; /* Inherit drag cursor */
+}
+
+.win98-close {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    padding: 0 8px;
+    font-size: 1.1rem;
+    line-height: 1.2;
+    cursor: pointer;
+    /* Win98 outset button look */
+    border: 2px outset var(--border-light);
+    border-right-color: var(--border-dark);
+    border-bottom-color: var(--border-dark);
+    flex-shrink: 0;
+}
+
+.win98-close:active {
+    /* Pressed state */
+    border: 2px inset var(--border-dark);
+    border-right-color: var(--border-light);
+    border-bottom-color: var(--border-light);
+    box-shadow: none;
+}
+
+.win98-content {
+    padding: 1rem;
+    height: 350px; /* Fixed height for the fractal area */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #000000;
+}
+
+.win98-content canvas {
+    /* Make the canvas fill the content area */
+    max-width: 100%;
+    max-height: 100%;
+}
+
 
 /* ============================= */
 /* Footer                        */
@@ -345,18 +575,55 @@ footer {
     background-color: var(--footer-bg);
     color: var(--secondary-color);
     font-size: 0.9rem;
-    border-top: 3px outset var(--border-light);
-    border-bottom: 3px outset var(--border-dark);
+    /* Replaced double outset with a single top-border line for a 'toolbar' feel */
+    border-top: 2px solid var(--border-dark); 
+    border-bottom: 1px solid var(--border-dark);
+    /* Removed redundant border-bottom-color */
 }
 
 /* ============================= */
 /* Responsive                    */
 /* ============================= */
 @media (max-width: 768px) {
-    .container { width: 95%; }
-    .hero-content h1 { font-size: 2rem; }
-    header nav { flex-direction: column; align-items: flex-start; }
-    header nav a { margin: 0.25rem 0; }
-    .project-grid { grid-template-columns: 1fr; }
-    .profile-summary { flex-direction: column; text-align: center; }
+    .container { width: 95%; padding: 1.5rem 0.5rem; }
+    
+    .hero-section { margin: 1rem auto; padding: 2rem 0; }
+    .hero-content h1 { font-size: 2.2rem; }
+    .hero-content .subtitle { font-size: 1.1rem; }
+
+    header nav { 
+        flex-direction: column; 
+        align-items: stretch; /* Stretch links across the container */
+        gap: 0.25rem;
+    }
+    header nav a { 
+        margin: 0; 
+        text-align: center;
+    }
+    #dark-mode-toggle {
+        margin: 0.5rem 0 0; 
+        order: -1; /* Move toggle to the top for better visibility */
+    }
+
+    .focus-list { 
+        flex-direction: column; /* Stack focus areas vertically */
+        gap: 8px;
+    }
+
+    .project-grid { 
+        grid-template-columns: 1fr; 
+    }
+
+    .contact-container {
+        margin: 20px auto;
+        padding: 20px;
+    }
+
+    .win98-window {
+        min-width: 90%;
+        left: 5%;
+    }
+    .win98-content {
+        height: 250px; /* Shorter height on mobile */
+    }
 }
