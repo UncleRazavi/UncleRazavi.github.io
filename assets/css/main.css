@@ -1,5 +1,5 @@
 /* ============================= */
-/* Global Styles 1998      */
+/* Global Styles & Variables 1998 */
 /* ============================= */
 
 /* Using a Monospace font stack for the classic programmer/terminal feel */
@@ -7,36 +7,39 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    /* Consolidate font stack */
     font-family: 'Courier New', Courier, monospace, 'Lucida Console', Monaco;
     /* Removed smooth transitions for that instant, blocky feel */
 }
 
 /* Default Colors (Classic Desktop Theme) */
 :root {
-    --bg-color: #c0c0c0; /* Standard Windows 95/98 gray */
+    /* Main Theme Colors */
+    --bg-color: #c0c0c0;      /* Standard Windows 95/98 gray */
     --text-color: #000000;
     --primary-color: #000080; /* Deep blue for links and headers */
     --primary-hover: #1084d0; /* A slightly brighter active blue */
     --secondary-color: #6a6a6a; /* Darker gray for text/accents */
-    --card-bg: #ffffff; /* White card background */
-    --input-bg: #e0e0e0; /* Input field background (sunken effect base) */
-    --footer-bg: #a0a0a0; /* Darker gray footer */
+    
+    /* UI Component Colors */
+    --card-bg: #ffffff;       /* White card background */
+    --input-bg: #e0e0e0;      /* Input field background (sunken effect base) */
+    --footer-bg: #a0a0a0;     /* Darker gray footer */
     
     /* 3D Border Colors */
-    --border-light: #ffffff;
-    --border-dark: #000000;
+    --border-light: #ffffff;  /* Highlight color (top/left) */
+    --border-dark: #000000;   /* Shadow color (bottom/right) */
 }
 
-/* Dark Mode (High Contrast Terminal Style - if needed) */
+/* Dark Mode (High Contrast Terminal Style - kept for future use) */
 .dark-mode {
     --bg-color: #000000;
-    --text-color: #00ff00; /* Neon green text */
+    --text-color: #00ff00; 
     --primary-color: #00c000;
     --primary-hover: #00ff00;
     --secondary-color: #007000;
     --card-bg: #111111;
     --input-bg: #000000;
-    --input-focus-bg: #002200;
     --footer-bg: #0a0a0a;
     --border-light: #00c000;
     --border-dark: #003300;
@@ -46,17 +49,35 @@ body {
     line-height: 1.5;
     background-color: var(--bg-color);
     color: var(--text-color);
-    /* Removed large background image for a faster, starker feel */
 }
 
 /* ============================= */
-/* Links               */
+/* Particle Background (NEW)    */
+/* ============================= */
+
+#particles-js {
+    position: fixed; /* Ensures it covers the entire screen */
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1; /* Puts it behind everything else */
+    background-color: var(--bg-color); /* Matches body background */
+}
+
+/* Ensure all content sits on top of the particles */
+.hero-section, section, footer, header {
+    position: relative; 
+    z-index: 1;
+}
+
+/* ============================= */
+/* Links & Text                  */
 /* ============================= */
 
 a {
     text-decoration: none;
     color: var(--primary-color);
-    /* No transitions */
 }
 
 a:hover {
@@ -64,19 +85,30 @@ a:hover {
     text-decoration: underline;
 }
 
+/* Section Headings */
+.section-heading, section h2 {
+    text-align: left;
+    margin-bottom: 1.5rem;
+    font-size: 1.8rem;
+    /* Classic section divider look */
+    border-bottom: 2px solid var(--secondary-color);
+    padding-bottom: 0.5rem;
+    color: var(--text-color);
+}
+
 /* ============================= */
-/* Container            */
+/* Layout & Container            */
 /* ============================= */
 
 .container {
     width: 90%;
-    max-width: 1000px; /* Made max-width slightly smaller for the era */
+    max-width: 1000px;
     margin: auto;
     padding: 2rem 1rem;
 }
 
 /* ============================= */
-/* Header              */
+/* Header & Navigation           */
 /* ============================= */
 
 header {
@@ -95,7 +127,6 @@ header nav {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    /* Navigation links are inside the container for spacing */
 }
 
 header nav a {
@@ -103,27 +134,26 @@ header nav a {
     padding: 0.5rem 0.75rem;
     font-weight: bold;
     color: var(--text-color);
-    /* Gives the link a flat button look */
-    border: 1px solid transparent; 
+    border: 1px solid transparent; /* Flat button base */
 }
 
 header nav a:hover {
     color: var(--primary-color);
     text-decoration: none;
     /* Sunken look on hover */
-    border: 1px solid var(--secondary-color);
+    border: 1px inset var(--border-dark); /* Changed from var(--secondary-color) for consistent inset look */
 }
 
 header nav .active {
     background-color: var(--card-bg);
     color: var(--primary-color);
-    /* Use an inverse/pressed look for the active link */
-    border: 1px solid var(--secondary-color);
+    /* Inverse/pressed look for the active link */
+    border: 1px inset var(--border-dark);
 }
 
 
 /* ============================= */
-/* Buttons / CTAs        */
+/* Buttons / CTAs                */
 /* ============================= */
 
 .cta-btn, .button-link, .cta-link {
@@ -134,47 +164,56 @@ header nav .active {
     text-align: center;
     cursor: pointer;
     text-transform: uppercase;
-    
-    /* The classic 3D-raised button effect */
-    background-color: var(--bg-color);
-    border: 2px outset var(--border-light); /* Light top/left */
-    border-bottom: 2px outset var(--border-dark); /* Dark bottom/right */
-    color: var(--text-color);
-    box-shadow: 1px 1px 0 var(--border-dark); /* Small shadow below */
     text-decoration: none;
+    color: var(--text-color);
+    background-color: var(--bg-color);
+    
+    /* Classic 3D-raised button effect */
+    border: 2px outset var(--border-light); 
+    border-right-color: var(--border-dark);
+    border-bottom-color: var(--border-dark);
+    box-shadow: 1px 1px 0 var(--border-dark);
 }
 
 .cta-btn:hover, .button-link:hover, .cta-link:hover {
-    /* The classic 3D-pressed button effect */
+    /* Classic 3D-pressed button effect */
     background-color: var(--bg-color);
     border: 2px inset var(--border-dark); /* Dark top/left (pressed) */
-    border-bottom: 2px inset var(--border-light); /* Light bottom/right (pressed) */
+    border-right-color: var(--border-light);
+    border-bottom-color: var(--border-light);
+    box-shadow: none; /* Remove shadow when pressed */
     text-decoration: none;
 }
 
 .cta-btn.primary {
     background-color: var(--primary-color);
     color: var(--border-light);
-    border: 2px outset var(--primary-hover);
-    border-bottom: 2px outset var(--border-dark);
+    border-color: var(--primary-color);
+    border-top-color: var(--primary-hover);
+    border-left-color: var(--primary-hover);
 }
 
 .cta-btn.primary:hover {
     background-color: var(--primary-hover);
-    border: 2px inset var(--border-dark);
+    /* Inset look is fine, but keeping colors consistent with original button */
+    border: 2px inset var(--border-dark); 
+    border-right-color: var(--border-light);
+    border-bottom-color: var(--border-light);
 }
 
 
 /* ============================= */
-/* Hero Section           */
+/* Hero Section & Profile        */
 /* ============================= */
 
 .hero-section {
     padding: 4rem 0;
     text-align: center;
     background-color: var(--card-bg);
-    /* Simple solid background, no gradient or image */
-    border: 3px solid var(--border-dark);
+    /* 3D Window Frame: raised border style */
+    border: 3px outset var(--border-light);
+    border-right-color: var(--border-dark);
+    border-bottom-color: var(--border-dark);
     margin: 2rem auto;
 }
 
@@ -196,39 +235,36 @@ header nav .active {
     width: 120px;
     height: 120px;
     background-color: var(--bg-color);
-    color: var(--text-color);
     line-height: 120px;
     text-align: center;
     font-size: 0.8rem;
-    /* Boxy 3D Frame for the image placeholder */
-    border: 3px solid var(--border-dark);
-    border-right-color: var(--border-light);
-    border-bottom-color: var(--border-light);
+    /* Boxy 3D Frame for the image placeholder (Raised) */
+    border: 3px outset var(--border-light);
+    border-right-color: var(--border-dark);
+    border-bottom-color: var(--border-dark);
 }
 
 /* ============================= */
-/* Sections            */
+/* Cards & Lists                 */
 /* ============================= */
 
-section {
-    padding: 2rem 0;
-    margin: 1rem 0;
+.skills-focus-section {
+    background-color: var(--input-bg);
+    /* Changed to 3D inset effect for a recessed panel look */
+    border: 2px inset var(--border-dark);
+    padding: 1.5rem;
+    margin: 2rem auto;
 }
 
-.section-heading, section h2 {
-    text-align: left;
-    margin-bottom: 1.5rem;
-    font-size: 1.8rem;
-    /* Use a classic section divider look */
-    border-bottom: 2px solid var(--secondary-color);
-    padding-bottom: 0.5rem;
-    color: var(--text-color);
+.focus-list {
+    list-style: square;
+    padding-left: 20px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
 }
 
-/* ============================= */
-/* Project Cards        */
-/* ============================= */
-
+/* Project Grid */
 .project-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -242,9 +278,7 @@ section {
     margin-bottom: 1.5rem;
     
     /* 3D Sunken/Recessed Effect for the card content area */
-    border: 2px inset var(--border-dark); /* Dark top/left, Light bottom/right */
-    
-    /* Removed smooth hover/transform effects */
+    border: 2px inset var(--border-dark);
 }
 
 .project-card h2 {
@@ -255,18 +289,6 @@ section {
     padding-bottom: 0.25rem;
 }
 
-.project-meta .tech-stack,
-.project-meta .key-tags {
-    list-style: none;
-    padding-left: 0;
-    font-size: 0.9rem;
-    margin-top: 1rem;
-}
-
-.project-meta li {
-    padding: 2px 0;
-}
-
 .project-image-placeholder {
     height: 150px;
     background-color: var(--input-bg);
@@ -274,38 +296,49 @@ section {
     text-align: center;
     line-height: 150px;
     margin-top: 1rem;
-    /* Simple 1px gray border for the internal window look */
-    border: 1px solid var(--secondary-color); 
+    /* 3D Sunken/Recessed border for the internal window look */
+    border: 2px inset var(--border-dark);
 }
 
 /* ============================= */
-/* About Page Styles     */
+/* Contact Form & Inputs         */
 /* ============================= */
 
-.profile-summary {
-    display: flex;
-    gap: 20px;
-    align-items: center;
-    margin-bottom: 2rem;
+.contact-container {
+    max-width: 600px;
+    margin: 40px auto;
+    padding: 40px 32px;
+    background-color: var(--card-bg);
+    /* Classic 3D window style (Raised) */
+    border: 3px outset var(--border-light);
+    border-right-color: var(--border-dark);
+    border-bottom-color: var(--border-dark);
 }
 
-.skills-focus-section {
+.contact-form input,
+.contact-form textarea {
+    width: 100%; /* Ensure inputs fill the width */
+    padding: 6px 8px;
+    border: none;
     background-color: var(--input-bg);
-    border: 2px solid var(--secondary-color);
-    padding: 1.5rem;
-    margin: 2rem auto;
+    color: var(--text-color);
+    font-size: 1rem;
+    
+    /* Sunken field effect (inward bevel) */
+    border: 2px inset var(--border-dark);
 }
 
-.focus-list {
-    list-style: square;
-    padding-left: 20px;
-    display: flex;
-    flex-wrap: wrap;
-    gap: 20px;
+.contact-form input:focus,
+.contact-form textarea:focus {
+    /* Slight color change on focus for feedback */
+    background-color: var(--card-bg); 
+    /* Focus indicator */
+    outline: 1px dotted var(--primary-color);
 }
+
 
 /* ============================= */
-/* Footer              */
+/* Footer                        */
 /* ============================= */
 
 footer {
@@ -314,49 +347,13 @@ footer {
     background-color: var(--footer-bg);
     color: var(--secondary-color);
     font-size: 0.9rem;
-    /* Use a clear separation line */
-    border-top: 3px solid var(--border-dark);
+    /* Use a clear separation line (Raised border for consistency) */
+    border-top: 3px outset var(--border-light);
+    border-bottom: 3px outset var(--border-dark);
 }
 
 /* ============================= */
-/* Contact Form          */
-/* ============================= */
-
-.contact-container {
-    max-width: 600px;
-    margin: 40px auto;
-    padding: 40px 32px;
-    background-color: var(--card-bg);
-    /* Classic 3D window style */
-    border: 3px solid var(--border-dark);
-    border-right-color: var(--border-light);
-    border-bottom-color: var(--border-light);
-}
-
-.contact-form input,
-.contact-form textarea {
-    padding: 6px 8px;
-    /* No border-radius */
-    border: none;
-    background-color: var(--input-bg);
-    color: var(--text-color);
-    font-size: 1rem;
-    
-    /* Sunken field effect (inward bevel) */
-    border: 2px inset var(--border-dark); 
-}
-
-.contact-form input:focus,
-.contact-form textarea:focus {
-    /* No change on focus, just the standard inset look */
-    border: 2px inset var(--border-dark); 
-    outline: 1px dotted var(--primary-color);
-    background-color: var(--card-bg);
-}
-
-
-/* ============================= */
-/* Responsive           */
+/* Responsive                    */
 /* ============================= */
 
 @media (max-width: 768px) {
