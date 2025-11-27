@@ -77,7 +77,7 @@ fractalWindow.id = 'win-fractal';
 // Title bar
 const title = document.createElement('div');
 title.className = 'win98-title';
-title.textContent = 'Fractal (Mandelbrot)';
+title.textContent = 'Fractal (Mandelbrot) - Interactive';
 
 const closeBtn = document.createElement('div');
 closeBtn.className = 'win98-close';
@@ -98,7 +98,7 @@ document.body.appendChild(fractalWindow);
 makeDraggable(fractalWindow, title); 
 
 // =============================
-// FRACTAL (Mandelbrot) - Performance Improved
+// ENHANCED MANDELBROT FRACTAL - Interactive
 // =============================
 function initFractal(container) {
     const canvas = document.createElement('canvas');
@@ -108,50 +108,304 @@ function initFractal(container) {
     container.appendChild(canvas);
     const ctx = canvas.getContext('2d');
 
-    const width = canvas.width;
-    const height = canvas.height;
-    const maxIter = 50;
+    let zoom = 1;
+    let panX = -2.5;
+    let panY = -1;
+    const maxIter = 100;
     
-    // Use ImageData for much better drawing performance (less calls to fillRect)
-    const imgData = ctx.createImageData(width, height);
-    const data = imgData.data;
+    function drawMandelbrot() {
+        const width = canvas.width;
+        const height = canvas.height;
+        
+        const imgData = ctx.createImageData(width, height);
+        const data = imgData.data;
 
-    for(let px=0; px<width; px++) {
-        for(let py=0; py<height; py++){
-            // Map pixel coordinates to the complex plane (-2.0 to 2.0)
-            let x0 = (px / width) * 3.5 - 2.5; 
-            let y0 = (py / height) * 2.0 - 1.0; 
-            
-            let x=0, y=0, iter=0;
-            while(x*x + y*y < 4 && iter < maxIter){
-                let xt = x*x - y*y + x0;
-                y = 2*x*y + y0; 
-                x = xt;
-                iter++;
+        for(let px=0; px<width; px++) {
+            for(let py=0; py<height; py++){
+                // Map pixel coordinates to the complex plane with pan and zoom
+                let x0 = panX + (px / width) * 3.5 * zoom; 
+                let y0 = panY + (py / height) * 2.0 * zoom; 
+                
+                let x=0, y=0, iter=0;
+                while(x*x + y*y < 4 && iter < maxIter){
+                    let xt = x*x - y*y + x0;
+                    y = 2*x*y + y0; 
+                    x = xt;
+                    iter++;
+                }
+                
+                // Color based on iteration count with gradient
+                let colorValue = iter === maxIter ? 0 : (iter * 255 / maxIter);
+                
+                const index = (py * width + px) * 4;
+                data[index] = colorValue;     // Red
+                data[index + 1] = colorValue * 0.7; // Green
+                data[index + 2] = colorValue * 0.5; // Blue
+                data[index + 3] = 255;        // Alpha
             }
-            
-            // Color based on iteration count
-            const colorValue = iter === maxIter ? 0 : 255 - iter * 5;
-            
-            // Calculate index in the ImageData array
-            const index = (py * width + px) * 4;
-            
-            // Set R, G, B channels (Greyscale for the retro look)
-            data[index] = colorValue;     // Red
-            data[index + 1] = colorValue; // Green
-            data[index + 2] = colorValue; // Blue
-            data[index + 3] = 255;        // Alpha (fully opaque)
         }
+        
+        ctx.putImageData(imgData, 0, 0);
     }
     
-    // Put the calculated image data onto the canvas
-    ctx.putImageData(imgData, 0, 0);
+    drawMandelbrot();
+    
+    // Mouse wheel zoom
+    canvas.addEventListener('wheel', (e) => {
+        e.preventDefault();
+        const zoomFactor = e.deltaY > 0 ? 1.2 : 0.8;
+        zoom *= zoomFactor;
+        drawMandelbrot();
+    });
+    
+    // Click to pan
+    canvas.addEventListener('click', (e) => {
+        const rect = canvas.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+        
+        panX += (x / canvas.width - 0.5) * 3.5 * zoom;
+        panY += (y / canvas.height - 0.5) * 2.0 * zoom;
+        zoom *= 0.5;
+        
+        drawMandelbrot();
+    });
 }
 
 initFractal(content);
 
 // =============================
-// DARK MODE TOGGLE (New Functionality)
+// SCROLL-TO-TOP BUTTON
+// =============================
+const scrollToTopBtn = document.createElement('button');
+scrollToTopBtn.id = 'scroll-to-top';
+scrollToTopBtn.innerHTML = '↑';
+scrollToTopBtn.setAttribute('aria-label', 'Scroll to top');
+document.body.appendChild(scrollToTopBtn);
+
+window.addEventListener('scroll', () => {
+    if (window.pageYOffset > 300) {
+        scrollToTopBtn.classList.add('show');
+    } else {
+        scrollToTopBtn.classList.remove('show');
+    }
+});
+
+scrollToTopBtn.addEventListener('click', () => {
+    window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+    });
+});
+
+// =============================
+// TYPEWRITER EFFECT FOR HERO TITLE
+// =============================
+function initTypewriter() {
+    const heroTitle = document.querySelector('.hero-content h1');
+    if (!heroTitle) return;
+    
+    const text = heroTitle.textContent;
+    heroTitle.textContent = '';
+    heroTitle.classList.add('typewriter');
+    
+    let index = 0;
+    const speed = 60; // milliseconds per character
+    
+    function type() {
+        if (index < text.length) {
+            heroTitle.textContent += text.charAt(index);
+            index++;
+            setTimeout(type, speed);
+        } else {
+            // Remove cursor after typing completes
+            setTimeout(() => {
+                heroTitle.classList.remove('typewriter');
+            }, 1000);
+        }
+    }
+    
+    type();
+}
+
+// Initialize typewriter when page loads
+document.addEventListener('DOMContentLoaded', initTypewriter);
+
+// =============================
+// SMOOTH SCROLL BEHAVIOR
+// =============================
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function (e) {
+        const href = this.getAttribute('href');
+        if (href !== '#' && document.querySelector(href)) {
+            e.preventDefault();
+            document.querySelector(href).scrollIntoView({
+                behavior: 'smooth'
+            });
+        }
+    });
+});
+
+// =============================
+// KEYBOARD SHORTCUTS
+// =============================
+document.addEventListener('keydown', (e) => {
+    // Alt + D: Toggle dark mode
+    if (e.altKey && e.key.toLowerCase() === 'd') {
+        document.getElementById('dark-mode-toggle').click();
+    }
+    // Alt + T: Scroll to top
+    if (e.altKey && e.key.toLowerCase() === 't') {
+        scrollToTopBtn.click();
+    }
+    // Alt + H: Go home
+    if (e.altKey && e.key.toLowerCase() === 'h') {
+        window.location.href = '/';
+    }
+});
+
+// =============================
+// ENHANCED CARD ANIMATIONS
+// =============================
+function enhanceCardAnimations() {
+    const cards = document.querySelectorAll('.project-card, .post-card');
+    
+    cards.forEach((card, index) => {
+        // Add staggered fade-in animation
+        card.style.opacity = '0';
+        card.style.animation = `fadeInUp 0.5s ease ${index * 0.1}s forwards`;
+        
+        // Add scale effect on hover
+        card.addEventListener('mouseenter', () => {
+            card.style.transform = 'scale(1.02)';
+        });
+        
+        card.addEventListener('mouseleave', () => {
+            card.style.transform = 'scale(1)';
+        });
+    });
+}
+
+// Add fadeInUp animation to CSS dynamically
+const style = document.createElement('style');
+style.textContent = `
+    @keyframes fadeInUp {
+        from {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+`;
+document.head.appendChild(style);
+
+document.addEventListener('DOMContentLoaded', enhanceCardAnimations);
+
+// =============================
+// VISIT COUNTER (Local Storage)
+// =============================
+function initVisitCounter() {
+    let visitCount = localStorage.getItem('visitCount');
+    visitCount = visitCount ? parseInt(visitCount) + 1 : 1;
+    localStorage.setItem('visitCount', visitCount);
+    
+    // Optional: Display counter in console
+    console.log(`%c👋 Welcome! You've visited ${visitCount} time(s)`, 'font-size: 14px; color: #000080; font-weight: bold;');
+}
+
+document.addEventListener('DOMContentLoaded', initVisitCounter);
+
+// =============================
+// PAGE VISIBILITY DETECTION
+// =============================
+document.addEventListener('visibilitychange', () => {
+    if (document.hidden) {
+        document.title = '👋 Come back!';
+    } else {
+        document.title = document.querySelector('title').getAttribute('data-original') || 'Hossein Razavi';
+    }
+});
+
+// Store original title
+if (document.querySelector('title')) {
+    document.querySelector('title').setAttribute('data-original', document.title);
+}
+
+// =============================
+// LAZY IMAGE LOADING
+// =============================
+function initLazyLoading() {
+    if ('IntersectionObserver' in window) {
+        const images = document.querySelectorAll('img[data-src]');
+        
+        const imageObserver = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const img = entry.target;
+                    img.src = img.getAttribute('data-src');
+                    img.removeAttribute('data-src');
+                    observer.unobserve(img);
+                }
+            });
+        });
+        
+        images.forEach(img => imageObserver.observe(img));
+    }
+}
+
+document.addEventListener('DOMContentLoaded', initLazyLoading);
+
+// =============================
+// FLOATING ACTION MENU
+// =============================
+function initFloatingMenu() {
+    const fabButton = document.createElement('button');
+    fabButton.id = 'fab-menu-toggle';
+    fabButton.textContent = '⚙';
+    fabButton.setAttribute('aria-label', 'Settings Menu');
+    fabButton.style.cssText = `
+        position: fixed;
+        bottom: 80px;
+        right: 20px;
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        background-color: var(--primary-color);
+        color: var(--border-light);
+        border: 2px outset var(--border-light);
+        border-right-color: var(--border-dark);
+        border-bottom-color: var(--border-dark);
+        cursor: pointer;
+        z-index: 998;
+        font-size: 1.5rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.2s ease;
+    `;
+    
+    fabButton.addEventListener('click', () => {
+        alert('⚙️ Settings:\n\n• Alt + D: Toggle Dark Mode\n• Alt + T: Scroll to Top\n• Alt + H: Go Home\n\n💡 You can also drag the Fractal window!');
+    });
+    
+    fabButton.addEventListener('mouseover', () => {
+        fabButton.style.transform = 'scale(1.1)';
+    });
+    
+    fabButton.addEventListener('mouseout', () => {
+        fabButton.style.transform = 'scale(1)';
+    });
+    
+    document.body.appendChild(fabButton);
+}
+
+document.addEventListener('DOMContentLoaded', initFloatingMenu);
+
+// =============================
+// DARK MODE TOGGLE (Enhanced)
 // =============================
 const darkModeToggle = document.getElementById('dark-mode-toggle');
 const body = document.body;
@@ -198,3 +452,315 @@ if (savedDarkMode === 'true') {
 darkModeToggle.addEventListener('click', () => {
     updateDarkMode(!body.classList.contains('dark-mode'));
 });
+
+// =============================
+// 3D OBJECTS WITH THREE.JS
+// =============================
+function init3DObject(containerId, objectType = 'cube') {
+    const container = document.getElementById(containerId);
+    if (!container || !window.THREE) return;
+    
+    // Remove any existing content
+    while (container.firstChild) {
+        container.removeChild(container.firstChild);
+    }
+    
+    const width = container.clientWidth;
+    const height = container.clientHeight || 400;
+    
+    // Scene setup
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(75, width / height, 0.1, 1000);
+    const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+    renderer.setSize(width, height);
+    renderer.setClearColor(0xc0c0c0, 1);
+    container.appendChild(renderer.domElement);
+    
+    // Handle dark mode
+    if (document.body.classList.contains('dark-mode')) {
+        renderer.setClearColor(0x111111, 1);
+    }
+    
+    // Create geometry based on type
+    let geometry, material, mesh;
+    
+    switch(objectType) {
+        case 'cube':
+            geometry = new THREE.BoxGeometry(2, 2, 2);
+            material = new THREE.MeshPhongMaterial({ color: 0x000080 });
+            break;
+        case 'sphere':
+            geometry = new THREE.SphereGeometry(1.5, 32, 32);
+            material = new THREE.MeshPhongMaterial({ color: 0x1084d0 });
+            break;
+        case 'torus':
+            geometry = new THREE.TorusGeometry(1, 0.4, 16, 32);
+            material = new THREE.MeshPhongMaterial({ color: 0x00c000 });
+            break;
+        case 'octahedron':
+            geometry = new THREE.OctahedronGeometry(1.5);
+            material = new THREE.MeshPhongMaterial({ color: 0xff00ff });
+            break;
+        case 'tetrahedron':
+            geometry = new THREE.TetrahedronGeometry(2);
+            material = new THREE.MeshPhongMaterial({ color: 0xff6600 });
+            break;
+        default:
+            geometry = new THREE.BoxGeometry(2, 2, 2);
+            material = new THREE.MeshPhongMaterial({ color: 0x000080 });
+    }
+    
+    mesh = new THREE.Mesh(geometry, material);
+    scene.add(mesh);
+    
+    // Lighting
+    const light1 = new THREE.DirectionalLight(0xffffff, 0.8);
+    light1.position.set(5, 5, 5);
+    scene.add(light1);
+    
+    const light2 = new THREE.DirectionalLight(0xffffff, 0.4);
+    light2.position.set(-5, -5, 5);
+    scene.add(light2);
+    
+    const ambientLight = new THREE.AmbientLight(0xffffff, 0.4);
+    scene.add(ambientLight);
+    
+    camera.position.z = 5;
+    
+    // Mouse interaction
+    let mouseX = 0, mouseY = 0;
+    document.addEventListener('mousemove', (e) => {
+        mouseX = (e.clientX / window.innerWidth) * 2 - 1;
+        mouseY = -(e.clientY / window.innerHeight) * 2 + 1;
+    });
+    
+    // Animation loop
+    function animate() {
+        requestAnimationFrame(animate);
+        
+        // Rotate based on mouse position
+        mesh.rotation.x += 0.005;
+        mesh.rotation.y += 0.008;
+        
+        // Respond to mouse movement (subtle effect)
+        mesh.rotation.y += mouseX * 0.01;
+        mesh.rotation.x += mouseY * 0.01;
+        
+        renderer.render(scene, camera);
+    }
+    
+    animate();
+    
+    // Handle window resize
+    const resizeHandler = () => {
+        const newWidth = container.clientWidth;
+        const newHeight = container.clientHeight || 400;
+        camera.aspect = newWidth / newHeight;
+        camera.updateProjectionMatrix();
+        renderer.setSize(newWidth, newHeight);
+    };
+    
+    window.addEventListener('resize', resizeHandler);
+}
+
+// =============================
+// INTERACTIVE MATHEMATICAL OBJECTS
+// =============================
+
+// Lissajous Curve
+function drawLissajousCurve(canvasId) {
+    const canvas = document.getElementById(canvasId);
+    if (!canvas) return;
+    
+    const ctx = canvas.getContext('2d');
+    const width = canvas.width = canvas.offsetWidth;
+    const height = canvas.height = canvas.offsetHeight;
+    
+    ctx.fillStyle = document.body.classList.contains('dark-mode') ? '#111111' : '#c0c0c0';
+    ctx.fillRect(0, 0, width, height);
+    
+    ctx.strokeStyle = document.body.classList.contains('dark-mode') ? '#00ff00' : '#000080';
+    ctx.lineWidth = 2;
+    
+    const a = 3, b = 2, delta = Math.PI / 2;
+    const points = [];
+    
+    for (let t = 0; t < 2 * Math.PI; t += 0.01) {
+        const x = Math.sin(a * t + delta);
+        const y = Math.sin(b * t);
+        points.push({
+            x: (x + 1) * width / 2,
+            y: (y + 1) * height / 2
+        });
+    }
+    
+    ctx.beginPath();
+    ctx.moveTo(points[0].x, points[0].y);
+    for (let i = 1; i < points.length; i++) {
+        ctx.lineTo(points[i].x, points[i].y);
+    }
+    ctx.stroke();
+}
+
+// Butterfly Curve
+function drawButterflyCurve(canvasId) {
+    const canvas = document.getElementById(canvasId);
+    if (!canvas) return;
+    
+    const ctx = canvas.getContext('2d');
+    const width = canvas.width = canvas.offsetWidth;
+    const height = canvas.height = canvas.offsetHeight;
+    
+    ctx.fillStyle = document.body.classList.contains('dark-mode') ? '#111111' : '#c0c0c0';
+    ctx.fillRect(0, 0, width, height);
+    
+    ctx.strokeStyle = document.body.classList.contains('dark-mode') ? '#ff00ff' : '#000080';
+    ctx.lineWidth = 1;
+    
+    const points = [];
+    
+    for (let t = 0; t < 12 * Math.PI; t += 0.01) {
+        const r = Math.exp(Math.cos(t)) - 2 * Math.cos(4 * t);
+        const x = Math.sin(t) * r;
+        const y = Math.cos(t) * r;
+        
+        points.push({
+            x: width / 2 + x * width / 20,
+            y: height / 2 + y * height / 20
+        });
+    }
+    
+    ctx.beginPath();
+    ctx.moveTo(points[0].x, points[0].y);
+    for (let i = 1; i < points.length; i++) {
+        ctx.lineTo(points[i].x, points[i].y);
+    }
+    ctx.stroke();
+}
+
+// Rose Curve
+function drawRoseCurve(canvasId, k = 5) {
+    const canvas = document.getElementById(canvasId);
+    if (!canvas) return;
+    
+    const ctx = canvas.getContext('2d');
+    const width = canvas.width = canvas.offsetWidth;
+    const height = canvas.height = canvas.offsetHeight;
+    
+    ctx.fillStyle = document.body.classList.contains('dark-mode') ? '#111111' : '#c0c0c0';
+    ctx.fillRect(0, 0, width, height);
+    
+    ctx.strokeStyle = document.body.classList.contains('dark-mode') ? '#00ff00' : '#1084d0';
+    ctx.lineWidth = 2;
+    
+    const points = [];
+    
+    for (let theta = 0; theta < 2 * Math.PI; theta += 0.01) {
+        const r = Math.cos(k * theta);
+        if (r >= 0) {
+            const x = r * Math.cos(theta);
+            const y = r * Math.sin(theta);
+            points.push({
+                x: width / 2 + x * width / 4,
+                y: height / 2 + y * height / 4
+            });
+        }
+    }
+    
+    ctx.beginPath();
+    ctx.moveTo(points[0].x, points[0].y);
+    for (let i = 1; i < points.length; i++) {
+        ctx.lineTo(points[i].x, points[i].y);
+    }
+    ctx.stroke();
+}
+
+// Spirograph
+function drawSpirograph(canvasId) {
+    const canvas = document.getElementById(canvasId);
+    if (!canvas) return;
+    
+    const ctx = canvas.getContext('2d');
+    const width = canvas.width = canvas.offsetWidth;
+    const height = canvas.height = canvas.offsetHeight;
+    
+    ctx.fillStyle = document.body.classList.contains('dark-mode') ? '#111111' : '#c0c0c0';
+    ctx.fillRect(0, 0, width, height);
+    
+    ctx.strokeStyle = document.body.classList.contains('dark-mode') ? '#00ff00' : '#ff6600';
+    ctx.lineWidth = 1.5;
+    
+    const R = 80, r = 40, d = 50;
+    const points = [];
+    
+    for (let theta = 0; theta < 2 * Math.PI * 5; theta += 0.01) {
+        const x = (R + r) * Math.cos(theta) - d * Math.cos((R + r) / r * theta);
+        const y = (R + r) * Math.sin(theta) - d * Math.sin((R + r) / r * theta);
+        
+        points.push({
+            x: width / 2 + x,
+            y: height / 2 + y
+        });
+    }
+    
+    ctx.beginPath();
+    ctx.moveTo(points[0].x, points[0].y);
+    for (let i = 1; i < points.length; i++) {
+        ctx.lineTo(points[i].x, points[i].y);
+    }
+    ctx.stroke();
+}
+
+// Initialize all canvases on load
+document.addEventListener('DOMContentLoaded', () => {
+    // Initialize all mathematical objects
+    const canvases = document.querySelectorAll('[data-math-object]');
+    canvases.forEach(canvas => {
+        const type = canvas.getAttribute('data-math-object');
+        switch(type) {
+            case 'lissajous':
+                drawLissajousCurve(canvas.id);
+                break;
+            case 'butterfly':
+                drawButterflyCurve(canvas.id);
+                break;
+            case 'rose':
+                drawRoseCurve(canvas.id);
+                break;
+            case 'spirograph':
+                drawSpirograph(canvas.id);
+                break;
+        }
+    });
+    
+    // Initialize all 3D objects
+    const containers = document.querySelectorAll('[data-3d-object]');
+    containers.forEach(container => {
+        const type = container.getAttribute('data-3d-object');
+        init3DObject(container.id, type);
+    });
+});
+
+// Redraw mathematical objects when dark mode changes
+const observer = new MutationObserver(() => {
+    const canvases = document.querySelectorAll('[data-math-object]');
+    canvases.forEach(canvas => {
+        const type = canvas.getAttribute('data-math-object');
+        switch(type) {
+            case 'lissajous':
+                drawLissajousCurve(canvas.id);
+                break;
+            case 'butterfly':
+                drawButterflyCurve(canvas.id);
+                break;
+            case 'rose':
+                drawRoseCurve(canvas.id);
+                break;
+            case 'spirograph':
+                drawSpirograph(canvas.id);
+                break;
+        }
+    });
+});
+
+observer.observe(document.body, { attributes: true, attributeFilter: ['class'] });

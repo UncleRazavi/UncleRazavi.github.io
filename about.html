@@ -9,12 +9,22 @@
     <script defer src="assets/js/main.js"></script>
 </head>
 <body>
+    <!-- Particles Background -->
+    <div id="particles-js"></div>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
     <header>
-        <nav class="container">
-            <a href="index.html">Home</a>
-            <a href="about.html" class="active">About</a>
-            <a href="projects.html">Projects</a>
-            <a href="contact.html">Contact</a>
+        <nav class="container" aria-label="Main Navigation" style="display: flex; justify-content: space-between; align-items: center;">
+            <a href="index.html" class="nav-brand">H. Razavi</a>
+            <div style="display: flex; align-items: center; gap: 1rem;">
+                <a href="index.html">Home</a>
+                <a href="about.html" class="active" aria-current="page">About</a>
+                <a href="projects.html">Projects</a>
+                <a href="blog.html">Blog</a>
+                <a href="contact.html">Contact</a>
+                <button id="dark-mode-toggle" aria-label="Toggle Dark Mode">☾</button>
+            </div>
         </nav>
     </header>
 

@@ -2,19 +2,30 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Projects - My Personal Website</title>
+    <title>Projects - Hossein Razavi</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="assets/css/main.css">
     <script defer src="assets/js/main.js"></script>
 </head>
 <body>
+    <!-- Particles Background -->
+    <div id="particles-js"></div>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    
     <!-- Header / Navigation -->
     <header>
-        <nav class="container">
-            <a href="index.html">Home</a>
-            <a href="about.html">About</a>
-            <a href="projects.html">Projects</a>
-            <a href="contact.html">Contact</a>
+        <nav class="container" aria-label="Main Navigation" style="display: flex; justify-content: space-between; align-items: center;">
+            <a href="index.html" class="nav-brand">H. Razavi</a>
+            <div style="display: flex; align-items: center; gap: 1rem;">
+                <a href="index.html">Home</a>
+                <a href="about.html">About</a>
+                <a href="projects.html" class="active" aria-current="page">Projects</a>
+                <a href="blog.html">Blog</a>
+                <a href="contact.html">Contact</a>
+                <button id="dark-mode-toggle" aria-label="Toggle Dark Mode">☾</button>
+            </div>
         </nav>
     </header>
 
@@ -26,9 +37,9 @@
         <div class="project-card">
             <strong>Computational Neuroscience</strong>
             <p>
-                Computational neuroscience project exploring the human brain’s robustness to visual noise. 
+                Computational neuroscience project exploring the human brain's robustness to visual noise. 
                 I was part of a pod at Neuromatch Academy (pod Lively anat).
-                Check it out here: <a href="https://github.com/UncleRazavi/Visual-robustness-based-on-ECoG-data" target="_blank">GitHub</a>.
+                Check it out here: <a href="https://github.com/UncleRazavi/Visual-robustness-based-on-ECoG-data" target="_blank" data-tooltip="View on GitHub">GitHub</a>.
             </p>
         </div>
 
@@ -36,7 +47,7 @@
             <strong>Eurogene Project</strong>
             <p>
                 An exploration of genomes from diverse ancient and modern populations. 
-                Check it out on <a href="https://github.com/UncleRazavi/Eurogene-Project" target="_blank">GitHub</a>.
+                Check it out on <a href="https://github.com/UncleRazavi/Eurogene-Project" target="_blank" data-tooltip="View on GitHub">GitHub</a>.
             </p>
         </div>
 
@@ -44,20 +55,24 @@
             <strong>PINN library</strong>
             <p>
                 A small, easy-to-use Python library for solving PDEs with Physics-Informed Neural Networks (PINNs).
-                Check it out on <a href="https://github.com/UncleRazavi/pinns-lib" target="_blank">GitHub</a>.
+                Check it out on <a href="https://github.com/UncleRazavi/pinns-lib" target="_blank" data-tooltip="View on GitHub">GitHub</a>.
             </p>
         </div>
 
 
-        
         <div class="project-card">
             <strong>BCI, Motor Imagery</strong>
             <p>
                 This project uses data from the BCI Competition IV, Dataset 1, which focuses on motor imagery EEG signals. 
                 The dataset was recorded from healthy subjects performing motor imagery tasks (e.g., imagining left hand, right hand, or foot movement) without feedback.
-                Check it out on <a href="https://github.com/UncleRazavi/Motor-Imagery-EEG-Analysis" target="_blank">GitHub</a>.
+                Check it out on <a href="https://github.com/UncleRazavi/Motor-Imagery-EEG-Analysis" target="_blank" data-tooltip="View on GitHub">GitHub</a>.
             </p>
         </div>
     </section>
 </main>
 
+<footer>
+    <p>&copy; 2025 Hossein Razavi. Powered by the spirit of **Windows 98**.</p>
+</footer>
+</body>
+</html>

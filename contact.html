@@ -2,57 +2,78 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Contact - My Personal Website</title>
+    <title>Contact - Hossein Razavi</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="assets/css/main.css">
     <script defer src="assets/js/main.js"></script>
 </head>
 <body>
+    <!-- Particles Background -->
+    <div id="particles-js"></div>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    
     <!-- Header / Navigation -->
     <header>
-        <nav class="container">
-            <a href="index.html">Home</a>
-            <a href="about.html">About</a>
-            <a href="projects.html">Projects</a>
-            <a href="contact.html">Contact</a>
-            <button id="dark-mode-toggle" style="margin-left:auto;">🌙</button>
+        <nav class="container" aria-label="Main Navigation" style="display: flex; justify-content: space-between; align-items: center;">
+            <a href="index.html" class="nav-brand">H. Razavi</a>
+            <div style="display: flex; align-items: center; gap: 1rem;">
+                <a href="index.html">Home</a>
+                <a href="about.html">About</a>
+                <a href="projects.html">Projects</a>
+                <a href="blog.html">Blog</a>
+                <a href="contact.html" class="active" aria-current="page">Contact</a>
+                <button id="dark-mode-toggle" aria-label="Toggle Dark Mode">☾</button>
+            </div>
         </nav>
     </header>
 
     <!-- Main Content -->
     <main class="container">
         <section class="contact-container">
-            <h1>Contact Me</h1>
-            <p>If you want to get in touch, feel free to drop me a message using the form below or reach me via social links.</p>
+            <h1>Get In Touch</h1>
+            <p>I'd love to hear from you! Whether you have a question, collaboration idea, or just want to say hello, feel free to reach out.</p>
 
             <!-- Contact Info -->
             <div class="links">
                 <h2>Find me online:</h2>
-                <a href="https://github.com/UncleRazavi" target="_blank">GitHub</a>
-                <a href="https://orcid.org/0009-0000-9511-0736" target="_blank">ORCID</a>
-                <a href="https://www.linkedin.com/in/hossein-razavi-485a84288" target="_blank">LinkedIn</a>
-                <a href="mailto:gildedmath@gmail.com">Email</a>
+                <a href="https://github.com/UncleRazavi" target="_blank" data-tooltip="Check my repositories">GitHub</a>
+                <a href="https://orcid.org/0009-0000-9511-0736" target="_blank" data-tooltip="My academic profile">ORCID</a>
+                <a href="https://www.linkedin.com/in/hossein-razavi-485a84288" target="_blank" data-tooltip="Connect professionally">LinkedIn</a>
+                <a href="mailto:gildedmath@gmail.com" data-tooltip="Send me an email">Email</a>
             </div>
 
             <!-- Contact Form -->
             <form class="contact-form" action="https://formspree.io/f/your-form-id" method="POST">
-                <label for="name">Name</label>
-                <input type="text" id="name" name="name" placeholder="Your Name" required>
+                <div>
+                    <label for="name">Name</label>
+                    <input type="text" id="name" name="name" placeholder="Your Name" required>
+                </div>
 
-                <label for="email">Email</label>
-                <input type="email" id="email" name="email" placeholder="you@example.com" required>
+                <div>
+                    <label for="email">Email</label>
+                    <input type="email" id="email" name="email" placeholder="you@example.com" required>
+                </div>
 
-                <label for="message">Message</label>
-                <textarea id="message" name="message" placeholder="Your message..." rows="6" required></textarea>
+                <div>
+                    <label for="subject">Subject</label>
+                    <input type="text" id="subject" name="subject" placeholder="What's this about?" required>
+                </div>
 
-                <button type="submit">Send Message</button>
+                <div>
+                    <label for="message">Message</label>
+                    <textarea id="message" name="message" placeholder="Your message..." rows="6" required></textarea>
+                </div>
+
+                <button type="submit" class="cta-btn primary">Send Message</button>
             </form>
         </section>
     </main>
 
     <!-- Footer -->
     <footer>
-        <p>2025 Hossein Razavi.</p>
+        <p>&copy; 2025 Hossein Razavi. Powered by the spirit of **Windows 98**.</p>
     </footer>
 </body>
 </html>
