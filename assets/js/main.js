@@ -175,40 +175,61 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    // --- Three.js Spinning Cube ---
-    const cubeCanvas = document.getElementById("cubeCanvas");
-    if (cubeCanvas && typeof THREE !== 'undefined') {
-        const renderer = new THREE.WebGLRenderer({ canvas: cubeCanvas, antialias: true });
-        renderer.setSize(300, 300);
+// --- Three.js Spinning Cube ---
+const container = document.querySelector('.three-d-container');
+const cubeCanvas = document.getElementById("cubeCanvas");
 
-        const scene = new THREE.Scene();
-        const camera = new THREE.PerspectiveCamera(50, 1, 0.1, 1000);
-        camera.position.z = 3;
+if (cubeCanvas && typeof THREE !== 'undefined') {
+    // Renderer
+    const renderer = new THREE.WebGLRenderer({ canvas: cubeCanvas, antialias: true });
+    renderer.setSize(container.clientWidth, container.clientHeight);
+    renderer.setPixelRatio(window.devicePixelRatio);
 
-        const geometry = new THREE.BoxGeometry(1, 1, 1);
-        const material = new THREE.MeshStandardMaterial({
-            color: new THREE.Color("hsl(0, 100%, 50%)")
-        });
+    // Scene
+    const scene = new THREE.Scene();
 
-        const cube = new THREE.Mesh(geometry, material);
-        scene.add(cube);
+    // Camera
+    const camera = new THREE.PerspectiveCamera(
+        75,
+        container.clientWidth / container.clientHeight,
+        0.1,
+        1000
+    );
+    camera.position.set(0, 0, 3);
+    camera.lookAt(0, 0, 0);
 
-        const light = new THREE.PointLight(0xffffff, 2);
-        light.position.set(2, 2, 3);
-        scene.add(light);
+    // Cube
+    const geometry = new THREE.BoxGeometry(1, 1, 1);
+    const material = new THREE.MeshStandardMaterial({ color: new THREE.Color("hsl(0, 100%, 50%)") });
+    const cube = new THREE.Mesh(geometry, material);
+    scene.add(cube);
 
-        let hue = 0;
+    // Light
+    const light = new THREE.PointLight(0xffffff, 2);
+    light.position.set(2, 2, 3);
+    scene.add(light);
 
-        function animateCube() {
-            requestAnimationFrame(animateCube);
-            cube.rotation.x += 0.01;
-            cube.rotation.y += 0.015;
-            hue = (hue + 0.5) % 360;
-            cube.material.color.setHSL(hue / 360, 1.0, 0.5);
-            renderer.render(scene, camera);
-        }
-        animateCube();
+    // Animate Cube
+    let hue = 0;
+    function animateCube() {
+        requestAnimationFrame(animateCube);
+        cube.rotation.x += 0.01;
+        cube.rotation.y += 0.015;
+        hue = (hue + 0.5) % 360;
+        cube.material.color.setHSL(hue / 360, 1.0, 0.5);
+        renderer.render(scene, camera);
     }
+    animateCube();
+
+    // Responsive: Adjust on window resize
+    window.addEventListener('resize', () => {
+        const width = container.clientWidth;
+        const height = container.clientHeight;
+        renderer.setSize(width, height);
+        camera.aspect = width / height;
+        camera.updateProjectionMatrix();
+    });
+}
 
 
     // --- Dynamic Fractal Window Creation ---
@@ -615,3 +636,4 @@ drawCurve("spirograph-canvas", (ctx, w, h) => {
     }
     ctx.stroke();
 });
+
