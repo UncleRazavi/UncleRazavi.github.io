@@ -1,172 +1,78 @@
 ---
 layout: default
-title: Hossein Razavi - Electrical Engineering, Data Science & Neuroscience
-description: Personal website of Hossein Razavi. Electrical Engineering, DSP, Machine Learning, Neuroscience, and FPGA development — presented with a retro Windows 98 design.
+title: Hossein Razavi | Home
 ---
 
 <main class="container">
 
-    <!-- ========================= -->
-    <!-- HERO SECTION -->
-    <!-- ========================= -->
-    <section class="hero-section" role="banner">
-        <div class="hero-content">
-
-            <div class="avatar-group">
-                <div id="avatar-3d" class="win98-bevel-in" aria-label="3D rotating cube avatar"></div>
-                <h1 id="typewriter" class="main-title">Hossein Razavi</h1>
+    <!-- Hero / Welcome Section -->
+    <section class="hero win98-window">
+        <div class="window-title">Welcome</div>
+        <div class="window-content" style="text-align: center;">
+            <h1>Hello, I'm Hossein Razavi</h1>
+            <p>Electrical engineering student, data science enthusiast, and explorer of neuroscience and digital electronics.</p>
+            <div class="spinning-cube-placeholder win98-bevel-in" style="width: 120px; height: 120px; margin: 20px auto;">
+                Spinning Cube
             </div>
-
-            <h2 class="subtitle">
-                <span class="typewriter-tagline">
-                    Undergraduate Student • Electrical & Electronic Engineering
-                </span>
-            </h2>
-
-            <p class="bio-intro">
-                I’m currently studying at <strong>K.N. Toosi University of Technology</strong>.
-                My work spans <strong>Electrical Engineering</strong>,
-                <strong>Data Science</strong>, <strong>Neuroscience</strong>,
-                and <strong>Signal Processing</strong>.
-            </p>
-
-            <div class="cta-group">
-                <a href="{{ '/projects.html' | relative_url }}" class="win98-button primary">Explore Projects</a>
-                <a href="{{ '/about.html' | relative_url }}" class="win98-button">About Me</a>
-            </div>
-
-            <div class="quick-links">
-                <a href="https://github.com/UncleRazavi" target="_blank" rel="noopener" class="win98-link">GitHub</a>
-                <span> | </span>
-                <a href="https://www.linkedin.com/in/hossein-razavi-485a84288" target="_blank" rel="noopener" class="win98-link">LinkedIn</a>
-            </div>
-
         </div>
     </section>
 
-
-
-    <!-- ========================= -->
-    <!-- FOCUS AREAS -->
-    <!-- ========================= -->
-    <section class="focus-section">
-        <h2 class="section-heading win98-window-titlebar">Key Focus Areas</h2>
-
-        <ul class="focus-list win98-bevel-in">
-            <li><strong>Data Science & Machine Learning:</strong> Modeling, classification, and statistical analysis.</li>
-            <li><strong>Neuroscience & BCIs:</strong> ECoG, EEG, and neural decoding pipelines.</li>
-            <li><strong>Signal Processing:</strong> DSP filters, time-frequency analysis, transforms.</li>
-            <li><strong>Digital Electronics:</strong> Microcontrollers (AVR/STM32), VHDL/Verilog, FPGA systems.</li>
-        </ul>
-    </section>
-
-
-
-    <!-- ========================= -->
-    <!-- INTERACTIVE MATH DEMOS -->
-    <!-- ========================= -->
-    <section class="math-preview-section">
-        <h2 class="section-heading win98-window-titlebar">Interactive Mathematics</h2>
-
-        <p class="description">
-            A small set of animated mathematical curves and patterns:
-        </p>
-
-        <div class="math-grid">
-            <div class="math-object-container win98-bevel-in">
-                <div class="math-object-title">Lissajous Curve</div>
-                <canvas id="lissajous-canvas" width="300" height="240"></canvas>
-            </div>
-
-            <div class="math-object-container win98-bevel-in">
-                <div class="math-object-title">Rose Curve</div>
-                <canvas id="rose-canvas" width="300" height="240"></canvas>
-            </div>
-
-            <div class="math-object-container win98-bevel-in">
-                <div class="math-object-title">Butterfly Curve</div>
-                <canvas id="butterfly-canvas" width="300" height="240"></canvas>
-            </div>
-
-            <div class="math-object-container win98-bevel-in">
-                <div class="math-object-title">Spirograph</div>
-                <canvas id="spirograph-canvas" width="300" height="240"></canvas>
-            </div>
-        </div>
-
-        <div class="interactive-control-box">
-            <button id="open-interactive-fractal" class="win98-button primary">
-                Mandelbrot Explorer
-            </button>
+    <!-- Latest Blog Posts -->
+    <section class="latest-blog win98-window" style="margin-top: 2rem;">
+        <div class="window-title">Latest Blog Posts</div>
+        <div class="window-content">
+            <ul class="grid-container" style="list-style: none; padding: 0;">
+                {% for post in site.posts limit:3 %}
+                <li class="post-card win98-bevel-out">
+                    <a href="{{ post.url }}" class="post-title-link">{{ post.title }}</a>
+                    <p class="post-meta">{{ post.date | date: "%B %d, %Y" }}</p>
+                    <p class="post-excerpt">{{ post.excerpt | strip_html | truncatewords: 25 }}</p>
+                    <a href="{{ post.url }}" class="win98-button">Read More →</a>
+                </li>
+                {% endfor %}
+            </ul>
         </div>
     </section>
 
-
-
-    <!-- ========================= -->
-    <!-- TELEGRAM DOCUMENT LIBRARY -->
-    <!-- ========================= -->
-    <section class="telegram-library-section">
-        <h2 class="section-heading win98-window-titlebar">Document Library</h2>
-
-        <div class="win98-bevel-in telegram-library-box">
-            <p>
-                A curated collection of academic PDFs and notes,
-                available through Telegram:
-            </p>
-
-            <p>
-                <a href="https://t.me/HRslibrary" target="_blank"
-                   class="win98-button primary telegram-button">
-                    Visit Telegram Library
-                </a>
-            </p>
-
-            <p class="library-note">
-                Subjects include Electrical Engineering, DSP,
-                Control, Signals, Probability, and Machine Learning.
-            </p>
+    <!-- Projects Overview -->
+    <section class="latest-projects win98-window" style="margin-top: 2rem;">
+        <div class="window-title">Featured Projects</div>
+        <div class="window-content">
+            <div class="grid-container">
+                <div class="project-card win98-bevel-out">
+                    <h2>Computational Neuroscience</h2>
+                    <p>Exploring brain robustness to visual noise (Neuromatch Academy pod Lively anat).</p>
+                    <a href="projects.html" class="win98-button">View Projects</a>
+                </div>
+                <div class="project-card win98-bevel-out">
+                    <h2>Eurogene Project</h2>
+                    <p>Analyzing ancient and modern genomes to trace human ancestry.</p>
+                    <a href="projects.html" class="win98-button">View Projects</a>
+                </div>
+                <div class="project-card win98-bevel-out">
+                    <h2>PINN Library</h2>
+                    <p>Python library for Physics-Informed Neural Networks (PDE solver).</p>
+                    <a href="projects.html" class="win98-button">View Projects</a>
+                </div>
+            </div>
         </div>
     </section>
 
-
-
-    <!-- ========================= -->
-    <!-- BLOG POSTS SECTION -->
-    <!-- ========================= -->
-    <section class="blog-preview-section">
-        <h2 class="section-heading win98-window-titlebar">Latest Blog Posts</h2>
-
-        <div class="blog-grid">
-            {% for post in site.posts limit: 3 %}
-            <article class="post-card win98-bevel-out">
-                <h3 class="post-title">
-                    <a href="{{ post.url | relative_url }}" class="post-title-link">
-                        {{ post.title }}
-                    </a>
-                </h3>
-
-                <p class="post-meta">
-                    <time datetime="{{ post.date | date_to_xmlschema }}">
-                        {{ post.date | date: "%B %d, %Y" }}
-                    </time>
-                </p>
-
-                <p class="post-excerpt">
-                    {{ post.excerpt | strip_html | truncatewords: 25 }}
-                </p>
-
-                <a href="{{ post.url | relative_url }}" class="win98-button small">Read More →</a>
-            </article>
-            {% else %}
-            <p class="no-posts-message win98-bevel-in">No articles yet.</p>
-            {% endfor %}
+    <!-- About Preview -->
+    <section class="about-preview win98-window" style="margin-top: 2rem;">
+        <div class="window-title">About Me</div>
+        <div class="window-content">
+            <p>I am a K.N. Toosi University undergraduate student exploring signal processing, neuroscience, and data science. </p>
+            <a href="about.html" class="win98-button">Learn More</a>
         </div>
+    </section>
 
-        <div class="post-footer-actions">
-            <a href="{{ '/blog.html' | relative_url }}" class="win98-button primary">
-                View All Posts
-            </a>
+    <!-- Contact / CTA -->
+    <section class="contact-preview win98-window" style="margin-top: 2rem;">
+        <div class="window-title">Get in Touch</div>
+        <div class="window-content" style="text-align: center;">
+            <p>Questions, collaborations, or just a hello — reach out anytime!</p>
+            <a href="contact.html" class="win98-button primary">Contact Me</a>
         </div>
     </section>
 
