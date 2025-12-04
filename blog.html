@@ -4,27 +4,45 @@ title: Blog - Hossein Razavi
 ---
 
 <main class="container">
-    <section class="blog-container win98-window">
-        <div class="window-title">My Blog</div>
-        <div class="window-content">
-            <p style="text-align: center; font-size: 1.1rem; margin-bottom: 30px;">
-                Insights, projects, and updates on electrical engineering, data science, and more.
-            </p>
+    
+    <section class="blog-header-window win98-window" style="max-width: 900px; margin: 30px auto;">
+        <div class="window-title"> My Blog Posts</div>
+        <div class="window-content" style="text-align: center;">
+            <header>
+                <h1>My Blog</h1>
+                <p class="subtitle">
+                    Insights, projects, and updates on **electrical engineering**, **data science**, and more.
+                </p>
+            </header>
+        </div>
+    </section>
 
-            <div class="grid-container">
-                {% for post in site.posts %}
-                <div class="post-card win98-bevel-out">
-                    <h2 class="post-title">{{ post.title }}</h2>
-                    <p class="post-meta">{{ post.date | date: "%B %d, %Y" }}</p>
-                    <p class="post-excerpt">{{ post.excerpt | strip_html | truncatewords: 30 }}</p>
-                    <a href="{{ post.url }}" class="win98-button">Read more →</a>
-                </div>
-                {% endfor %}
-            </div>
+    <section class="blog-grid-section" style="max-width: 900px; margin: 20px auto;">
+        <ul class="post-list-grid">
+            {% for post in site.posts %}
+            
+            <li class="post-card win98-bevel-out">
+                <article>
+                    <h3 class="post-title">
+                        <a href="{{ post.url }}" class="post-title-link">{{ post.title }}</a>
+                    </h3>
+                    
+                    <p class="post-meta">
+                        Published on: <time datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: "%B %d, %Y" }}</time>
+                    </p>
+                    
+                    <p class="post-excerpt">
+                        {{ post.excerpt | strip_html | truncatewords: 30 }}
+                    </p>
+                    
+                    <a href="{{ post.url }}" class="win98-button small-button">Read more →</a>
+                </article>
+            </li>
+            {% endfor %}
+        </ul>
 
-            <div style="text-align: center; margin-top: 30px;">
-                <a href="/blog.html" class="win98-button primary">View All Posts</a>
-            </div>
+        <div class="post-grid-footer" style="text-align: center; margin-top: 40px;">
+            <a href="/blog.html" class="win98-button primary">View All Posts</a>
         </div>
     </section>
 </main>
