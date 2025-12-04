@@ -1,30 +1,36 @@
 /* ========================================================= */
-/* TRUE WINDOWS 98 + VT323 — CLEANED & DARK MODE READY      */
+/* TRUE WINDOWS 98 + VT323 — ENHANCED CSS VERSION            */
 /* ========================================================= */
 
 :root {
+    /* Core Palette */
     --win98-bg: #c0c0c0;
-    --win98-dark: #808080;
-    --win98-darker: #404040;
-    --win98-light: #dfdfdf;
-    --win98-lighter: #ffffff;
+    --win98-text: #000000;
+    --win98-gray-light: #dfdfdf;
+    --win98-gray-dark: #808080;
+    --win98-gray-darker: #404040;
+    --win98-white: #ffffff;
+    --win98-black: #000000;
+    
+    /* Branding */
     --win98-blue: #000080;
-    --win98-title: #000080;
-    --text-color: #000000;
+    --win98-blue-light: #1084d0; /* For gradient */
     --accent-color: #008080;
-    --menu-bg: #c0c0c0;
+    
+    /* CRT Effect Opacity (Set to 0 to remove) */
+    --scanline-opacity: 0.04;
 }
 
 .dark-mode {
-    --win98-bg: #000000;
-    --win98-dark: #003300;
-    --win98-darker: #001100;
-    --win98-light: #003300;
-    --win98-lighter: #006600;
-    --win98-blue: #00c000;
-    --win98-title: #003300;
-    --text-color: #00ff00;
-    --menu-bg: #000000;
+    --win98-bg: #1a1a1a;
+    --win98-text: #00ff00;
+    --win98-gray-light: #2d2d2d;
+    --win98-gray-dark: #004400;
+    --win98-gray-darker: #002200;
+    --win98-white: #00cc00; /* Borders highlight */
+    --win98-black: #000000;
+    --win98-blue: #004400;
+    --win98-blue-light: #008800;
 }
 
 @font-face {
@@ -33,90 +39,344 @@
          url('https://fonts.googleapis.com/css2?family=VT323&display=swap');
 }
 
+/* ========================================================= */
+/* RESET & GLOBAL */
+/* ========================================================= */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    /* Crucial for retro feel: prevents blurry text aliasing */
+    -webkit-font-smoothing: none;
+    -moz-osx-font-smoothing: grayscale;
 }
 
 body {
     font-family: 'VT323', 'MS Sans Serif', 'Segoe UI', Tahoma, sans-serif;
-    line-height: 1.6;
-    color: var(--text-color);
-    background-color: var(--win98-bg);
+    line-height: 1.5;
+    color: var(--win98-text);
+    background-color: var(--win98-accent); /* Fallback */
+    /* Classic Teal Background Color for desktop */
+    background: #008080; 
+    /* Dot pattern overlay */
     background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAIAAAACCAYAAABytg0kAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAABdJREFUeNpi+P//PwMTAwMDEwMQAAQYABVcA0k1n67xAAAAAElFTkSuQmCC');
     background-repeat: repeat;
+    min-height: 100vh;
+    overflow-x: hidden;
+}
+
+/* CRT SCANLINE OVERLAY */
+body::after {
+    content: " ";
+    display: block;
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
+    z-index: 9999;
+    background-size: 100% 2px, 3px 100%;
+    pointer-events: none;
+    opacity: var(--scanline-opacity);
+}
+
+/* ========================================================= */
+/* SCROLLBARS (Webkit Only - Critical for aesthetic) */
+/* ========================================================= */
+::-webkit-scrollbar {
+    width: 16px;
+    height: 16px;
+    background: var(--win98-gray-light);
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--win98-bg);
+    border: 1px solid var(--win98-black);
+    box-shadow: inset 1px 1px var(--win98-white), inset -1px -1px var(--win98-gray-dark);
+}
+
+::-webkit-scrollbar-track {
+    background: #e0e0e0;
+    box-shadow: inset 1px 1px 2px rgba(0,0,0,0.2);
+}
+
+::-webkit-scrollbar-corner {
+    background: var(--win98-bg);
 }
 
 /* ========================================================= */
 /* HEADER & NAVIGATION */
 /* ========================================================= */
 header {
-    background-color: var(--menu-bg);
+    background-color: var(--win98-bg);
     padding: 4px;
     position: fixed;
     width: 100%;
     top: 0;
     z-index: 1000;
-    border-bottom: 2px solid var(--win98-darker);
+    /* The classic "Taskbar" border: White top, dark bottom */
+    border-top: 1px solid var(--win98-white);
+    border-bottom: 1px solid var(--win98-black);
+    box-shadow: inset 0 -1px 0 var(--win98-gray-dark);
 }
 
 nav {
     display: flex;
     justify-content: flex-start;
     align-items: center;
-    padding: 0 1rem;
+    padding: 0 4px;
 }
 
 .nav-links {
     display: flex;
     list-style: none;
-    gap: 0.5rem;
+    gap: 4px; /* Taskbar items are close */
     align-items: center;
+    width: 100%;
 }
 
-nav a, nav button {
-    color: var(--text-color);
+/* THE CLASSIC WIN98 BUTTON STYLE */
+nav a, nav button, .button-98, .window-controls button {
+    color: var(--win98-text);
     text-decoration: none;
-    padding: 4px 8px;
-    border: 2px solid;
-    border-color: var(--win98-lighter) var(--win98-darker) var(--win98-darker) var(--win98-lighter);
+    padding: 4px 10px;
     font-family: inherit;
-    font-size: inherit;
+    font-size: 1.1rem;
     font-weight: bold;
     background: var(--win98-bg);
     cursor: pointer;
     min-width: 100px;
-    height: 28px;
+    height: 32px;
     display: flex;
     align-items: center;
     justify-content: center;
     white-space: nowrap;
+    
+    /* The Authentic Bevel */
+    border: none;
+    box-shadow: 
+        inset 1px 1px 0px var(--win98-white),
+        inset -1px -1px 0px var(--win98-gray-dark),
+        inset -2px -2px 0px var(--win98-black),
+        1px 1px 0px var(--win98-black); /* Drop shadow */
+    
+    /* Text crispness */
+    text-shadow: none;
+    transition: none; /* No animations in 98! */
 }
 
-nav a:hover, nav button:hover {
-    background: var(--win98-light);
+/* Focus state - The dotted line */
+nav a:focus, nav button:focus, .button-98:focus {
+    outline: 1px dotted var(--win98-black);
+    outline-offset: -4px;
 }
 
-nav a:active, nav button:active {
-    border-color: var(--win98-darker) var(--win98-lighter) var(--win98-lighter) var(--win98-darker);
+nav a:hover, nav button:hover, .button-98:hover {
+    /* No bg change in classic 98, usually just cursor */
+}
+
+/* PRESSED STATE - Borders Invert */
+nav a:active, nav button:active, .button-98:active, 
+nav a.active, .window-controls button:active {
+    box-shadow: 
+        inset 1px 1px 0px var(--win98-black),
+        inset 2px 2px 0px var(--win98-gray-dark),
+        inset -1px -1px 0px var(--win98-white);
     transform: translate(1px, 1px);
+    background: var(--win98-bg);
+    padding-top: 6px; /* Visual text shift */
+    padding-bottom: 2px;
 }
 
 .mobile-menu-button {
     display: none;
+    min-width: 40px !important;
 }
 
-/* Responsive navigation */
+/* ========================================================= */
+/* MAIN CONTENT & WINDOWS */
+/* ========================================================= */
+main {
+    margin-top: 50px;
+    padding: 1rem;
+    max-width: 1200px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.win98-window {
+    background-color: var(--win98-bg);
+    /* The Window Bevel */
+    box-shadow: 
+        inset 1px 1px 0px var(--win98-white),
+        inset -1px -1px 0px var(--win98-gray-dark),
+        inset -2px -2px 0px var(--win98-black),
+        1px 1px 0px 0px var(--win98-black); 
+    padding: 3px;
+    margin-bottom: 1.5rem;
+    position: relative;
+}
+
+.window-title {
+    /* The Gradient Title Bar */
+    background: linear-gradient(90deg, var(--win98-blue) 0%, var(--win98-blue-light) 100%);
+    color: white;
+    padding: 3px 6px;
+    font-weight: bold;
+    letter-spacing: 1px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    cursor: default;
+    height: 24px;
+    font-size: 1rem;
+}
+
+/* Dark mode override for title text */
+.dark-mode .window-title {
+    color: var(--win98-text);
+}
+
+.window-content {
+    padding: 1rem;
+    background: var(--win98-bg);
+    color: var(--win98-text);
+}
+
+/* Window controls */
+.window-controls {
+    display: flex;
+    gap: 2px;
+}
+
+.window-controls button {
+    min-width: 16px;
+    width: 16px;
+    height: 14px;
+    font-size: 10px;
+    line-height: 10px;
+    padding: 0;
+    box-shadow: 
+        inset 1px 1px 0px var(--win98-white),
+        inset -1px -1px 0px var(--win98-gray-dark),
+        inset -2px -2px 0px var(--win98-black);
+}
+
+/* ========================================================= */
+/* Profile & Cards */
+.profile-section {
+    display: grid;
+    grid-template-columns: 300px 1fr;
+    gap: 1rem;
+    padding: 1rem;
+}
+
+.profile-pic {
+    width: 100%;
+    height: auto;
+    /* Sunken Field Look */
+    border: 2px solid;
+    border-color: var(--win98-gray-dark) var(--win98-white) var(--win98-white) var(--win98-gray-dark);
+    box-shadow: inset 1px 1px 0 #000;
+}
+
+.character-card, .backstory-container {
+    background: var(--win98-bg);
+    /* Group Box border style */
+    border: 1px solid var(--win98-white);
+    outline: 1px solid var(--win98-gray-dark);
+    margin: 4px;
+    padding: 1rem;
+    position: relative;
+}
+
+.backstory-container h2 {
+    font-size: 1.5rem;
+    color: var(--win98-blue);
+    margin-bottom: 1rem;
+    text-align: center;
+    text-shadow: 1px 1px var(--win98-white);
+}
+
+.dark-mode .backstory-container h2 {
+    text-shadow: none;
+    color: var(--win98-text);
+}
+
+/* ========================================================= */
+/* GRIDS & EXTRAS */
+/* ========================================================= */
+.grid-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1rem;
+    padding: 1rem 0;
+}
+
+/* Pixelated borders helper */
+.pixel-border {
+    image-rendering: pixelated;
+    border: 4px solid;
+    border-image-slice: 2;
+    border-image-width: 2;
+    border-image-outset: 0;
+    /* Optional: Replace with a cleaner standard border if base64 fails */
+    border-style: solid;
+    border-color: var(--win98-black);
+}
+
+/* Popup & bulletin */
+.popup-window {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 80%;
+    max-width: 800px;
+    height: 70vh;
+    z-index: 1001;
+    background-color: var(--win98-bg);
+    
+    /* Heavy Window Bevel */
+    box-shadow: 
+        inset 2px 2px 0px var(--win98-white),
+        inset -2px -2px 0px var(--win98-gray-dark),
+        inset -4px -4px 0px var(--win98-black),
+        2px 2px 5px rgba(0,0,0,0.5); 
+}
+
+.popup-window .window-content {
+    overflow-y: auto;
+    height: calc(100% - 30px); /* Minus title bar */
+    padding: 15px;
+    /* Sunken field for content */
+    border: 2px solid;
+    border-color: var(--win98-gray-dark) var(--win98-white) var(--win98-white) var(--win98-gray-dark);
+    margin: 5px;
+    background: var(--win98-white); /* Wordpad feel */
+}
+
+/* Dark mode fix for popup content area */
+.dark-mode .popup-window .window-content {
+    background: #000000;
+}
+
+/* Responsive adjustments */
 @media (max-width: 1024px) {
     nav a, nav button {
         min-width: 80px;
-        font-size: 0.9em;
+        font-size: 1rem;
         padding: 4px 6px;
     }
 }
 
 @media (max-width: 768px) {
+    .profile-section {
+        grid-template-columns: 1fr;
+    }
+    
     .mobile-menu-button {
         display: block;
     }
@@ -127,10 +387,11 @@ nav a:active, nav button:active {
         top: 100%;
         left: 0;
         right: 0;
-        background-color: var(--menu-bg);
+        background-color: var(--win98-bg);
         flex-direction: column;
-        padding: 1rem;
-        border-bottom: 2px solid var(--win98-darker);
+        padding: 4px;
+        border-bottom: 2px solid var(--win98-black);
+        box-shadow: 0 4px 6px rgba(0,0,0,0.3);
     }
 
     .nav-links.active {
@@ -142,172 +403,7 @@ nav a:active, nav button:active {
         text-align: left;
         display: block;
         padding: 8px;
+        margin-bottom: 2px;
+        justify-content: flex-start;
     }
-}
-
-/* ========================================================= */
-/* MAIN CONTENT & WINDOWS */
-/* ========================================================= */
-main {
-    margin-top: 3rem;
-    padding: 1rem;
-    max-width: 1200px;
-    margin-left: auto;
-    margin-right: auto;
-}
-
-.win98-window {
-    background-color: var(--win98-bg);
-    border: 2px solid;
-    border-color: var(--win98-lighter) var(--win98-darker) var(--win98-darker) var(--win98-lighter);
-    box-shadow: 1px 1px 0 var(--win98-dark);
-    padding: 2px;
-    margin-bottom: 1rem;
-    position: relative;
-}
-
-.window-title {
-    background: var(--win98-title);
-    color: white;
-    padding: 2px 4px;
-    font-weight: bold;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    cursor: default;
-}
-
-.window-content {
-    padding: 1rem;
-    background: var(--win98-bg);
-}
-
-/* Window controls */
-.window-controls {
-    display: flex;
-    gap: 2px;
-}
-
-.window-controls button {
-    cursor: default;
-    color: var(--win98-dark);
-    background: var(--win98-bg);
-    border-color: var(--win98-darker) var(--win98-lighter) var(--win98-lighter) var(--win98-darker);
-    width: 20px;
-    height: 20px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 12px;
-    flex-shrink: 0;
-}
-
-.window-controls button:active {
-    border-color: var(--win98-darker) var(--win98-lighter) var(--win98-lighter) var(--win98-darker);
-}
-
-/* ========================================================= */
-/* Profile & Cards */
-.profile-section {
-    display: grid;
-    grid-template-columns: 350px 1fr;
-    gap: 1rem;
-    padding: 1rem;
-}
-
-.profile-pic {
-    width: 100%;
-    height: 100%;
-    border: 2px solid var(--win98-darker);
-    box-shadow: 2px 2px 0 var(--win98-dark);
-}
-
-.character-card, .backstory-container {
-    background: var(--win98-bg);
-    border: 2px solid;
-    border-color: var(--win98-lighter) var(--win98-darker) var(--win98-darker) var(--win98-lighter);
-    padding: 1rem;
-}
-
-.backstory-container h2 {
-    font-size: 1.5rem;
-    color: var(--win98-blue);
-    margin-bottom: 1rem;
-    text-align: center;
-}
-
-/* Buttons */
-.button-98 {
-    background: var(--win98-bg);
-    border: 2px solid;
-    border-color: var(--win98-lighter) var(--win98-darker) var(--win98-darker) var(--win98-lighter);
-    padding: 4px 8px;
-    font-family: inherit;
-    cursor: pointer;
-}
-
-.button-98:active {
-    border-color: var(--win98-darker) var(--win98-lighter) var(--win98-lighter) var(--win98-darker);
-}
-
-/* Grids */
-.grid-container {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 1.5rem;
-    padding: 1rem 0;
-}
-
-/* Pixelated borders */
-.pixel-border {
-    image-rendering: pixelated;
-    border: 4px solid;
-    border-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAQAAAAECAYAAACp8Z5+AAAACXBIWXMAAAsTAAALEwEAmpwYAAAAB3RJTUUH4AkZCg47FCzAJQAAAB1pVFh0Q29tbWVudAAAAAAAQ3JlYXRlZCB3aXRoIEdJTVBkLmUHAAAAMklEQVQI12P4z8DwnwEK/jNM/A8F/xkY/wMB+z8YYGBg/P+fARH8/w9m/gfq+A/CBAB7dw0BA84CxgAAAABJRU5ErkJggg==') 2 stretch;
-}
-
-/* Popup & bulletin */
-.popup-window {
-    display: none;
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 75%;
-    max-width: 900px;
-    height: 75vh;
-    z-index: 1001;
-    background-color: var(--win98-bg);
-    border: 2px solid;
-    border-color: var(--win98-lighter) var(--win98-darker) var(--win98-darker) var(--win98-lighter);
-}
-
-.popup-window .window-content {
-    overflow-y: auto;
-    height: calc(75vh - 30px);
-    padding: 10px;
-}
-
-/* Scrollbar */
-.popup-window .window-content::-webkit-scrollbar {
-    width: 16px;
-}
-
-.popup-window .window-content::-webkit-scrollbar-track {
-    background: var(--win98-bg);
-    border: 2px solid;
-    border-color: var(--win98-lighter) var(--win98-darker) var(--win98-darker) var(--win98-lighter);
-}
-
-.popup-window .window-content::-webkit-scrollbar-thumb {
-    background: var(--win98-bg);
-    border: 2px solid;
-    border-color: var(--win98-darker) var(--win98-lighter) var(--win98-lighter) var(--win98-darker);
-}
-
-/* Responsive adjustments */
-@media (max-width: 768px) {
-    .profile-section {
-        grid-template-columns: 1fr;
-    }
-    nav ul { flex-direction: column; }
 }
