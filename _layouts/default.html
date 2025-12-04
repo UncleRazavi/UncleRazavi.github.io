@@ -22,7 +22,11 @@
 </head>
 
 <body>
-    <!-- ====================== TASKBAR-STYLE HEADER ====================== -->
+
+    <!-- Background Particles (MUST BE FIRST) -->
+    <div id="particles-js"></div>
+
+    <!-- Windows 98 Taskbar Header -->
     <header>
         <nav class="nav-links">
             <a href="{{ "/" | relative_url }}" class="win98-button">Start</a>
@@ -37,18 +41,16 @@
         </nav>
     </header>
 
-    <!-- ====================== MAIN CONTENT (NO EXTRA WINDOW WRAPPER!) ====================== -->
-    <main class="container">
+    <!-- Main Content (no container, no layout conflict) -->
+    <main>
         {{ content }}
     </main>
 
-    <!-- ====================== FOOTER ====================== -->
+    <!-- Footer -->
     <footer style="text-align:center; margin:4rem 0 2rem; font-size:0.9rem; color:var(--win98-gray-dark);">
         © {{ 'now' | date: "%Y" }} Hossein Razavi • Running Windows 98 on the web since 2024
     </footer>
 
-    <!-- ====================== MAIN JS ====================== -->
-    <div id="particles-js"></div>
     <script src="{{ "/assets/js/main.js" | relative_url }}"></script>
 </body>
 </html>
