@@ -15,7 +15,6 @@ title: Hossein Razavi - Electrical Engineering, Data Science & Neuroscience
   </div>
 </header>
 
-<!-- Hero Section -->
 <section class="hero-section">
   <div class="container hero-content">
     <div id="avatar-3d" class="win98-bevel-in" aria-label="3D rotating cube avatar">
@@ -45,7 +44,6 @@ title: Hossein Razavi - Electrical Engineering, Data Science & Neuroscience
   </div>
 </section>
 
-<!-- Key Focus Areas -->
 <section class="container">
   <h2 class="section-heading">Key Focus Areas</h2>
   <ul class="focus-list win98-bevel-in">
@@ -56,7 +54,6 @@ title: Hossein Razavi - Electrical Engineering, Data Science & Neuroscience
   </ul>
 </section>
 
-<!-- Interactive Mathematics -->
 <section class="container math-preview-section">
   <h2 class="section-heading">Interactive Mathematics</h2>
   <p>Explore beautiful mathematical curves and fractal patterns:</p>
@@ -80,20 +77,19 @@ title: Hossein Razavi - Electrical Engineering, Data Science & Neuroscience
     </div>
   </div>
 
-  <div style="text-align:center; margin-top:2rem;">
+  <div class="interactive-control-box">
     <button id="open-interactive-fractal" class="win98-button primary">
       Open Interactive Mandelbrot Explorer
     </button>
   </div>
 </section>
 
-<!-- Static Fractal Window -->
 <section class="container">
   <h2 class="section-heading">Fractal Loader (Static)</h2>
-  <div id="fractalWindow" class="win98-window" style="position:relative; width:380px; height:300px; margin:1.5rem auto;">
+  <div id="fractalWindow" class="win98-window fractal-static-window">
     <div id="fractalHeader" class="win98-title">
       <span>Fractal Loader - Mandelbrot Set</span>
-      <div class="win98-close" title="Close" onclick="this.closest('.win98-window').style.display='none'">X</div>
+      <div id="fractalCloseBtn" class="win98-close" title="Close">X</div>
     </div>
     <div class="win98-content">
       <canvas id="fractalCanvas"></canvas>
@@ -101,48 +97,34 @@ title: Hossein Razavi - Electrical Engineering, Data Science & Neuroscience
   </div>
 </section>
 
-<!-- Blog Preview -->
 <section class="container blog-preview-section">
   <h2 class="section-heading">Latest Insights &amp; Blog Posts</h2>
 
-  <div class="win98-bevel-in" style="padding:12px; margin-bottom:1rem;">
+  <div class="win98-bevel-in blog-preview-wrapper">
     {% for post in site.posts limit:3 %}
-    <div class="post-card win98-bevel-out" style="margin-bottom:12px; padding:10px;">
-      <h3 style="margin:0 0 6px 0;">
+    <div class="post-card win98-bevel-out post-card-preview">
+      <h3 class="post-title">
         <a href="{{ post.url | relative_url }}" class="post-title-link">{{ post.title }}</a>
       </h3>
-      <p class="post-meta" style="margin:4px 0; font-size:10px; color:#00f;">
+      <p class="post-meta">
         Published on <time datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: "%B %d, %Y" }}</time>
       </p>
-      <p style="margin:8px 0; font-size:11px;">{{ post.excerpt | strip_html | truncatewords: 25 }}</p>
-      <a href="{{ post.url | relative_url }}" style="font-size:10px;">Read more →</a>
+      <p class="post-excerpt">{{ post.excerpt | strip_html | truncatewords: 25 }}</p>
+      <a href="{{ post.url | relative_url }}" class="read-more-link">Read more →</a>
     </div>
     {% else %}
-    <p style="padding:10px; font-style:italic;">No blog posts published yet. Check back soon!</p>
+    <p class="no-posts-message">No blog posts published yet. Check back soon!</p>
     {% endfor %}
   </div>
 
-  <div style="text-align:center; margin-top:1rem;">
+  <div class="view-all-posts">
     <a href="{{ '/blog.html' | relative_url }}" class="win98-button">View All Posts</a>
   </div>
 
-  <div class="telegram-link-box win98-bevel-in" style="margin-top:1.5rem; padding:12px; text-align:center;">
-    <p style="margin:0;">
+  <div class="telegram-link-box win98-bevel-in">
+    <p>
       Check out my academic document library on Telegram:<br>
-      <a href="https://t.me/HRslibrary" target="_blank" rel="noopener" style="font-weight:bold;">t.me/HRslibrary</a>
+      <a href="https://t.me/HRslibrary" target="_blank" rel="noopener" class="telegram-link">t.me/HRslibrary</a>
     </p>
   </div>
 </section>
-
-<!-- Open Interactive Fractal Window -->
-<script>
-  document.getElementById("open-interactive-fractal")?.addEventListener("click", () => {
-    let win = document.getElementById("win-fractal");
-    if (!win) return;
-
-    win.style.display = "block";
-    // Bring to front
-    document.querySelectorAll('.win98-window').forEach(w => w.style.zIndex = "999");
-    win.style.zIndex = "1001";
-  });
-</script>
