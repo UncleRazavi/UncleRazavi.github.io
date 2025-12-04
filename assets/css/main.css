@@ -7,28 +7,23 @@
     box-sizing: border-box;
     font-family: 'Courier New', Courier, monospace, 'Lucida Console', Monaco;
 }
-
 :root {
     --bg-color: #dfdfdf;
     --text-color: #000000;
     --primary-color: #000080;
     --primary-hover: #1084d0;
     --secondary-color: #4a4a4a;
-
     --card-bg: #c0c0c0;
     --input-bg: #c0c0c0;
     --footer-bg: #dfdfdf;
     --win98-title-bg: var(--primary-color);
     --win98-title-text: #ffffff;
-
     --border-light: #dfdfdf;
     --border-dark: #808080;
     --shadow-inset: inset -1px -1px var(--border-light), inset 1px 1px var(--border-dark);
     --shadow-outset: 1px 1px 0 var(--border-dark);
-
     --blog-font: 'Segoe UI', 'Trebuchet MS', sans-serif;
 }
-
 /* Dark Mode */
 .dark-mode {
     --bg-color: #000000;
@@ -36,13 +31,11 @@
     --primary-color: #00c000;
     --primary-hover: #00ff00;
     --secondary-color: #007000;
-
     --card-bg: #111111;
     --input-bg: #0a0a0a;
     --footer-bg: #000000;
     --win98-title-bg: var(--primary-color);
     --win98-title-text: #000000;
-
     --border-light: #00c000;
     --border-dark: #003300;
 }
@@ -52,10 +45,11 @@ body {
     background-color: var(--bg-color);
     color: var(--text-color);
     text-rendering: optimizeLegibility;
+    overflow-x: hidden;
 }
 
 /* ============================= */
-/* Particles Background          */
+/* Particles Background */
 /* ============================= */
 #particles-js {
     position: fixed;
@@ -64,14 +58,13 @@ body {
     z-index: -1;
     background-color: transparent;
 }
-
 .hero-section, section, footer, header {
     position: relative;
     z-index: 1;
 }
 
 /* ============================= */
-/* Links & Headings              */
+/* Links & Headings */
 /* ============================= */
 a {
     text-decoration: none;
@@ -88,233 +81,185 @@ a:hover { color: var(--primary-hover); text-decoration: underline; }
     padding-bottom: 0.5rem;
     color: var(--text-color);
 }
-.section-heading + h3 { margin-top: -1rem; }
 
 /* ============================= */
-/* Profile Avatar                */
+/* Win98-Style Draggable Windows */
 /* ============================= */
-.profile-avatar {
-    margin: 0 auto 1.5rem;
-    width: 120px; height: 120px;
-    overflow: hidden;
-    position: relative;
-    border: 3px outset var(--border-light);
+.win98-window {
+    position: fixed;
+    background: var(--card-bg);
+    border: 2px outset var(--border-light);
     border-right-color: var(--border-dark);
     border-bottom-color: var(--border-dark);
+    box-shadow: 3px 3px 10px rgba(0,0,0,0.5);
+    min-width: 320px;
+    max-width: 90%;
+    z-index: 999;
+    user-select: none;
 }
-.profile-avatar .avatar-img {
-    display: block;
-    width: 100%; height: 100%;
-    object-fit: cover;
-    border: none;
-    transition: filter 0.3s ease-in-out, transform 0.3s ease-in-out;
-    filter: grayscale(10%);
-}
-.profile-avatar .avatar-img:hover {
-    filter: grayscale(100%) brightness(1.2);
-    transform: scale(1.05);
-}
-
-/* 3D Canvas Placeholder */
-#avatar-3d-canvas {
-    display: block;
-    width: 100%; height: 100%;
-    border: 1px solid var(--secondary-color);
-    background-color: var(--input-bg);
-}
-.avatar-loading-text {
-    position: absolute;
-    top: 50%;
-    left: 0;
-    width: 100%;
-    transform: translateY(-50%);
-    font-size: 0.8rem;
-    color: var(--secondary-color);
-    text-align: center;
-}
-
-/* ============================= */
-/* Layout & Containers           */
-/* ============================= */
-.container {
-    width: 90%;
-    max-width: 1000px;
-    margin: auto;
-    padding: 2rem 1rem;
-}
-
-/* ============================= */
-/* Header & Navigation           */
-/* ============================= */
-header {
-    background-color: var(--bg-color);
-    padding: 0.5rem 0;
-    border: 3px solid var(--border-dark);
-    border-right-color: var(--border-light);
-    border-bottom-color: var(--border-light);
-    position: sticky;
-    top: 0;
-    z-index: 1000;
-}
-header nav {
+.win98-title {
+    background: var(--win98-title-bg);
+    color: var(--win98-title-text);
+    padding: 3px 8px;
+    font-weight: bold;
+    font-size: 0.9rem;
+    cursor: grab;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    gap: 1rem;
 }
-header nav a {
-    padding: 0.5rem 0.75rem;
-    font-weight: bold;
-    color: var(--text-color);
-    border: 1px solid transparent;
-    flex-shrink: 0;
-}
-header nav a:hover {
-    color: var(--primary-color);
+.win98-title:active { cursor: grabbing; }
+.win98-close {
+    width: 16px; height: 16px;
+    background: var(--card-bg);
     border: 1px inset var(--border-dark);
-}
-header nav .active {
-    background-color: var(--card-bg);
-    color: var(--primary-color);
-    border: 1px inset var(--border-dark);
-}
-
-/* Dark Mode Toggle */
-#dark-mode-toggle {
-    display: inline-block;
-    padding: 4px 8px;
-    font-size: 1.2rem;
-    cursor: pointer;
-    background-color: var(--bg-color);
-    border: 2px outset var(--border-light);
-    border-right-color: var(--border-dark);
-    border-bottom-color: var(--border-dark);
-    box-shadow: 1px 1px 0 var(--border-dark);
-    color: var(--text-color);
-    margin-left: auto;
-    flex-shrink: 0;
-    transition: all 0.1s ease;
-}
-#dark-mode-toggle:hover, #dark-mode-toggle:focus {
-    border: 2px inset var(--border-dark);
-    border-right-color: var(--border-light);
-    border-bottom-color: var(--border-light);
-    box-shadow: none;
-    outline: none;
-}
-
-/* ============================= */
-/* Buttons / CTAs                */
-/* ============================= */
-.cta-btn, .button-link, .cta-link {
-    display: inline-block;
-    padding: 8px 16px;
-    margin: 8px 4px;
-    font-weight: bold;
+    font-size: 0.7rem;
+    line-height: 14px;
     text-align: center;
     cursor: pointer;
-    text-transform: uppercase;
-    color: var(--text-color);
-    background-color: var(--bg-color);
-    border: 2px outset var(--border-light);
-    border-right-color: var(--border-dark);
-    border-bottom-color: var(--border-dark);
-    box-shadow: 1px 1px 0 var(--border-dark);
-    transition: all 0.1s ease;
+    margin-left: 8px;
 }
-.cta-btn:hover, .button-link:hover, .cta-link:hover,
-.cta-btn:focus, .button-link:focus, .cta-link:focus {
-    border: 2px inset var(--border-dark);
-    border-right-color: var(--border-light);
-    border-bottom-color: var(--border-light);
-    box-shadow: none;
-    text-decoration: none;
-    outline: none;
+.win98-close:hover {
+    background: red;
+    color: white;
 }
-.cta-btn.primary {
-    background-color: var(--primary-color);
-    color: var(--border-light);
-    border-color: var(--primary-color);
-    border-top-color: var(--primary-hover);
-    border-left-color: var(--primary-hover);
-    box-shadow: 1px 1px 0 var(--border-dark);
-}
-.cta-btn.primary:hover,
-.cta-btn.primary:focus {
-    background-color: var(--primary-hover);
-    border: 2px inset var(--border-dark);
-    border-right-color: var(--border-light);
-    border-bottom-color: var(--border-light);
-    box-shadow: none;
-}
-
-/* ============================= */
-/* Hero Section & Avatar         */
-/* ============================= */
-.hero-section {
-    padding: 4rem 0;
-    text-align: center;
-    background-color: var(--card-bg);
-    border: 3px outset var(--border-light);
-    border-right-color: var(--border-dark);
-    border-bottom-color: var(--border-dark);
-    margin: 2rem auto;
-}
-.hero-content h1 {
-    font-size: 2.8rem;
-    margin-bottom: 0.5rem;
-    color: var(--primary-color);
-}
-.hero-content .subtitle {
-    font-size: 1.3rem;
-    margin-bottom: 1.5rem;
-    font-style: italic;
-    color: var(--secondary-color);
-}
-
-/* ============================= */
-/* Project Cards & Lists         */
-/* ============================= */
-.project-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 20px;
-}
-.project-card {
-    background-color: var(--card-bg);
-    color: var(--text-color);
-    padding: 1.5rem;
-    border: 2px inset var(--border-dark);
-    transition: transform 0.2s ease;
-}
-.project-card:hover {
-    transform: translateY(-2px);
-    box-shadow: 4px 4px 0 var(--secondary-color);
-}
-
-/* ============================= */
-/* 3D Canvas Container           */
-/* ============================= */
-.three-d-container {
-    width: 100%;
+.win98-content {
+    padding: 10px;
+    background: var(--input-bg);
     height: 400px;
-    border: 3px outset var(--border-light);
-    border-right-color: var(--border-dark);
-    border-bottom-color: var(--border-dark);
-    background-color: var(--input-bg);
-    margin: 1rem 0;
-    position: relative;
     overflow: hidden;
+    position: relative;
 }
-.three-d-container canvas {
-    display: block;
-    width: 100%;
+
+/* Interactive Fractal Window Specific */
+.interactive-fractal-window {
+    top: 60px;
+    left: 50px;
+    width: 600px;
+    height: 520px;
+}
+.interactive-fractal-content {
+    display: flex;
+    flex-direction: column;
     height: 100%;
 }
+.fractal-controls {
+    padding: 8px;
+    background: var(--card-bg);
+    border-bottom: 2px inset var(--border-dark);
+    font-size: 0.9rem;
+    flex-shrink: 0;
+}
+.fractal-controls input[type="range"] {
+    width: 200px;
+    margin: 0 8px;
+}
+.fractal-controls select {
+    padding: 2px;
+    background: white;
+    border: 1px inset;
+}
+
+/* Canvas in fractal windows */
+.win98-content canvas {
+    flex: 1;
+    display: block;
+    cursor: grab;
+    background: black;
+}
+.win98-content canvas:active {
+    cursor: grabbing;
+}
+
+/* ============================= */
+/* Floating Action Button (FAB) Menu */
+/* ============================= */
+#fab-menu-toggle {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    background: var(--primary-color);
+    color: white;
+    font-size: 1.8rem;
+    border: 3px outset var(--border-light);
+    box-shadow: 0 4px 10px rgba(0,0,0,0.4);
+    cursor: pointer;
+    z-index: 1000;
+    transition: all 0.2s;
+}
+#fab-menu-toggle:hover {
+    background: var(--primary-hover);
+    transform: scale(1.1);
+}
+
+.fab-menu {
+    position: fixed;
+    bottom: 90px;
+    right: 20px;
+    background: var(--card-bg);
+    border: 2px outset var(--border-light);
+    padding: 10px;
+    border-radius: 4px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+    z-index: 999;
+    display: none;
+}
+.fab-menu button {
+    display: block;
+    width: 100%;
+    margin: 6px 0;
+    padding: 8px;
+    background: var(--bg-color);
+    border: 2px outset var(--border-light);
+    cursor: pointer;
+    font-size: 0.9rem;
+}
+.fab-menu button:hover {
+    border: 2px inset var(--border-dark);
+}
+
+/* Dynamic Scroll to Top Button */
+#scroll-to-top {
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: var(--primary-color);
+    color: white;
+    font-size: 1.8rem;
+    font-weight: bold;
+    border: 3px outset var(--border-light);
+    box-shadow: 0 4px 10px rgba(0,0,0,0.4);
+    cursor: pointer;
+    z-index: 998;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+}
+#scroll-to-top.show {
+    opacity: 1;
+    visibility: visible;
+}
+#scroll-to-top:hover {
+    background: var(--primary-hover);
+    transform: translateY(-4px);
+}
+
+/* ============================= */
+/* Profile Avatar & 3D Cube */
+/* ============================= */
 #avatar-3d {
-    position: relative;
-    width: 300px;
+    width: 100%;
     height: 300px;
+    background: var(--input-bg);
+    border: 3px outset var(--border-light);
+    overflow: hidden;
+    position: relative;
 }
 #cubeCanvas {
     position: absolute;
@@ -324,17 +269,34 @@ header nav .active {
 }
 
 /* ============================= */
-/* Responsive Adjustments        */
+/* Responsive Adjustments */
 /* ============================= */
 @media (max-width: 768px) {
     .container { width: 95%; padding: 1.5rem 0.5rem; }
     .hero-section { margin: 1rem auto; padding: 2rem 0; }
     .hero-content h1 { font-size: 2.2rem; }
     .hero-content .subtitle { font-size: 1.1rem; }
-    header nav { flex-direction: column; align-items: stretch; gap: 0.25rem; }
-    header nav a { margin: 0; text-align: center; }
-    #dark-mode-toggle { margin: 0.5rem 0 0; order: -1; }
-    .project-grid { grid-template-columns: 1fr; }
-    .win98-window { min-width: 90%; left: 5%; }
-    .win98-content { height: 250px; }
+    header nav { flex-direction: column; gap: 0.5rem; }
+    #dark-mode-toggle { margin: 0.5rem auto; order: -1; }
+
+    /* Mobile: Fullscreen draggable windows */
+    .win98-window,
+    .interactive-fractal-window {
+        left: 5% !important;
+        top: 50px !important;
+        width: 90% !important;
+        height: auto !important;
+        max-height: calc(100vh - 100px);
+    }
+    .win98-content {
+        height: 60vh;
+    }
+    .fractal-controls input[type="range"] {
+        width: 150px;
+    }
+
+    /* FAB on mobile */
+    #fab-menu-toggle { bottom: 15px; right: 15px; width: 50px; height: 50px; font-size: 1.5rem; }
+    #scroll-to-top { bottom: 15px; left: 15px; width: 46px; height: 46px; }
+    .fab-menu { bottom: 80px; right: 15px; }
 }
