@@ -66,6 +66,18 @@ function makeDraggable(win, handle) {
 document.addEventListener("DOMContentLoaded", () => {
 
 
+    // Attach cube canvas inside avatar-3d
+    const avatar3D = document.getElementById("avatar-3d");
+    if (avatar3D && typeof THREE !== 'undefined') {
+        const cubeCanvas = document.createElement("canvas");
+        cubeCanvas.id = "cubeCanvas";
+        cubeCanvas.width = 300;
+        cubeCanvas.height = 300;
+        avatar3D.appendChild(cubeCanvas);
+    
+    }
+
+
     // --- Typewriter Effect (Targeting ID: "typewriter") ---
     const typewriterElement = document.getElementById("typewriter");
     if (typewriterElement) {
@@ -543,4 +555,63 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
+});
+function drawCurve(canvasId, drawFunc) {
+    const c = document.getElementById(canvasId);
+    if (!c) return;
+    const ctx = c.getContext("2d");
+    c.width = 300;
+    c.height = 300;
+    drawFunc(ctx, c.width, c.height);
+}
+
+// Lissajous
+drawCurve("lissajous-canvas", (ctx, w, h) => {
+    ctx.strokeStyle = "#ff66ff";
+    ctx.beginPath();
+    for (let t = 0; t < 2 * Math.PI; t += 0.01) {
+        let x = w/2 + Math.sin(3*t + Math.PI/2) * 120;
+        let y = h/2 + Math.sin(4*t) * 120;
+        ctx.lineTo(x, y);
+    }
+    ctx.stroke();
+});
+
+// Rose curve
+drawCurve("rose-canvas", (ctx, w, h) => {
+    ctx.strokeStyle = "#66ccff";
+    ctx.beginPath();
+    for (let t = 0; t < Math.PI * 12; t += 0.01) {
+        let r = 150 * Math.sin(4 * t);
+        let x = w/2 + r * Math.cos(t);
+        let y = h/2 + r * Math.sin(t);
+        ctx.lineTo(x, y);
+    }
+    ctx.stroke();
+});
+
+// Butterfly
+drawCurve("butterfly-canvas", (ctx, w, h) => {
+    ctx.strokeStyle = "#ff8844";
+    ctx.beginPath();
+    for (let t = 0; t < 2*Math.PI*10; t += 0.01) {
+        let r = Math.exp(Math.sin(t)) - 2*Math.cos(4*t) + Math.pow(Math.sin((2*t- Math.PI)/24), 5);
+        let x = w/2 + 30 * r * Math.cos(t);
+        let y = h/2 + 30 * r * Math.sin(t);
+        ctx.lineTo(x, y);
+    }
+    ctx.stroke();
+});
+
+// Spirograph
+drawCurve("spirograph-canvas", (ctx, w, h) => {
+    ctx.strokeStyle = "#44ff99";
+    ctx.beginPath();
+    let R = 120, r = 60, d = 90;
+    for (let t = 0; t < Math.PI*20; t += 0.01) {
+        let x = (R-r)*Math.cos(t) + d*Math.cos(((R-r)/r)*t);
+        let y = (R-r)*Math.sin(t) - d*Math.sin(((R-r)/r)*t);
+        ctx.lineTo(w/2 + x, h/2 + y);
+    }
+    ctx.stroke();
 });
