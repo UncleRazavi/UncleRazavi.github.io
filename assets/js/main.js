@@ -1,6 +1,28 @@
 // ============================================================
 // 1. GLOBAL CONFIGURATIONS & UTILITIES
 // ============================================================
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    const toggleBtn = document.getElementById('dark-mode-toggle');
+
+    // Load saved preference
+    if (localStorage.getItem('darkMode') === 'enabled') {
+        document.body.classList.add('dark-mode');
+    }
+
+    toggleBtn.addEventListener('click', () => {
+        document.body.classList.toggle('dark-mode');
+
+        if (document.body.classList.contains('dark-mode')) {
+            localStorage.setItem('darkMode', 'enabled');
+            toggleBtn.textContent = '☀️ Light Mode';
+        } else {
+            localStorage.setItem('darkMode', 'disabled');
+            toggleBtn.textContent = '🌙 Dark Mode';
+        }
+    });
+});
+</script>
 
 // --- Particles.js Configuration ---
 const particleConfig = {
@@ -636,4 +658,5 @@ drawCurve("spirograph-canvas", (ctx, w, h) => {
     }
     ctx.stroke();
 });
+
 
