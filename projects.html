@@ -5,8 +5,73 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Projects - Hossein Razavi</title>
     <link rel="stylesheet" href="assets/css/main.css">
+    <style>
+        /* Header buttons */
+        .win98-header {
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+            padding: 10px;
+            background-color: #c0c0c0;
+            border-bottom: 2px solid #fff;
+        }
+
+        .win98-button-header {
+            padding: 5px 12px;
+            font-family: 'Courier New', monospace;
+            border: 2px outset #fff;
+            background-color: #e0e0e0;
+            cursor: pointer;
+        }
+
+        /* Dark mode styles */
+        body.dark-mode {
+            background-color: #1a1a1a;
+            color: #f0f0f0;
+        }
+
+        body.dark-mode .win98-window {
+            background-color: #2a2a2a;
+            border-color: #555;
+        }
+
+        body.dark-mode .win98-button,
+        body.dark-mode .win98-button-header {
+            background-color: #444;
+            color: #f0f0f0;
+            border-color: #888;
+        }
+
+        body.dark-mode a {
+            color: #9fcfff;
+        }
+    </style>
 </head>
 <body>
+
+<!-- Header with Home & Dark Mode Toggle -->
+<div class="win98-header">
+    <button class="win98-button-header" onclick="location.href='index.html'">🏠 Home</button>
+    <button class="win98-button-header" id="dark-mode-toggle">🌙 Dark Mode</button>
+</div>
+
+<script>
+    // Dark mode toggle
+    const darkToggle = document.getElementById('dark-mode-toggle');
+    const darkModeKey = 'darkMode';
+
+    if (localStorage.getItem(darkModeKey) === 'enabled') {
+        document.body.classList.add('dark-mode');
+        darkToggle.textContent = '☀️ Light Mode';
+    }
+
+    darkToggle.addEventListener('click', () => {
+        document.body.classList.toggle('dark-mode');
+        const isDark = document.body.classList.contains('dark-mode');
+        localStorage.setItem(darkModeKey, isDark ? 'enabled' : 'disabled');
+        darkToggle.textContent = isDark ? '☀️ Light Mode' : '🌙 Dark Mode';
+    });
+</script>
 
 <main class="container" style="padding: 2rem; max-width: 1200px; margin: auto;">
 
