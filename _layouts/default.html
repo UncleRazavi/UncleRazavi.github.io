@@ -1,29 +1,40 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    {% seo %} 
+
     <title>{{ page.title | default: site.title }}</title>
     
+    {% unless page.description %}
+    <meta name="description" content="{{ site.description }}">
+    {% endunless %}
+
     <link rel="stylesheet" href="{{ "/assets/css/main.css" | relative_url }}">
+    
 </head>
 <body>
     
     <div id="particles-js"></div> 
     
-    <header>
+    <header class="win98-window-titlebar">
         <div class="container"> 
-            <nav style="display: flex; justify-content: space-between; align-items: center;">
-                <a href="{{ "/" | relative_url }}" class="site-title-link">
-                    Hossein Razavi
+            <nav class="main-nav-layout" aria-label="Main Navigation">
+                <a href="{{ "/" | relative_url }}" class="site-title-link nav-brand">
+                    {{ site.title }}
                 </a>
                 
-                <div style="display: flex; align-items: center; gap: 1rem;">
-                    <a href="{{ "/about.html" | relative_url }}">About</a>
-                    <a href="{{ "/projects.html" | relative_url }}">Projects</a>
-                    <a href="{{ "/blog.html" | relative_url }}">Blog</a>
-                    <a href="{{ "/contact.html" | relative_url }}">Contact</a>
-                    <button id="dark-mode-toggle" aria-label="Toggle Dark Mode" style="margin-left: auto;">☾</button>
+                <div class="nav-links-wrapper">
+                    <a href="{{ "/" | relative_url }}" accesskey="h">Home</a>
+                    <a href="{{ "/about.html" | relative_url }}" accesskey="a">About</a>
+                    <a href="{{ "/projects.html" | relative_url }}" accesskey="p">Projects</a>
+                    <a href="{{ "/blog.html" | relative_url }}" accesskey="b">Blog</a>
+                    <a href="{{ "/contact.html" | relative_url }}" accesskey="c">Contact</a>
+                    
+                    <button id="dark-mode-toggle" aria-label="Toggle Dark Mode" class="win98-button">☾</button>
                 </div>
             </nav>
         </div>
@@ -34,12 +45,15 @@
     </main>
     
     <footer>
-        <p>© 2025 Hossein Razavi. All Rights Reserved.</p>
+        <div class="container footer-content">
+             <p>&copy; {{ 'now' | date: "%Y" }} {{ site.author }}. All Rights Reserved. Powered by the spirit of **Windows 98**.</p>
+        </div>
     </footer>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
-    <script src="{{ "/assets/js/main.js" | relative_url }}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js" defer></script>
+    
+    <script src="{{ "/assets/js/main.js" | relative_url }}" defer></script>
     
 </body>
 </html>
