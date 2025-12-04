@@ -1,130 +1,136 @@
 ---
 layout: default
 title: Hossein Razavi - Electrical Engineering, Data Science & Neuroscience
+description: The personal website of Hossein Razavi, focusing on Signal Processing, Data Science, and Neuroscience, presented with a retro Windows 98 aesthetic.
 ---
 
-<header>
-  <div class="container">
-    <nav>
-      <a href="{{ '/' | relative_url }}" accesskey="h">Home</a>
-      <a href="{{ '/projects.html' | relative_url }}" accesskey="p">Projects</a>
-      <a href="{{ '/blog.html' | relative_url }}" accesskey="b">Blog</a>
-      <a href="{{ '/about.html' | relative_url }}" accesskey="a">About</a>
-      <button id="dark-mode-toggle" aria-label="Toggle Dark Mode">Dark Mode</button>
-    </nav>
-  </div>
-</header>
+<main class="container">
+    <section class="hero-section" role="banner">
+        <div class="hero-content">
+            
+            <div class="avatar-group">
+                <div id="avatar-3d" class="win98-bevel-in" aria-label="3D rotating cube avatar">
+                    <div class="avatar-loading-text">Loading 3D Avatar...</div>
+                </div>
+                
+                <h1 id="typewriter" class="main-title">Hossein Razavi</h1>
+            </div>
+            
+            <h2 class="subtitle">
+                <span class="typewriter-tagline">
+                    Undergraduate Student | Electrical &amp; Electronic Engineering
+                </span>
+            </h2>
 
-<section class="hero-section">
-  <div class="container hero-content">
-    <div id="avatar-3d" class="win98-bevel-in" aria-label="3D rotating cube avatar">
-      <div class="avatar-loading-text">Loading 3D Avatar...</div>
-    </div>
+            <p class="bio-intro">
+                Welcome to my personal website! I am currently pursuing my undergraduate studies at
+                <strong>K.N. Toosi University of Technology</strong>. My academic passion lies at the intersection of
+                <strong>Electrical Engineering</strong>, <strong>Data Science</strong>, <strong>Neuroscience</strong>,
+                and <strong>Signal Processing</strong>.
+            </p>
 
-    <h1>Hossein Razavi</h1>
-    <h2 class="subtitle">Undergraduate Student | Electrical &amp; Electronic Engineering</h2>
+            <div class="cta-group">
+                <a href="{{ '/projects.html' | relative_url }}" class="win98-button primary">📂 Explore Projects</a>
+                <a href="{{ '/about.html' | relative_url }}" class="win98-button">🧑‍💻 More About Me</a>
+            </div>
+            
+            <div class="quick-links">
+                <a href="https://github.com/UncleRazavi" target="_blank" rel="noopener" class="win98-link">GitHub (Code)</a>
+                <span aria-hidden="true"> | </span>
+                <a href="https://www.linkedin.com/in/hossein-razavi-485a84288" target="_blank" rel="noopener" class="win98-link">LinkedIn (Network)</a>
+            </div>
+        </div>
+    </section>
 
-    <p class="bio-intro">
-      Welcome to my personal website! I am currently pursuing my undergraduate studies at
-      <strong>K.N. Toosi University of Technology</strong>. My academic passion lies at the intersection of
-      <strong>Electrical Engineering</strong>, <strong>Data Science</strong>, <strong>Neuroscience</strong>,
-      and <strong>Signal Processing</strong>.
-    </p>
+    ---
 
-    <div class="quick-links">
-      <a href="https://github.com/UncleRazavi" target="_blank" rel="noopener">GitHub</a>
-      <span aria-hidden="true"> | </span>
-      <a href="https://www.linkedin.com/in/hossein-razavi-485a84288" target="_blank" rel="noopener">LinkedIn</a>
-    </div>
+    <section class="focus-section">
+        <h2 class="section-heading win98-window-titlebar">🎯 Key Focus Areas</h2>
+        <ul class="focus-list win98-bevel-in">
+            <li><strong>Data Science &amp; ML:</strong> Complex data modeling and practical applications.</li>
+            <li><strong>Neuroscience &amp; BCIs:</strong> Analysis of biological signals for Brain-Computer Interfaces.</li>
+            <li><strong>Signal Processing (DSP):</strong> Digital Filter Design and Time-Series Analysis.</li>
+            <li><strong>Digital Electronics:</strong> Microcontrollers (AVR/STM32) and FPGA programming (Verilog/VHDL).</li>
+        </ul>
+    </section>
 
-    <div class="cta-group">
-      <a href="{{ '/projects.html' | relative_url }}" class="win98-button primary">Explore My Projects</a>
-      <a href="{{ '/about.html' | relative_url }}" class="win98-button">More About Me</a>
-    </div>
-  </div>
-</section>
+    ---
 
-<section class="container">
-  <h2 class="section-heading">Key Focus Areas</h2>
-  <ul class="focus-list win98-bevel-in">
-    <li>Data Science &amp; Machine Learning</li>
-    <li>Neuroscience &amp; Brain-Computer Interfaces</li>
-    <li>Signal Processing (DSP)</li>
-    <li>Digital Electronics</li>
-  </ul>
-</section>
+    <section class="math-preview-section">
+        <h2 class="section-heading win98-window-titlebar">📐 Interactive Mathematics</h2>
+        <p class="description">Explore beautiful mathematical curves and the infinite complexity of fractal patterns:</p>
 
-<section class="container math-preview-section">
-  <h2 class="section-heading">Interactive Mathematics</h2>
-  <p>Explore beautiful mathematical curves and fractal patterns:</p>
+        <div class="math-grid">
+            <div class="math-object-container win98-bevel-in" title="Animated Lissajous Curve">
+                <div class="math-object-title">Lissajous Curve</div>
+                <canvas id="lissajous-canvas" class="math-object-canvas" width="300" height="240"></canvas>
+            </div>
+            <div class="math-object-container win98-bevel-in" title="Animated Rose Curve">
+                <div class="math-object-title">Rose Curve</div>
+                <canvas id="rose-canvas" class="math-object-canvas" width="300" height="240"></canvas>
+            </div>
+            <div class="math-object-container win98-bevel-in" title="Animated Butterfly Curve">
+                <div class="math-object-title">Butterfly Curve</div>
+                <canvas id="butterfly-canvas" class="math-object-canvas" width="300" height="240"></canvas>
+            </div>
+            <div class="math-object-container win98-bevel-in" title="Animated Spirograph">
+                <div class="math-object-title">Spirograph</div>
+                <canvas id="spirograph-canvas" class="math-object-canvas" width="300" height="240"></canvas>
+            </div>
+        </div>
 
-  <div class="math-grid">
-    <div class="math-object-container win98-bevel-in">
-      <div class="math-object-title">Lissajous Curve</div>
-      <canvas id="lissajous-canvas" class="math-object-canvas" width="300" height="240"></canvas>
-    </div>
-    <div class="math-object-container win98-bevel-in">
-      <div class="math-object-title">Rose Curve</div>
-      <canvas id="rose-canvas" class="math-object-canvas" width="300" height="240"></canvas>
-    </div>
-    <div class="math-object-container win98-bevel-in">
-      <div class="math-object-title">Butterfly Curve</div>
-      <canvas id="butterfly-canvas" class="math-object-canvas" width="300" height="240"></canvas>
-    </div>
-    <div class="math-object-container win98-bevel-in">
-      <div class="math-object-title">Spirograph</div>
-      <canvas id="spirograph-canvas" class="math-object-canvas" width="300" height="240"></canvas>
-    </div>
-  </div>
+        <div class="interactive-control-box">
+            <button id="open-interactive-fractal" class="win98-button primary">
+                Open Interactive Mandelbrot Explorer 🔎
+            </button>
+        </div>
+    </section>
 
-  <div class="interactive-control-box">
-    <button id="open-interactive-fractal" class="win98-button primary">
-      Open Interactive Mandelbrot Explorer
-    </button>
-  </div>
-</section>
+    <section class="fractal-loader-container">
+        <div id="fractalWindow" class="win98-window fractal-static-window" role="dialog" aria-modal="false">
+            <div id="fractalHeader" class="window-title">
+                <span>Fractal Loader - Mandelbrot Set</span>
+                <div id="fractalCloseBtn" class="window-controls">
+                    <button class="win98-close" title="Close">X</button>
+                </div>
+            </div>
+            <div class="window-content">
+                <canvas id="fractalCanvas" width="300" height="220"></canvas>
+            </div>
+        </div>
+    </section>
 
-<section class="container">
-  <h2 class="section-heading">Fractal Loader (Static)</h2>
-  <div id="fractalWindow" class="win98-window fractal-static-window">
-    <div id="fractalHeader" class="win98-title">
-      <span>Fractal Loader - Mandelbrot Set</span>
-      <div id="fractalCloseBtn" class="win98-close" title="Close">X</div>
-    </div>
-    <div class="win98-content">
-      <canvas id="fractalCanvas"></canvas>
-    </div>
-  </div>
-</section>
+    ---
 
-<section class="container blog-preview-section">
-  <h2 class="section-heading">Latest Insights &amp; Blog Posts</h2>
+    <section class="blog-preview-section">
+        <h2 class="section-heading win98-window-titlebar">📰 Latest Insights &amp; Blog Posts</h2>
 
-  <div class="win98-bevel-in blog-preview-wrapper">
-    {% for post in site.posts limit:3 %}
-    <div class="post-card win98-bevel-out post-card-preview">
-      <h3 class="post-title">
-        <a href="{{ post.url | relative_url }}" class="post-title-link">{{ post.title }}</a>
-      </h3>
-      <p class="post-meta">
-        Published on <time datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: "%B %d, %Y" }}</time>
-      </p>
-      <p class="post-excerpt">{{ post.excerpt | strip_html | truncatewords: 25 }}</p>
-      <a href="{{ post.url | relative_url }}" class="read-more-link">Read more →</a>
-    </div>
-    {% else %}
-    <p class="no-posts-message">No blog posts published yet. Check back soon!</p>
-    {% endfor %}
-  </div>
+        <div class="blog-grid">
+            {% for post in site.posts limit:3 %}
+            <article class="post-card win98-bevel-out post-card-preview" aria-labelledby="post-title-{{ post.slug }}">
+                <h3 id="post-title-{{ post.slug }}" class="post-title">
+                    <a href="{{ post.url | relative_url }}" class="post-title-link">{{ post.title }}</a>
+                </h3>
+                <p class="post-meta">
+                    <span class="icon">📅</span> Published: <time datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: "%B %d, %Y" }}</time>
+                </p>
+                <p class="post-excerpt">{{ post.excerpt | strip_html | truncatewords: 25 }}</p>
+                <a href="{{ post.url | relative_url }}" class="win98-button small read-more-link">Read more →</a>
+            </article>
+            {% else %}
+            <p class="no-posts-message win98-bevel-in">No blog posts published yet. Check back soon!</p>
+            {% endfor %}
+        </div>
 
-  <div class="view-all-posts">
-    <a href="{{ '/blog.html' | relative_url }}" class="win98-button">View All Posts</a>
-  </div>
+        <div class="post-footer-actions">
+            <a href="{{ '/blog.html' | relative_url }}" class="win98-button primary view-all-posts">View All Posts</a>
 
-  <div class="telegram-link-box win98-bevel-in">
-    <p>
-      Check out my academic document library on Telegram:<br>
-      <a href="https://t.me/HRslibrary" target="_blank" rel="noopener" class="telegram-link">t.me/HRslibrary</a>
-    </p>
-  </div>
-</section>
+            <div class="telegram-link-box win98-bevel-in">
+                <p>
+                    <span class="icon">📚</span> Check out my academic document library on Telegram:<br>
+                    <a href="https://t.me/HRslibrary" target="_blank" rel="noopener" class="telegram-link">t.me/HRslibrary</a>
+                </p>
+            </div>
+        </div>
+    </section>
+</main>
