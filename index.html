@@ -10,7 +10,6 @@ description: The personal website of Hossein Razavi, focusing on Signal Processi
             
             <div class="avatar-group">
                 <div id="avatar-3d" class="win98-bevel-in" aria-label="3D rotating cube avatar">
-                    <div class="avatar-loading-text">Loading 3D Avatar...</div>
                 </div>
                 
                 <h1 id="typewriter" class="main-title">Hossein Razavi</h1>
@@ -30,8 +29,8 @@ description: The personal website of Hossein Razavi, focusing on Signal Processi
             </p>
 
             <div class="cta-group">
-                <a href="{{ '/projects.html' | relative_url }}" class="win98-button primary">📂 Explore Projects</a>
-                <a href="{{ '/about.html' | relative_url }}" class="win98-button">🧑‍💻 More About Me</a>
+                <a href="{{ '/projects.html' | relative_url }}" class="win98-button primary"> Explore Projects</a>
+                <a href="{{ '/about.html' | relative_url }}" class="win98-button"> More About Me</a>
             </div>
             
             <div class="quick-links">
@@ -45,7 +44,7 @@ description: The personal website of Hossein Razavi, focusing on Signal Processi
     ---
 
     <section class="focus-section">
-        <h2 class="section-heading win98-window-titlebar">🎯 Key Focus Areas</h2>
+        <h2 class="section-heading win98-window-titlebar"> Key Focus Areas</h2>
         <ul class="focus-list win98-bevel-in">
             <li><strong>Data Science &amp; ML:</strong> Complex data modeling and practical applications.</li>
             <li><strong>Neuroscience &amp; BCIs:</strong> Analysis of biological signals for Brain-Computer Interfaces.</li>
@@ -103,7 +102,7 @@ description: The personal website of Hossein Razavi, focusing on Signal Processi
     ---
 
     <section class="blog-preview-section">
-        <h2 class="section-heading win98-window-titlebar">📰 Latest Insights &amp; Blog Posts</h2>
+        <h2 class="section-heading win98-window-titlebar">Latest Insights &amp; Blog Posts</h2>
 
         <div class="blog-grid">
             {% for post in site.posts limit:3 %}
@@ -112,7 +111,7 @@ description: The personal website of Hossein Razavi, focusing on Signal Processi
                     <a href="{{ post.url | relative_url }}" class="post-title-link">{{ post.title }}</a>
                 </h3>
                 <p class="post-meta">
-                    <span class="icon">📅</span> Published: <time datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: "%B %d, %Y" }}</time>
+                    <span class="icon"></span> Published: <time datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: "%B %d, %Y" }}</time>
                 </p>
                 <p class="post-excerpt">{{ post.excerpt | strip_html | truncatewords: 25 }}</p>
                 <a href="{{ post.url | relative_url }}" class="win98-button small read-more-link">Read more →</a>
@@ -134,3 +133,4 @@ description: The personal website of Hossein Razavi, focusing on Signal Processi
         </div>
     </section>
 </main>
+
