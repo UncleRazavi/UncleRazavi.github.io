@@ -942,3 +942,17 @@ footer {
         height: 250px; /* Shorter height on mobile */
     }
 }
+
+#avatar-3d {
+    position: relative;
+    width: 300px;  /* match cube size */
+    height: 300px;
+}
+
+#cubeCanvas {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
