@@ -6,10 +6,10 @@ title: Hossein Razavi | Home
 <main class="container">
 
     <section class="hero win98-window" id="welcome-section">
-        <div class="window-title"> Welcome to Hossein's Page</div>
+        <div class="window-title">Welcome to Hossein's Page</div>
         <div class="window-content" style="text-align: center;">
             <header>
-                <h1>Hello, I'm **Hossein Razavi**</h1>
+                <h1>Hello, I'm Hossein Razavi</h1>
                 <p class="subtitle">
                     Electrical engineering student, data science enthusiast, and explorer of **neuroscience** and **digital electronics**.
                 </p>
@@ -24,7 +24,7 @@ title: Hossein Razavi | Home
 
     <div class="grid-layout-main">
         <section class="latest-blog win98-window" id="blog-posts">
-            <div class="window-title"> Latest Blog Posts</div>
+            <div class="window-title">Latest Blog Posts</div>
             <div class="window-content">
                 <ul class="post-list" style="list-style: none; padding: 0;">
                     {% for post in site.posts limit:3 %}
@@ -33,7 +33,7 @@ title: Hossein Razavi | Home
                             <h3 class="post-card-title">
                                 <a href="{{ post.url }}" class="post-title-link">{{ post.title }}</a>
                             </h3>
-                            <p class="post-meta"> Published on: <time datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: "%B %d, %Y" }}</time></p>
+                            <p class="post-meta">Published on: <time datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: "%B %d, %Y" }}</time></p>
                             <p class="post-excerpt">{{ post.excerpt | strip_html | truncatewords: 25 }}</p>
                             <a href="{{ post.url }}" class="win98-button">Read Post →</a>
                         </article>
@@ -48,7 +48,7 @@ title: Hossein Razavi | Home
         </section>
         
         <section class="latest-projects win98-window" id="featured-projects">
-            <div class="window-title">💻 Featured Projects</div>
+            <div class="window-title">Featured Projects</div>
             <div class="window-content">
                 <div class="project-grid">
                     <div class="project-card win98-bevel-out">
@@ -76,7 +76,7 @@ title: Hossein Razavi | Home
 
     <div class="grid-layout-secondary">
         <section class="about-preview win98-window" id="about-me">
-            <div class="window-title">👤 About Me Summary</div>
+            <div class="window-title">About Me Summary</div>
             <div class="window-content">
                 <p>I am a K.N. Toosi University undergraduate student exploring **signal processing**, **neuroscience**, and **data science**.</p>
                 <div style="text-align: center; margin-top: 15px;">
@@ -86,7 +86,7 @@ title: Hossein Razavi | Home
         </section>
 
         <section class="contact-preview win98-window" id="get-in-touch">
-            <div class="window-title"> Get in Touch</div>
+            <div class="window-title">Get in Touch</div>
             <div class="window-content" style="text-align: center;">
                 <p>Questions, collaborations, or just a hello — reach out anytime!</p>
                 <a href="contact.html" class="win98-button primary">Contact Me</a>
