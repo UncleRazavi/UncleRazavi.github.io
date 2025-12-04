@@ -3,75 +3,100 @@ layout: default
 title: Hossein Razavi | Home
 ---
 
+<!-- Particle Background -->
+<div id="particles-js" style="position:fixed; top:0; left:0; width:100%; height:100%; z-index:-1;"></div>
+
 <main class="container">
 
+    <!-- Hero Section with Spinning Cube -->
     <section class="hero win98-window" id="welcome-section">
         <div class="window-title">Welcome to Hossein's Page</div>
-        <div class="window-content" style="text-align: center;">
-            <figure class="spinning-cube-placeholder win98-bevel-in" style="width: 120px; height: 120px; margin: 30px auto; display: flex; align-items: center; justify-content: center; font-size: 0.9em; color: #888;">
-                Interactive/Spinning Cube
-            </figure>
+        <div class="window-content" style="text-align:center;">
+            <div id="avatar-3d" style="width:150px; height:150px; margin: 20px auto;">
+                <!-- Three.js cube will be injected here -->
+            </div>
+            <h1 id="typewriter">Hello! I'm Hossein Razavi</h1>
             <a href="about.html" class="win98-button primary">Learn More About My Journey</a>
         </div>
     </section>
 
-    <div class="grid-layout-main">
-        <section class="latest-blog win98-window" id="blog-posts">
-            <div class="window-title">Latest Blog Posts</div>
-            <div class="window-content">
-                <ul class="post-list" style="list-style: none; padding: 0;">
-                    {% for post in site.posts limit:3 %}
-                    <li class="post-card win98-bevel-out" style="margin-bottom: 15px; padding: 10px;">
-                        <article>
-                            <h3 class="post-card-title">
-                                <a href="{{ post.url }}" class="post-title-link">{{ post.title }}</a>
-                            </h3>
-                            <p class="post-meta">Published on: <time datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: "%B %d, %Y" }}</time></p>
-                            <p class="post-excerpt">{{ post.excerpt | strip_html | truncatewords: 25 }}</p>
-                            <a href="{{ post.url }}" class="win98-button">Read Post →</a>
-                        </article>
-                    </li>
-                    {% endfor %}
-                </ul>
-                <div style="text-align: right; margin-top: 15px;">
-                    <a href="blog.html" class="win98-button">View All Blog Posts</a>
-                </div>
+    <!-- Latest Blog Posts -->
+    <section class="latest-blog win98-window" id="blog-posts">
+        <div class="window-title">Latest Blog Posts</div>
+        <div class="window-content">
+            <ul class="post-list" style="list-style:none; padding:0;">
+                {% for post in site.posts limit:3 %}
+                <li class="post-card win98-bevel-out" style="margin-bottom:15px; padding:10px;">
+                    <article>
+                        <h3 class="post-card-title">
+                            <a href="{{ post.url }}" class="post-title-link">{{ post.title }}</a>
+                        </h3>
+                        <p class="post-meta">Published on: <time datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: "%B %d, %Y" }}</time></p>
+                        <p class="post-excerpt">{{ post.excerpt | strip_html | truncatewords:25 }}</p>
+                        <a href="{{ post.url }}" class="win98-button">Read Post →</a>
+                    </article>
+                </li>
+                {% endfor %}
+            </ul>
+            <div style="text-align:right; margin-top:15px;">
+                <a href="blog.html" class="win98-button">View All Blog Posts</a>
             </div>
-        </section>
-        
-        <section class="latest-projects win98-window" id="featured-projects">
-            <div class="window-title">Featured Projects</div>
-            <div class="window-content">
-                <div class="project-grid">
-                    <div class="project-card win98-bevel-out">
-                        <h4>Computational Neuroscience</h4>
-                        <p>Exploring brain robustness to visual noise (Neuromatch Academy pod Lively anat).</p>
-                        <a href="projects.html#neuroscience" class="win98-button small-button">Details</a>
-                    </div>
-                    <div class="project-card win98-bevel-out">
-                        <h4>Eurogene Project</h4>
-                        <p>Analyzing ancient and modern genomes to trace human ancestry.</p>
-                        <a href="projects.html#eurogene" class="win98-button small-button">Details</a>
-                    </div>
-                    <div class="project-card win98-bevel-out">
-                        <h4>PINN Library</h4>
-                        <p>Python library for <strong>Physics-Informed Neural Networks</strong> (PDE solver).</p>
-                        <a href="projects.html#pinn" class="win98-button small-button">Details</a>
-                    </div>
-                </div>
-                <div style="text-align: right; margin-top: 15px;">
-                    <a href="projects.html" class="win98-button">View All Projects</a>
-                </div>
-            </div>
-        </section>
-    </div>
+        </div>
+    </section>
 
-    <div class="grid-layout-secondary">
+    <!-- Featured Projects -->
+    <section class="latest-projects win98-window" id="featured-projects">
+        <div class="window-title">Featured Projects</div>
+        <div class="window-content">
+            <div class="project-grid">
+                <div class="project-card win98-bevel-out">
+                    <h4>Computational Neuroscience</h4>
+                    <p>Exploring brain robustness to visual noise (Neuromatch Academy pod Lively anat).</p>
+                    <a href="projects.html#neuroscience" class="win98-button small-button">Details</a>
+                </div>
+                <div class="project-card win98-bevel-out">
+                    <h4>Eurogene Project</h4>
+                    <p>Analyzing ancient and modern genomes to trace human ancestry.</p>
+                    <a href="projects.html#eurogene" class="win98-button small-button">Details</a>
+                </div>
+                <div class="project-card win98-bevel-out">
+                    <h4>PINN Library</h4>
+                    <p>Python library for <strong>Physics-Informed Neural Networks</strong> (PDE solver).</p>
+                    <a href="projects.html#pinn" class="win98-button small-button">Details</a>
+                </div>
+            </div>
+            <div style="text-align:right; margin-top:15px;">
+                <a href="projects.html" class="win98-button">View All Projects</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Curves Section -->
+    <section class="math-curves win98-window" id="curves">
+        <div class="window-title">Mathematical Curves</div>
+        <div class="window-content" style="display:flex; gap:10px; flex-wrap:wrap;">
+            <canvas id="lissajous-canvas"></canvas>
+            <canvas id="rose-canvas"></canvas>
+            <canvas id="butterfly-canvas"></canvas>
+            <canvas id="spirograph-canvas"></canvas>
+        </div>
+    </section>
+
+    <!-- Static Fractal -->
+    <section class="fractal-section win98-window" id="fractalWindow">
+        <div class="window-title" id="fractalHeader">Static Mandelbrot</div>
+        <div class="window-content" style="text-align:center;">
+            <canvas id="fractalCanvas" width="300" height="220" style="border:2px solid #808080;"></canvas>
+        </div>
+    </section>
+
+    <!-- About and Contact -->
+    <section class="grid-layout-secondary">
         <section class="about-preview win98-window" id="about-me">
             <div class="window-title">About Me Summary</div>
             <div class="window-content">
                 <p>I am a K.N. Toosi University undergraduate student exploring <strong>signal processing</strong>, <strong>neuroscience</strong>, and <strong>data science</strong>.</p>
-                <div style="text-align: center; margin-top: 15px;">
+                <div style="text-align:center; margin-top:15px;">
                     <a href="about.html" class="win98-button">Full Bio</a>
                 </div>
             </div>
@@ -79,10 +104,22 @@ title: Hossein Razavi | Home
 
         <section class="contact-preview win98-window" id="get-in-touch">
             <div class="window-title">Get in Touch</div>
-            <div class="window-content" style="text-align: center;">
+            <div class="window-content" style="text-align:center;">
                 <p>Questions, collaborations, or just a hello — reach out anytime!</p>
                 <a href="contact.html" class="win98-button primary">Contact Me</a>
             </div>
         </section>
-    </div>
+    </section>
+
 </main>
+
+<!-- Scroll Top Button -->
+<button id="scrollTopBtn" class="win98-button" style="position:fixed; bottom:20px; right:20px; display:none;">↑ Top</button>
+
+<!-- Dark Mode Toggle (hidden, controlled by JS or FAB) -->
+<button id="dark-mode-toggle" style="display:none;">Toggle Dark Mode</button>
+
+<!-- JS Scripts -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r150/three.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+<script src="/assets/js/main.js"></script>
