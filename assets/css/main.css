@@ -300,3 +300,27 @@ a:hover { color: var(--primary-hover); text-decoration: underline; }
     #scroll-to-top { bottom: 15px; left: 15px; width: 46px; height: 46px; }
     .fab-menu { bottom: 80px; right: 15px; }
 }
+
+.math-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 20px;
+    margin: 2rem 0;
+}
+.math-object-container {
+    background: var(--card-bg);
+    padding: 1rem;
+    border: 2px inset var(--border-dark);
+    text-align: center;
+}
+.math-object-title {
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+    color: var(--primary-color);
+}
+.math-object-canvas {
+    background: black;
+    display: block;
+    margin: 0 auto;
+    image-rendering: pixelated; /* Retro feel */
+}
