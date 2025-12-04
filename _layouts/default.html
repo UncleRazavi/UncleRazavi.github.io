@@ -3,11 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% if page.title %}{{ page.title }} – {% endif %}{{ site.title }}</title>
+    <title>{% if page.title %}{{ page.title }} – {% endif %}Hossein Razavi</title>
     
     {% seo %}
 
     <link rel="stylesheet" href="{{ "/assets/css/main.css" | relative_url }}">
+
+    <!-- Libraries -->
+    <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.132.2/build/three.min.js"></script>
 
     {% if site.win98.dark_mode_default %}
       <script>document.documentElement.classList.add('dark-mode');</script>
@@ -21,48 +25,30 @@
     <!-- ====================== TASKBAR-STYLE HEADER ====================== -->
     <header>
         <nav class="nav-links">
-            <a href="{{ "/" | relative_url }}" class="button-98">Start</a>
-            <a href="{{ "/about.html" | relative_url }}" class="button-98">About</a>
-            <a href="{{ "/projects.html" | relative_url }}" class="button-98">Projects</a>
-            <a href="{{ "/blog.html" | relative_url }}" class="button-98">Blog</a>
-            <a href="{{ "/contact.html" | relative_url }}" class="button-98">Contact</a>
+            <a href="{{ "/" | relative_url }}" class="win98-button">Start</a>
+            <a href="{{ "/about.html" | relative_url }}" class="win98-button">About</a>
+            <a href="{{ "/projects.html" | relative_url }}" class="win98-button">Projects</a>
+            <a href="{{ "/blog.html" | relative_url }}" class="win98-button">Blog</a>
+            <a href="{{ "/contact.html" | relative_url }}" class="win98-button">Contact</a>
             
-            <button id="dark-mode-toggle" class="button-98" aria-label="Toggle Dark Mode">Dark</button>
+            <button id="dark-mode-toggle" class="win98-button" aria-label="Toggle Dark Mode">
+                Dark Mode
+            </button>
         </nav>
     </header>
 
-    <!-- ====================== MAIN CONTENT ====================== -->
-    <main>
-        <div class="win98-window">
-            <div class="window-title">
-                <span>{{ page.title | default: site.title }}</span>
-                <div class="window-controls">
-                    <button disabled>_</button>
-                    <button disabled>□</button>
-                    <button disabled>×</button>
-                </div>
-            </div>
-            <div class="window-content">
-                {{ content }}
-            </div>
-        </div>
+    <!-- ====================== MAIN CONTENT (NO EXTRA WINDOW WRAPPER!) ====================== -->
+    <main class="container">
+        {{ content }}
     </main>
 
-    <!-- ====================== FOOTER (optional) ====================== -->
-    <footer style="text-align:center; margin-top:2rem; font-size:0.9rem; color:var(--win98-gray-dark);">
-        © {{ 'now' | date: "%Y" }} {{ site.author }} • Running Windows 98 on the web since 2025
+    <!-- ====================== FOOTER ====================== -->
+    <footer style="text-align:center; margin:4rem 0 2rem; font-size:0.9rem; color:var(--win98-gray-dark);">
+        © {{ 'now' | date: "%Y" }} Hossein Razavi • Running Windows 98 on the web since 2024
     </footer>
 
-    <!-- ====================== DARK MODE TOGGLE SCRIPT ====================== -->
-    <script>
-      document.getElementById('dark-mode-toggle').addEventListener('click', () => {
-        document.documentElement.classList.toggle('dark-mode');
-        localStorage.setItem('win98-darkmode', document.documentElement.classList.contains('dark-mode'));
-      });
-
-      if (localStorage.getItem('win98-darkmode') === 'true') {
-        document.documentElement.classList.add('dark-mode');
-      }
-    </script>
+    <!-- ====================== MAIN JS ====================== -->
+    <div id="particles-js"></div>
+    <script src="{{ "/assets/js/main.js" | relative_url }}"></script>
 </body>
 </html>
