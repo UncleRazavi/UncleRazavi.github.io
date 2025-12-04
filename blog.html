@@ -60,7 +60,6 @@
     const darkToggle = document.getElementById('dark-mode-toggle');
     const darkModeKey = 'darkMode';
 
-    // Load saved preference
     if (localStorage.getItem(darkModeKey) === 'enabled') {
         document.body.classList.add('dark-mode');
         darkToggle.textContent = '☀️ Light Mode';
@@ -93,25 +92,26 @@
     <section class="blog-grid-section" style="max-width: 900px; margin: 20px auto;">
         <ul class="post-list-grid" style="list-style:none; display:grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; padding:0;">
 
-            <!-- Example Post Card -->
+            {% for post in site.posts %}
             <li class="post-card win98-bevel-out" style="padding: 15px; background-color:#c0c0c0;">
                 <article>
                     <h3 class="post-title">
-                        <a href="example-post.html" class="post-title-link">Example Post Title</a>
+                        <a href="{{ post.url }}" class="post-title-link">{{ post.title }}</a>
                     </h3>
                     
                     <p class="post-meta">
-                        Published on: <time datetime="2025-12-05">December 05, 2025</time>
+                        Published on: <time datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: "%B %d, %Y" }}</time>
                     </p>
                     
                     <p class="post-excerpt">
-                        This is a short excerpt of the blog post, giving a quick preview of the content and insights...
+                        {{ post.excerpt | strip_html | truncatewords: 30 }}
                     </p>
                     
-                    <a href="example-post.html" class="win98-button small-button">Read more →</a>
+                    <a href="{{ post.url }}" class="win98-button small-button">Read more →</a>
                 </article>
             </li>
-            <!-- Repeat for each post -->
+            {% endfor %}
+
         </ul>
 
         <div class="post-grid-footer" style="text-align: center; margin-top: 40px;">
