@@ -60,6 +60,7 @@
     const darkToggle = document.getElementById('dark-mode-toggle');
     const darkModeKey = 'darkMode';
 
+    // Load saved preference
     if (localStorage.getItem(darkModeKey) === 'enabled') {
         document.body.classList.add('dark-mode');
         darkToggle.textContent = '☀️ Light Mode';
@@ -88,34 +89,24 @@
         </div>
     </section>
 
-    <!-- Blog Posts Grid -->
-    <section class="blog-grid-section" style="max-width: 900px; margin: 20px auto;">
-        <ul class="post-list-grid" style="list-style:none; display:grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; padding:0;">
-
-            {% for post in site.posts %}
-            <li class="post-card win98-bevel-out" style="padding: 15px; background-color:#c0c0c0;">
-                <article>
-                    <h3 class="post-title">
-                        <a href="{{ post.url }}" class="post-title-link">{{ post.title }}</a>
-                    </h3>
-                    
-                    <p class="post-meta">
-                        Published on: <time datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: "%B %d, %Y" }}</time>
-                    </p>
-                    
-                    <p class="post-excerpt">
-                        {{ post.excerpt | strip_html | truncatewords: 30 }}
-                    </p>
-                    
-                    <a href="{{ post.url }}" class="win98-button small-button">Read more →</a>
-                </article>
-            </li>
-            {% endfor %}
-
-        </ul>
-
-        <div class="post-grid-footer" style="text-align: center; margin-top: 40px;">
-            <a href="/blog.html" class="win98-button primary">View All Posts</a>
+    <!-- All Blog Posts -->
+    <section class="all-blog-posts win98-window" style="max-width: 900px; margin: 20px auto;">
+        <div class="window-title">All Posts</div>
+        <div class="window-content">
+            <ul class="post-list" style="list-style:none; padding:0;">
+                {% for post in site.posts %}
+                <li class="post-card win98-bevel-out" style="margin-bottom:15px; padding:10px;">
+                    <article>
+                        <h3 class="post-card-title">
+                            <a href="{{ post.url }}" class="post-title-link">{{ post.title }}</a>
+                        </h3>
+                        <p class="post-meta">Published on: <time datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: "%B %d, %Y" }}</time></p>
+                        <p class="post-excerpt">{{ post.excerpt | strip_html | truncatewords:30 }}</p>
+                        <a href="{{ post.url }}" class="win98-button">Read Post →</a>
+                    </article>
+                </li>
+                {% endfor %}
+            </ul>
         </div>
     </section>
 
