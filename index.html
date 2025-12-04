@@ -3,145 +3,146 @@ layout: default
 title: Hossein Razavi - Electrical Engineering, Data Science & Neuroscience
 ---
 
-<!-- Dark Mode Toggle (recommended in header, but can stay in JS only) -->
 <header>
-    <div class="container">
-        <nav>
-            <a href="{{ '/' | relative_url }}">Home</a>
-            <a href="{{ '/projects.html' | relative_url }}">Projects</a>
-            <a href="{{ '/blog.html' | relative_url }}">Blog</a>
-            <a href="{{ '/about.html' | relative_url }}">About</a>
-            <button id="dark-mode-toggle" aria-label="Toggle Dark Mode">Dark Mode</button>
-        </nav>
-    </div>
+  <div class="container">
+    <nav>
+      <a href="{{ '/' | relative_url }}" accesskey="h">Home</a>
+      <a href="{{ '/projects.html' | relative_url }}" accesskey="p">Projects</a>
+      <a href="{{ '/blog.html' | relative_url }}" accesskey="b">Blog</a>
+      <a href="{{ '/about.html' | relative_url }}" accesskey="a">About</a>
+      <button id="dark-mode-toggle" aria-label="Toggle Dark Mode">Dark Mode</button>
+    </nav>
+  </div>
 </header>
 
+<!-- Hero Section -->
 <section class="hero-section">
-    <div class="container hero-content">
-        <!-- 3D Rotating Cube Avatar -->
-        <div class="profile-avatar avatar-3d-wrapper" id="avatar-3d" data-3d-object="cube" aria-label="3D spinning cube avatar">
-            <div class="avatar-loading-text">Loading 3D Avatar...</div>
-        </div>
-
-        <h1>Hossein Razavi</h1>
-        <h2 class="subtitle">Undergraduate Student | Electrical & Electronic Engineering</h2>
-        <p class="bio-intro">
-            Welcome to my personal website! I am currently pursuing my undergraduate studies at
-            <strong>K.N. Toosi University</strong>. My academic passion lies at the intersection
-            of <strong>Electrical Engineering</strong> with <strong>Data Science</strong>,
-            <strong>Neuroscience</strong>, and <strong>Signal Processing</strong>.
-        </p>
-
-        <div class="quick-links">
-            <a href="https://github.com/UncleRazavi" target="_blank" rel="noopener" aria-label="GitHub Profile">GitHub</a>
-            <span class="link-separator" aria-hidden="true">|</span>
-            <a href="https://www.linkedin.com/in/hossein-razavi-485a84288" target="_blank" rel="noopener" aria-label="LinkedIn Profile">LinkedIn</a>
-        </div>
-
-        <div class="cta-group">
-            <a class="cta-btn primary" href="{{ '/projects.html' | relative_url }}">Explore My Projects</a>
-            <a class="cta-btn" href="{{ '/about.html' | relative_url }}">More About Me</a>
-        </div>
+  <div class="container hero-content">
+    <div id="avatar-3d" class="win98-bevel-in" aria-label="3D rotating cube avatar">
+      <div class="avatar-loading-text">Loading 3D Avatar...</div>
     </div>
+
+    <h1>Hossein Razavi</h1>
+    <h2 class="subtitle">Undergraduate Student | Electrical &amp; Electronic Engineering</h2>
+
+    <p class="bio-intro">
+      Welcome to my personal website! I am currently pursuing my undergraduate studies at
+      <strong>K.N. Toosi University of Technology</strong>. My academic passion lies at the intersection of
+      <strong>Electrical Engineering</strong>, <strong>Data Science</strong>, <strong>Neuroscience</strong>,
+      and <strong>Signal Processing</strong>.
+    </p>
+
+    <div class="quick-links">
+      <a href="https://github.com/UncleRazavi" target="_blank" rel="noopener">GitHub</a>
+      <span aria-hidden="true"> | </span>
+      <a href="https://www.linkedin.com/in/hossein-razavi-485a84288" target="_blank" rel="noopener">LinkedIn</a>
+    </div>
+
+    <div class="cta-group">
+      <a href="{{ '/projects.html' | relative_url }}" class="win98-button primary">Explore My Projects</a>
+      <a href="{{ '/about.html' | relative_url }}" class="win98-button">More About Me</a>
+    </div>
+  </div>
 </section>
 
 <!-- Key Focus Areas -->
-<section class="container skills-focus-section" aria-labelledby="focus-areas-heading">
-    <h2 id="focus-areas-heading" class="section-heading">Key Focus Areas</h2>
-    <ul class="focus-list">
-        <li>Data Science & Machine Learning</li>
-        <li>Neuroscience & Brain-Computer Interfaces</li>
-        <li>Signal Processing (DSP)</li>
-        <li>Digital Electronics</li>
-    </ul>
+<section class="container">
+  <h2 class="section-heading">Key Focus Areas</h2>
+  <ul class="focus-list win98-bevel-in">
+    <li>Data Science &amp; Machine Learning</li>
+    <li>Neuroscience &amp; Brain-Computer Interfaces</li>
+    <li>Signal Processing (DSP)</li>
+    <li>Digital Electronics</li>
+  </ul>
 </section>
 
 <!-- Interactive Mathematics -->
-<section class="container math-preview-section" aria-labelledby="interactive-math-heading">
-    <h2 id="interactive-math-heading" class="section-heading">Interactive Mathematics</h2>
-    <p style="margin-bottom: 1.5rem;">Explore beautiful mathematical curves and fractal patterns:</p>
+<section class="container math-preview-section">
+  <h2 class="section-heading">Interactive Mathematics</h2>
+  <p>Explore beautiful mathematical curves and fractal patterns:</p>
 
-    <div class="math-grid">
-        <div class="math-object-container">
-            <div class="math-object-title">Lissajous Curve</div>
-            <canvas id="lissajous-canvas" class="math-object-canvas" width="300" height="300"></canvas>
-        </div>
-        <div class="math-object-container">
-            <div class="math-object-title">Rose Curve</div>
-            <canvas id="rose-canvas" class="math-object-canvas" width="300" height="300"></canvas>
-        </div>
-        <div class="math-object-container">
-            <div class="math-object-title">Butterfly Curve</div>
-            <canvas id="butterfly-canvas" class="math-object-canvas" width="300" height="300"></canvas>
-        </div>
-        <div class="math-object-container">
-            <div class="math-object-title">Spirograph</div>
-            <canvas id="spirograph-canvas" class="math-object-canvas" width="300" height="300"></canvas>
-        </div>
+  <div class="math-grid">
+    <div class="math-object-container win98-bevel-in">
+      <div class="math-object-title">Lissajous Curve</div>
+      <canvas id="lissajous-canvas" class="math-object-canvas" width="300" height="240"></canvas>
     </div>
+    <div class="math-object-container win98-bevel-in">
+      <div class="math-object-title">Rose Curve</div>
+      <canvas id="rose-canvas" class="math-object-canvas" width="300" height="240"></canvas>
+    </div>
+    <div class="math-object-container win98-bevel-in">
+      <div class="math-object-title">Butterfly Curve</div>
+      <canvas id="butterfly-canvas" class="math-object-canvas" width="300" height="240"></canvas>
+    </div>
+    <div class="math-object-container win98-bevel-in">
+      <div class="math-object-title">Spirograph</div>
+      <canvas id="spirograph-canvas" class="math-object-canvas" width="300" height="240"></canvas>
+    </div>
+  </div>
 
-    <!-- Interactive Fractal Explorer Button -->
-    <div style="text-align: center; margin-top: 2rem;">
-        <button id="open-interactive-fractal" class="cta-btn primary">
-            Open Interactive Mandelbrot Explorer
-        </button>
-    </div>
+  <div style="text-align:center; margin-top:2rem;">
+    <button id="open-interactive-fractal" class="win98-button primary">
+      Open Interactive Mandelbrot Explorer
+    </button>
+  </div>
 </section>
 
-<!-- Static Fractal Loader Window (Win98 Style) -->
-<section class="container fractal-section" aria-labelledby="fractal-heading">
-    <h2 id="fractal-heading" class="section-heading">Fractal Loader (Static)</h2>
-    <div id="fractalWindow" class="win98-window">
-        <div id="fractalHeader" class="win98-title">
-            Fractal Loader - Mandelbrot Set
-            <div class="win98-close" onclick="this.parentElement.parentElement.style.display='none'">X</div>
-        </div>
-        <div class="win98-content">
-            <canvas id="fractalCanvas"></canvas>
-        </div>
+<!-- Static Fractal Window -->
+<section class="container">
+  <h2 class="section-heading">Fractal Loader (Static)</h2>
+  <div id="fractalWindow" class="win98-window" style="position:relative; width:380px; height:300px; margin:1.5rem auto;">
+    <div id="fractalHeader" class="win98-title">
+      <span>Fractal Loader - Mandelbrot Set</span>
+      <div class="win98-close" title="Close" onclick="this.closest('.win98-window').style.display='none'">X</div>
     </div>
+    <div class="win98-content">
+      <canvas id="fractalCanvas"></canvas>
+    </div>
+  </div>
 </section>
 
 <!-- Blog Preview -->
-<section class="container blog-preview-section" aria-labelledby="latest-blog-heading">
-    <h2 id="latest-blog-heading" class="section-heading">Latest Insights & Blog Posts</h2>
-    <ul class="post-list">
-        {% for post in site.posts limit:3 %}
-        <li class="post-card">
-            <a href="{{ post.url | relative_url }}" class="post-title-link">{{ post.title }}</a>
-            <p class="post-meta">
-                Published on <time datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: "%B %d, %Y" }}</time>
-            </p>
-            <p class="post-excerpt">{{ post.excerpt | strip_html | truncatewords: 25 }}</p>
-            <a href="{{ post.url | relative_url }}" class="read-more-link">Read more</a>
-        </li>
-        {% else %}
-        <p class="no-posts">No blog posts published yet. Check back soon!</p>
-        {% endfor %}
-    </ul>
+<section class="container blog-preview-section">
+  <h2 class="section-heading">Latest Insights &amp; Blog Posts</h2>
 
-    <div class="section-footer">
-        <a href="{{ '/blog.html' | relative_url }}" class="button-link">View All Posts</a>
+  <div class="win98-bevel-in" style="padding:12px; margin-bottom:1rem;">
+    {% for post in site.posts limit:3 %}
+    <div class="post-card win98-bevel-out" style="margin-bottom:12px; padding:10px;">
+      <h3 style="margin:0 0 6px 0;">
+        <a href="{{ post.url | relative_url }}" class="post-title-link">{{ post.title }}</a>
+      </h3>
+      <p class="post-meta" style="margin:4px 0; font-size:10px; color:#00f;">
+        Published on <time datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: "%B %d, %Y" }}</time>
+      </p>
+      <p style="margin:8px 0; font-size:11px;">{{ post.excerpt | strip_html | truncatewords: 25 }}</p>
+      <a href="{{ post.url | relative_url }}" style="font-size:10px;">Read more →</a>
     </div>
+    {% else %}
+    <p style="padding:10px; font-style:italic;">No blog posts published yet. Check back soon!</p>
+    {% endfor %}
+  </div>
 
-    <div class="telegram-link-box">
-        <p>
-            Check out my academic document library on Telegram:
-            <a href="https://t.me/HRslibrary" target="_blank" rel="noopener" class="telegram-link">HRs Library</a>
-        </p>
-    </div>
+  <div style="text-align:center; margin-top:1rem;">
+    <a href="{{ '/blog.html' | relative_url }}" class="win98-button">View All Posts</a>
+  </div>
+
+  <div class="telegram-link-box win98-bevel-in" style="margin-top:1.5rem; padding:12px; text-align:center;">
+    <p style="margin:0;">
+      Check out my academic document library on Telegram:<br>
+      <a href="https://t.me/HRslibrary" target="_blank" rel="noopener" style="font-weight:bold;">t.me/HRslibrary</a>
+    </p>
+  </div>
 </section>
 
-<!-- Trigger Interactive Fractal Window -->
+<!-- Open Interactive Fractal Window -->
 <script>
-    // Open the interactive fractal when button is clicked
-    document.getElementById("open-interactive-fractal")?.addEventListener("click", () => {
-        const win = document.getElementById("win-fractal");
-        if (win) {
-            win.style.display = "block";
-            // Bring to front
-            document.querySelectorAll('.win98-window').forEach(w => w.style.zIndex = "999");
-            win.style.zIndex = "1001";
-        }
-    });
+  document.getElementById("open-interactive-fractal")?.addEventListener("click", () => {
+    let win = document.getElementById("win-fractal");
+    if (!win) return;
+
+    win.style.display = "block";
+    // Bring to front
+    document.querySelectorAll('.win98-window').forEach(w => w.style.zIndex = "999");
+    win.style.zIndex = "1001";
+  });
 </script>
