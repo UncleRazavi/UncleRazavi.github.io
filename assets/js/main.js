@@ -1,6 +1,8 @@
-// =============================
-// PARTICLES CONFIG (No Change - works well)
-// =============================
+// ============================================================
+// 1. GLOBAL CONFIGURATIONS & UTILITIES
+// ============================================================
+
+// --- Particles.js Configuration ---
 const particleConfig = {
     particles: {
         number: { value: 80, density: { enable: true, value_area: 800 } },
@@ -18,354 +20,478 @@ const particleConfig = {
     },
     retina_detect: true
 };
-particlesJS('particles-js', particleConfig);
 
-// =============================
-// UTILITY: DRAG FUNCTION
-// =============================
+// Check if particlesJS is loaded before running
+if (typeof particlesJS !== 'undefined') {
+    particlesJS('particles-js', particleConfig);
+}
+
+// --- Generic Draggable Function (Used by File 2 logic) ---
 function makeDraggable(win, handle) {
     let offsetX, offsetY, isDown = false;
-    // Set initial cursor style
+
     win.style.cursor = 'grab';
 
     handle.addEventListener('mousedown', (e) => {
-        // Prevent accidental text selection while dragging
-        e.preventDefault(); 
+        e.preventDefault();
         isDown = true;
-        // Calculate the offset from the click point to the window's top-left corner
         offsetX = e.clientX - win.getBoundingClientRect().left;
         offsetY = e.clientY - win.getBoundingClientRect().top;
         win.style.cursor = 'grabbing';
     });
 
-    document.addEventListener('mouseup', () => { 
-        if (isDown) { // Only change cursor if it was dragging
-             win.style.cursor = 'grab';
-        }
-        isDown = false; 
+    document.addEventListener('mouseup', () => {
+        if (isDown) win.style.cursor = 'grab';
+        isDown = false;
     });
-    
+
     document.addEventListener('mousemove', (e) => {
-        if(!isDown) return;
-        
-        // Calculate new position
+        if (!isDown) return;
+
         let newX = e.clientX - offsetX;
         let newY = e.clientY - offsetY;
 
-        // Apply new position (prevent window from moving off-screen entirely)
+        // Boundary checks
         newX = Math.max(0, Math.min(newX, window.innerWidth - win.offsetWidth));
         newY = Math.max(0, Math.min(newY, window.innerHeight - win.offsetHeight));
-        
+
         win.style.left = `${newX}px`;
         win.style.top = `${newY}px`;
     });
 }
 
-// =============================
-// WINDOW CREATION: FRACTAL
-// =============================
-const fractalWindow = document.createElement('div');
-// Use a class to style the window as a win98-like component
-fractalWindow.className = 'win98-window'; 
-// Set initial position - check if user is on a small screen
-const initialX = window.innerWidth > 768 ? '50px' : '5%';
-const initialY = window.innerWidth > 768 ? '50px' : '50px';
-fractalWindow.style.top = initialY;
-fractalWindow.style.left = initialX;
-fractalWindow.id = 'win-fractal';
+// ============================================================
+// 2. MAIN EXECUTION (DOM CONTENT LOADED)
+// ============================================================
+document.addEventListener("DOMContentLoaded", () => {
 
-// Title bar
-const title = document.createElement('div');
-title.className = 'win98-title';
-title.textContent = 'Fractal (Mandelbrot) - Interactive';
 
-const closeBtn = document.createElement('div');
-closeBtn.className = 'win98-close';
-closeBtn.textContent = 'X';
-closeBtn.setAttribute('aria-label', 'Close Fractal Window'); // Accessibility
-closeBtn.onclick = () => fractalWindow.style.display = 'none';
+    // --- Typewriter Effect (Targeting ID: "typewriter") ---
+    const typewriterElement = document.getElementById("typewriter");
+    if (typewriterElement) {
+        const text = typewriterElement.textContent.trim();
+        typewriterElement.textContent = "";
+        let index = 0;
 
-title.appendChild(closeBtn);
-fractalWindow.appendChild(title);
-
-// Content
-const content = document.createElement('div');
-content.className = 'win98-content';
-fractalWindow.appendChild(content);
-
-document.body.appendChild(fractalWindow);
-// Make the window draggable by its title bar
-makeDraggable(fractalWindow, title); 
-
-// =============================
-// ENHANCED MANDELBROT FRACTAL - Interactive
-// =============================
-function initFractal(container) {
-    const canvas = document.createElement('canvas');
-    // Ensure canvas size is based on the content container
-    canvas.width = container.clientWidth; 
-    canvas.height = container.clientHeight;
-    container.appendChild(canvas);
-    const ctx = canvas.getContext('2d');
-
-    let zoom = 1;
-    let panX = -2.5;
-    let panY = -1;
-    const maxIter = 100;
-    
-    function drawMandelbrot() {
-        const width = canvas.width;
-        const height = canvas.height;
-        
-        const imgData = ctx.createImageData(width, height);
-        const data = imgData.data;
-
-        for(let px=0; px<width; px++) {
-            for(let py=0; py<height; py++){
-                // Map pixel coordinates to the complex plane with pan and zoom
-                let x0 = panX + (px / width) * 3.5 * zoom; 
-                let y0 = panY + (py / height) * 2.0 * zoom; 
-                
-                let x=0, y=0, iter=0;
-                while(x*x + y*y < 4 && iter < maxIter){
-                    let xt = x*x - y*y + x0;
-                    y = 2*x*y + y0; 
-                    x = xt;
-                    iter++;
-                }
-                
-                // Color based on iteration count with gradient
-                let colorValue = iter === maxIter ? 0 : (iter * 255 / maxIter);
-                
-                const index = (py * width + px) * 4;
-                data[index] = colorValue;     // Red
-                data[index + 1] = colorValue * 0.7; // Green
-                data[index + 2] = colorValue * 0.5; // Blue
-                data[index + 3] = 255;        // Alpha
+        function typeWriter() {
+            if (index < text.length) {
+                typewriterElement.textContent += text.charAt(index);
+                index++;
+                setTimeout(typeWriter, 50);
             }
         }
-        
-        ctx.putImageData(imgData, 0, 0);
+        typeWriter();
     }
-    
-    drawMandelbrot();
-    
-    // Mouse wheel zoom
-    canvas.addEventListener('wheel', (e) => {
-        e.preventDefault();
-        const zoomFactor = e.deltaY > 0 ? 1.2 : 0.8;
-        zoom *= zoomFactor;
-        drawMandelbrot();
-    });
-    
-    // Click to pan
-    canvas.addEventListener('click', (e) => {
-        const rect = canvas.getBoundingClientRect();
-        const x = e.clientX - rect.left;
-        const y = e.clientY - rect.top;
-        
-        panX += (x / canvas.width - 0.5) * 3.5 * zoom;
-        panY += (y / canvas.height - 0.5) * 2.0 * zoom;
-        zoom *= 0.5;
-        
-        drawMandelbrot();
-    });
-}
 
-initFractal(content);
+    // --- Scroll To Top Button (Targeting ID: "scrollTopBtn") ---
+    const scrollBtnFile1 = document.getElementById("scrollTopBtn");
+    if (scrollBtnFile1) {
+        window.addEventListener("scroll", () => {
+            if (window.scrollY > 200) {
+                scrollBtnFile1.classList.add("show");
+            } else {
+                scrollBtnFile1.classList.remove("show");
+            }
+        });
 
-// =============================
-// SCROLL-TO-TOP BUTTON
-// =============================
-const scrollToTopBtn = document.createElement('button');
-scrollToTopBtn.id = 'scroll-to-top';
-scrollToTopBtn.innerHTML = '↑';
-scrollToTopBtn.setAttribute('aria-label', 'Scroll to top');
-document.body.appendChild(scrollToTopBtn);
-
-window.addEventListener('scroll', () => {
-    if (window.pageYOffset > 300) {
-        scrollToTopBtn.classList.add('show');
-    } else {
-        scrollToTopBtn.classList.remove('show');
+        scrollBtnFile1.addEventListener("click", () => {
+            window.scrollTo({ top: 0, behavior: "smooth" });
+        });
     }
-});
 
-scrollToTopBtn.addEventListener('click', () => {
-    window.scrollTo({
-        top: 0,
-        behavior: 'smooth'
-    });
-});
+    // --- Fractal Window (Targeting Canvas ID: "fractalCanvas") ---
+    let fractalCanvas = document.getElementById("fractalCanvas");
+    if (fractalCanvas) {
+        let fractalCtx = fractalCanvas.getContext("2d");
 
-// =============================
-// TYPEWRITER EFFECT FOR HERO TITLE
-// =============================
-function initTypewriter() {
-    const heroTitle = document.querySelector('.hero-content h1');
-    if (!heroTitle) return;
-    
-    const text = heroTitle.textContent;
-    heroTitle.textContent = '';
-    heroTitle.classList.add('typewriter');
-    
-    let index = 0;
-    const speed = 60; // milliseconds per character
-    
-    function type() {
-        if (index < text.length) {
-            heroTitle.textContent += text.charAt(index);
-            index++;
-            setTimeout(type, speed);
-        } else {
-            // Remove cursor after typing completes
-            setTimeout(() => {
-                heroTitle.classList.remove('typewriter');
-            }, 1000);
+        function drawSimpleFractal() {
+            let w = fractalCanvas.width;
+            let h = fractalCanvas.height;
+            let img = fractalCtx.createImageData(w, h);
+
+            for (let x = 0; x < w; x++) {
+                for (let y = 0; y < h; y++) {
+                    let a = (x - w / 2) * 4 / w;
+                    let b = (y - h / 2) * 4 / h;
+                    let ca = a, cb = b;
+                    let n = 0;
+                    const maxIter = 50;
+
+                    while (n < maxIter) {
+                        let aa = a * a - b * b;
+                        let bb = 2 * a * b;
+                        a = aa + ca;
+                        b = bb + cb;
+                        if (a * a + b * b > 16) break;
+                        n++;
+                    }
+
+                    let pix = (x + y * w) * 4;
+                    let brightness = n === maxIter ? 0 : (n * 255) / maxIter;
+
+                    img.data[pix + 0] = brightness;
+                    img.data[pix + 1] = brightness;
+                    img.data[pix + 2] = brightness;
+                    img.data[pix + 3] = 255;
+                }
+            }
+            fractalCtx.putImageData(img, 0, 0);
         }
+        drawSimpleFractal();
     }
-    
-    type();
-}
 
-// Initialize typewriter when page loads
-document.addEventListener('DOMContentLoaded', initTypewriter);
+    // --- Drag Function for File 1 Fractal Window ---
+    const fractalWindowFile1 = document.getElementById("fractalWindow");
+    const headerFile1 = document.getElementById("fractalHeader");
 
-// =============================
-// SMOOTH SCROLL BEHAVIOR
-// =============================
-document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-    anchor.addEventListener('click', function (e) {
-        const href = this.getAttribute('href');
-        if (href !== '#' && document.querySelector(href)) {
-            e.preventDefault();
-            document.querySelector(href).scrollIntoView({
-                behavior: 'smooth'
+    if (fractalWindowFile1 && headerFile1) {
+        let offsetX = 0, offsetY = 0, isDragging = false;
+
+        headerFile1.addEventListener("mousedown", (e) => {
+            isDragging = true;
+            offsetX = e.clientX - fractalWindowFile1.offsetLeft;
+            offsetY = e.clientY - fractalWindowFile1.offsetTop;
+        });
+
+        document.addEventListener("mouseup", () => isDragging = false);
+
+        document.addEventListener("mousemove", (e) => {
+            if (isDragging) {
+                fractalWindowFile1.style.left = (e.clientX - offsetX) + "px";
+                fractalWindowFile1.style.top = (e.clientY - offsetY) + "px";
+            }
+        });
+    }
+
+    // --- Three.js Spinning Cube ---
+    const cubeCanvas = document.getElementById("cubeCanvas");
+    if (cubeCanvas && typeof THREE !== 'undefined') {
+        const renderer = new THREE.WebGLRenderer({ canvas: cubeCanvas, antialias: true });
+        renderer.setSize(300, 300);
+
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(50, 1, 0.1, 1000);
+        camera.position.z = 3;
+
+        const geometry = new THREE.BoxGeometry(1, 1, 1);
+        const material = new THREE.MeshStandardMaterial({
+            color: new THREE.Color("hsl(0, 100%, 50%)")
+        });
+
+        const cube = new THREE.Mesh(geometry, material);
+        scene.add(cube);
+
+        const light = new THREE.PointLight(0xffffff, 2);
+        light.position.set(2, 2, 3);
+        scene.add(light);
+
+        let hue = 0;
+
+        function animateCube() {
+            requestAnimationFrame(animateCube);
+            cube.rotation.x += 0.01;
+            cube.rotation.y += 0.015;
+            hue = (hue + 0.5) % 360;
+            cube.material.color.setHSL(hue / 360, 1.0, 0.5);
+            renderer.render(scene, camera);
+        }
+        animateCube();
+    }
+
+
+    // --- Dynamic Fractal Window Creation ---
+    const fractalWindow2 = document.createElement('div');
+    fractalWindow2.className = 'win98-window';
+    fractalWindow2.style.top = window.innerWidth > 768 ? '50px' : '50px';
+    fractalWindow2.style.left = window.innerWidth > 768 ? '50px' : '5%';
+    fractalWindow2.id = 'win-fractal';
+
+    const title2 = document.createElement('div');
+    title2.className = 'win98-title';
+    title2.textContent = 'Fractal (Mandelbrot) - Interactive';
+
+    const closeBtn2 = document.createElement('div');
+    closeBtn2.className = 'win98-close';
+    closeBtn2.textContent = 'X';
+    closeBtn2.onclick = () => fractalWindow2.style.display = 'none';
+
+    title2.appendChild(closeBtn2);
+    fractalWindow2.appendChild(title2);
+
+    const content2 = document.createElement('div');
+    content2.className = 'win98-content';
+    fractalWindow2.appendChild(content2);
+
+    document.body.appendChild(fractalWindow2);
+    makeDraggable(fractalWindow2, title2);
+
+    // --- Advanced Mandelbrot Viewer Logic ---
+    function initFractalViewer(container) {
+        const canvas = document.createElement('canvas');
+        canvas.width = container.clientWidth || 300;
+        canvas.height = container.clientHeight || 200;
+        container.appendChild(canvas);
+
+        const ctx = canvas.getContext('2d');
+
+        let zoom = 1;
+        let panX = -2.5;
+        let panY = -1;
+        let targetZoom = zoom;
+        let isDragging = false;
+        let startX, startY;
+        let maxIter = 100;
+        let colorMode = "classic";
+
+        const controls = document.createElement('div');
+        controls.style.cssText = `
+            font-family: monospace;
+            font-size: 14px;
+            background:#dcdcdc;
+            padding:6px;
+            border:2px outset #fff;
+            margin-bottom:6px;
+        `;
+        controls.innerHTML = `
+            Iterations: <input id="iterSlider" type="range" min="50" max="1000" value="${maxIter}">
+            <span id="iterVal">${maxIter}</span>
+            <br>
+            Colors:
+            <select id="colorSelect">
+                <option value="classic">Classic</option>
+                <option value="fire">Fire</option>
+                <option value="ice">Ice</option>
+            </select>
+        `;
+        container.insertBefore(controls, canvas);
+
+        // Event listeners for controls
+        const iterSlider = document.getElementById("iterSlider");
+        if(iterSlider) {
+             iterSlider.addEventListener("input", (e) => {
+                maxIter = parseInt(e.target.value);
+                document.getElementById("iterVal").textContent = maxIter;
+                drawMandelbrot();
             });
         }
-    });
-});
 
-// =============================
-// KEYBOARD SHORTCUTS
-// =============================
-document.addEventListener('keydown', (e) => {
-    // Alt + D: Toggle dark mode
-    if (e.altKey && e.key.toLowerCase() === 'd') {
-        document.getElementById('dark-mode-toggle').click();
-    }
-    // Alt + T: Scroll to top
-    if (e.altKey && e.key.toLowerCase() === 't') {
-        scrollToTopBtn.click();
-    }
-    // Alt + H: Go home
-    if (e.altKey && e.key.toLowerCase() === 'h') {
-        window.location.href = '/';
-    }
-});
+        const colorSelect = document.getElementById("colorSelect");
+        if(colorSelect) {
+            colorSelect.addEventListener("change", (e) => {
+                colorMode = e.target.value;
+                drawMandelbrot();
+            });
+        }
 
-// =============================
-// ENHANCED CARD ANIMATIONS
-// =============================
-function enhanceCardAnimations() {
-    const cards = document.querySelectorAll('.project-card, .post-card');
+        function getColor(iter) {
+            if (iter >= maxIter) return [0, 0, 0];
+            const t = iter / maxIter;
+            switch (colorMode) {
+                case "fire": return [255 * t, 80 * t, 0];
+                case "ice": return [0, 180 * t, 255 * t];
+                default: return [255 * t, 180 * t, 120 * t];
+            }
+        }
+
+        function drawMandelbrot() {
+            const w = canvas.width;
+            const h = canvas.height;
+            const img = ctx.createImageData(w, h);
+            const data = img.data;
+
+            for (let px = 0; px < w; px++) {
+                for (let py = 0; py < h; py++) {
+                    let x0 = panX + (px / w) * 3.5 * zoom;
+                    let y0 = panY + (py / h) * 2.0 * zoom;
+                    let x = 0, y = 0, iter = 0;
+
+                    while (x * x + y * y <= 4 && iter < maxIter) {
+                        const xt = x * x - y * y + x0;
+                        y = 2 * x * y + y0;
+                        x = xt;
+                        iter++;
+                    }
+
+                    const idx = (py * w + px) * 4;
+                    const [r, g, b] = getColor(iter);
+                    data[idx] = r;
+                    data[idx + 1] = g;
+                    data[idx + 2] = b;
+                    data[idx + 3] = 255;
+                }
+            }
+            ctx.putImageData(img, 0, 0);
+        }
+
+        drawMandelbrot();
+
+        canvas.addEventListener("mousedown", (e) => {
+            isDragging = true;
+            startX = e.clientX;
+            startY = e.clientY;
+        });
+
+        window.addEventListener("mouseup", () => isDragging = false);
+
+        canvas.addEventListener("mousemove", (e) => {
+            if (!isDragging) return;
+            const dx = e.clientX - startX;
+            const dy = e.clientY - startY;
+            panX -= dx * zoom * 0.0035;
+            panY -= dy * zoom * 0.002;
+            startX = e.clientX;
+            startY = e.clientY;
+            drawMandelbrot();
+        });
+
+        canvas.addEventListener("wheel", (e) => {
+            e.preventDefault();
+            const scale = e.deltaY > 0 ? 1.2 : 0.8;
+            targetZoom *= scale;
+            animateZoom();
+        });
+
+        function animateZoom() {
+            const diff = targetZoom - zoom;
+            if (Math.abs(diff) < 0.0001) {
+                zoom = targetZoom;
+                drawMandelbrot();
+                return;
+            }
+            zoom += diff * 0.15;
+            drawMandelbrot();
+            requestAnimationFrame(animateZoom);
+        }
+    }
     
-    cards.forEach((card, index) => {
-        // Add staggered fade-in animation
-        card.style.opacity = '0';
-        card.style.animation = `fadeInUp 0.5s ease ${index * 0.1}s forwards`;
-        
-        // Add scale effect on hover
-        card.addEventListener('mouseenter', () => {
-            card.style.transform = 'scale(1.02)';
-        });
-        
-        card.addEventListener('mouseleave', () => {
-            card.style.transform = 'scale(1)';
+    // Initialize the viewer inside the dynamically created window
+    initFractalViewer(content2);
+
+
+    // --- Dynamic Scroll To Top Button ---
+    const scrollToTopBtnDynamic = document.createElement('button');
+    scrollToTopBtnDynamic.id = 'scroll-to-top';
+    scrollToTopBtnDynamic.innerHTML = '↑';
+    document.body.appendChild(scrollToTopBtnDynamic);
+
+    window.addEventListener('scroll', () => {
+        if (window.pageYOffset > 300) scrollToTopBtnDynamic.classList.add('show');
+        else scrollToTopBtnDynamic.classList.remove('show');
+    });
+
+    scrollToTopBtnDynamic.addEventListener('click', () => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+
+
+    // --- Typewriter Effect 2 (Targeting .hero-content h1) ---
+    const heroTitle = document.querySelector('.hero-content h1');
+    if (heroTitle) {
+        const text = heroTitle.textContent;
+        heroTitle.textContent = '';
+        heroTitle.classList.add('typewriter');
+        let index = 0;
+        const speed = 60;
+
+        function typeHero() {
+            if (index < text.length) {
+                heroTitle.textContent += text.charAt(index);
+                index++;
+                setTimeout(typeHero, speed);
+            } else {
+                setTimeout(() => heroTitle.classList.remove('typewriter'), 1000);
+            }
+        }
+        typeHero();
+    }
+
+
+    // --- Smooth Scroll For Anchors ---
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', (e) => {
+            const href = anchor.getAttribute('href');
+            if (href !== '#' && document.querySelector(href)) {
+                e.preventDefault();
+                document.querySelector(href).scrollIntoView({ behavior: 'smooth' });
+            }
         });
     });
-}
 
-// Add fadeInUp animation to CSS dynamically
-const style = document.createElement('style');
-style.textContent = `
-    @keyframes fadeInUp {
-        from {
-            opacity: 0;
-            transform: translateY(20px);
-        }
-        to {
-            opacity: 1;
-            transform: translateY(0);
-        }
+
+    // --- Keyboard Shortcuts ---
+    document.addEventListener('keydown', (e) => {
+        const darkModeToggle = document.getElementById('dark-mode-toggle');
+        if (e.altKey && e.key.toLowerCase() === 'd' && darkModeToggle)
+            darkModeToggle.click();
+        
+        if (e.altKey && e.key.toLowerCase() === 't')
+            scrollToTopBtnDynamic.click(); // Using the dynamic button
+        
+        if (e.altKey && e.key.toLowerCase() === 'h')
+            window.location.href = '/';
+    });
+
+
+    // --- Card Animations ---
+    const cards = document.querySelectorAll('.project-card, .post-card');
+    if (cards.length > 0) {
+        // Inject keyframes if not present
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes fadeInUp {
+                from { opacity: 0; transform: translateY(20px); }
+                to { opacity: 1; transform: translateY(0); }
+            }
+        `;
+        document.head.appendChild(style);
+        
+        cards.forEach((card, index) => {
+            card.style.opacity = '0';
+            card.style.animation = `fadeInUp 0.5s ease ${index * 0.1}s forwards`;
+            card.addEventListener('mouseenter', () => card.style.transform = 'scale(1.02)');
+            card.addEventListener('mouseleave', () => card.style.transform = 'scale(1)');
+        });
     }
-`;
-document.head.appendChild(style);
 
-document.addEventListener('DOMContentLoaded', enhanceCardAnimations);
 
-// =============================
-// VISIT COUNTER (Local Storage)
-// =============================
-function initVisitCounter() {
+    // --- Visit Counter ---
     let visitCount = localStorage.getItem('visitCount');
     visitCount = visitCount ? parseInt(visitCount) + 1 : 1;
     localStorage.setItem('visitCount', visitCount);
-    
-    // Optional: Display counter in console
-    console.log(`%c👋 Welcome! You've visited ${visitCount} time(s)`, 'font-size: 14px; color: #000080; font-weight: bold;');
-}
+    console.log(`Visited ${visitCount} time(s)`);
 
-document.addEventListener('DOMContentLoaded', initVisitCounter);
 
-// =============================
-// PAGE VISIBILITY DETECTION
-// =============================
-document.addEventListener('visibilitychange', () => {
-    if (document.hidden) {
-        document.title = '👋 Come back!';
-    } else {
-        document.title = document.querySelector('title').getAttribute('data-original') || 'Hossein Razavi';
-    }
-});
+    // --- Page Visibility Title Change ---
+    if (document.querySelector('title'))
+        document.querySelector('title').setAttribute('data-original', document.title);
 
-// Store original title
-if (document.querySelector('title')) {
-    document.querySelector('title').setAttribute('data-original', document.title);
-}
+    document.addEventListener('visibilitychange', () => {
+        if (document.hidden) document.title = 'Come back!';
+        else document.title = document.querySelector('title')?.getAttribute('data-original') || 'Hossein Razavi';
+    });
 
-// =============================
-// LAZY IMAGE LOADING
-// =============================
-function initLazyLoading() {
+
+    // --- Lazy Loading Images ---
     if ('IntersectionObserver' in window) {
         const images = document.querySelectorAll('img[data-src]');
-        
-        const imageObserver = new IntersectionObserver((entries, observer) => {
+        const observer = new IntersectionObserver((entries, obs) => {
             entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    const img = entry.target;
-                    img.src = img.getAttribute('data-src');
-                    img.removeAttribute('data-src');
-                    observer.unobserve(img);
-                }
+                if (!entry.isIntersecting) return;
+                const img = entry.target;
+                img.src = img.getAttribute('data-src');
+                img.removeAttribute('data-src');
+                obs.unobserve(img);
             });
         });
-        
-        images.forEach(img => imageObserver.observe(img));
+        images.forEach(img => observer.observe(img));
     }
-}
 
-document.addEventListener('DOMContentLoaded', initLazyLoading);
 
-// =============================
-// FLOATING ACTION MENU
-// =============================
-function initFloatingMenu() {
+    // --- Floating Action Menu ---
     const fabButton = document.createElement('button');
     fabButton.id = 'fab-menu-toggle';
     fabButton.textContent = '⚙';
-    fabButton.setAttribute('aria-label', 'Settings Menu');
+
     fabButton.style.cssText = `
         position: fixed;
         bottom: 80px;
@@ -373,394 +499,48 @@ function initFloatingMenu() {
         width: 50px;
         height: 50px;
         border-radius: 50%;
-        background-color: var(--primary-color);
-        color: var(--border-light);
-        border: 2px outset var(--border-light);
-        border-right-color: var(--border-dark);
-        border-bottom-color: var(--border-dark);
+        background-color: var(--primary-color, #333);
+        color: var(--border-light, #fff);
+        border: 2px outset #fff;
         cursor: pointer;
         z-index: 998;
         font-size: 1.5rem;
         display: flex;
         align-items: center;
         justify-content: center;
-        transition: all 0.2s ease;
     `;
-    
+
+    const menu = document.createElement('div');
+    menu.id = 'fab-menu';
+    menu.style.cssText = `
+        position: fixed;
+        bottom: 140px;
+        right: 20px;
+        padding: 10px;
+        background: var(--window-bg, #fff);
+        border: 2px outset #fff;
+        display: none;
+        z-index: 999;
+    `;
+
+    menu.innerHTML = `
+        <button onclick="document.getElementById('dark-mode-toggle') && document.getElementById('dark-mode-toggle').click()">Toggle Dark Mode</button><br>
+        <button id="fab-scroll-btn">Scroll Top</button>
+    `;
+
     fabButton.addEventListener('click', () => {
-        alert('⚙️ Settings:\n\n• Alt + D: Toggle Dark Mode\n• Alt + T: Scroll to Top\n• Alt + H: Go Home\n\n💡 You can also drag the Fractal window!');
+        menu.style.display = menu.style.display === 'block' ? 'none' : 'block';
     });
-    
-    fabButton.addEventListener('mouseover', () => {
-        fabButton.style.transform = 'scale(1.1)';
-    });
-    
-    fabButton.addEventListener('mouseout', () => {
-        fabButton.style.transform = 'scale(1)';
-    });
-    
+
     document.body.appendChild(fabButton);
-}
-
-document.addEventListener('DOMContentLoaded', initFloatingMenu);
-
-// =============================
-// DARK MODE TOGGLE (Enhanced)
-// =============================
-const darkModeToggle = document.getElementById('dark-mode-toggle');
-const body = document.body;
-
-function updateDarkMode(isDark) {
-    if (isDark) {
-        body.classList.add('dark-mode');
-        // Update particles color in dark mode
-        particlesJS('particles-js', {
-            ...particleConfig, 
-            particles: {
-                ...particleConfig.particles, 
-                color: { value: "#00ff00" }, // Neon Green
-                line_linked: { ...particleConfig.particles.line_linked, color: "#00ff00" }
-            }
+    document.body.appendChild(menu);
+    
+    // Bind scroll click in the generated menu
+    const fabScroll = document.getElementById("fab-scroll-btn");
+    if(fabScroll) {
+        fabScroll.addEventListener("click", () => {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
         });
-        darkModeToggle.textContent = '☀'; // Sun icon
-        localStorage.setItem('darkMode', 'true');
-    } else {
-        body.classList.remove('dark-mode');
-        // Reset particles color to light mode (white)
-        particlesJS('particles-js', {
-            ...particleConfig, 
-            particles: {
-                ...particleConfig.particles, 
-                color: { value: "#ffffff" },
-                line_linked: { ...particleConfig.particles.line_linked, color: "#ffffff" }
-            }
-        });
-        darkModeToggle.textContent = '☾'; // Moon icon
-        localStorage.setItem('darkMode', 'false');
     }
-}
 
-// Initial check based on saved preference
-const savedDarkMode = localStorage.getItem('darkMode');
-if (savedDarkMode === 'true') {
-    updateDarkMode(true);
-} else {
-    updateDarkMode(false);
-}
-
-// Event listener for toggle button
-darkModeToggle.addEventListener('click', () => {
-    updateDarkMode(!body.classList.contains('dark-mode'));
 });
-
-// =============================
-// 3D OBJECTS WITH THREE.JS
-// =============================
-function init3DObject(containerId, objectType = 'cube') {
-    const container = document.getElementById(containerId);
-    if (!container || !window.THREE) return;
-    
-    // Remove any existing content
-    while (container.firstChild) {
-        container.removeChild(container.firstChild);
-    }
-    
-    const width = container.clientWidth;
-    const height = container.clientHeight || 400;
-    
-    // Scene setup
-    const scene = new THREE.Scene();
-    const camera = new THREE.PerspectiveCamera(75, width / height, 0.1, 1000);
-    const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
-    renderer.setSize(width, height);
-    renderer.setClearColor(0xc0c0c0, 1);
-    container.appendChild(renderer.domElement);
-    
-    // Handle dark mode
-    if (document.body.classList.contains('dark-mode')) {
-        renderer.setClearColor(0x111111, 1);
-    }
-    
-    // Create geometry based on type
-    let geometry, material, mesh;
-    
-    switch(objectType) {
-        case 'cube':
-            geometry = new THREE.BoxGeometry(2, 2, 2);
-            material = new THREE.MeshPhongMaterial({ color: 0x000080 });
-            break;
-        case 'sphere':
-            geometry = new THREE.SphereGeometry(1.5, 32, 32);
-            material = new THREE.MeshPhongMaterial({ color: 0x1084d0 });
-            break;
-        case 'torus':
-            geometry = new THREE.TorusGeometry(1, 0.4, 16, 32);
-            material = new THREE.MeshPhongMaterial({ color: 0x00c000 });
-            break;
-        case 'octahedron':
-            geometry = new THREE.OctahedronGeometry(1.5);
-            material = new THREE.MeshPhongMaterial({ color: 0xff00ff });
-            break;
-        case 'tetrahedron':
-            geometry = new THREE.TetrahedronGeometry(2);
-            material = new THREE.MeshPhongMaterial({ color: 0xff6600 });
-            break;
-        default:
-            geometry = new THREE.BoxGeometry(2, 2, 2);
-            material = new THREE.MeshPhongMaterial({ color: 0x000080 });
-    }
-    
-    mesh = new THREE.Mesh(geometry, material);
-    scene.add(mesh);
-    
-    // Lighting
-    const light1 = new THREE.DirectionalLight(0xffffff, 0.8);
-    light1.position.set(5, 5, 5);
-    scene.add(light1);
-    
-    const light2 = new THREE.DirectionalLight(0xffffff, 0.4);
-    light2.position.set(-5, -5, 5);
-    scene.add(light2);
-    
-    const ambientLight = new THREE.AmbientLight(0xffffff, 0.4);
-    scene.add(ambientLight);
-    
-    camera.position.z = 5;
-    
-    // Mouse interaction
-    let mouseX = 0, mouseY = 0;
-    document.addEventListener('mousemove', (e) => {
-        mouseX = (e.clientX / window.innerWidth) * 2 - 1;
-        mouseY = -(e.clientY / window.innerHeight) * 2 + 1;
-    });
-    
-    // Animation loop
-    function animate() {
-        requestAnimationFrame(animate);
-        
-        // Rotate based on mouse position
-        mesh.rotation.x += 0.005;
-        mesh.rotation.y += 0.008;
-        
-        // Respond to mouse movement (subtle effect)
-        mesh.rotation.y += mouseX * 0.01;
-        mesh.rotation.x += mouseY * 0.01;
-        
-        renderer.render(scene, camera);
-    }
-    
-    animate();
-    
-    // Handle window resize
-    const resizeHandler = () => {
-        const newWidth = container.clientWidth;
-        const newHeight = container.clientHeight || 400;
-        camera.aspect = newWidth / newHeight;
-        camera.updateProjectionMatrix();
-        renderer.setSize(newWidth, newHeight);
-    };
-    
-    window.addEventListener('resize', resizeHandler);
-}
-
-// =============================
-// INTERACTIVE MATHEMATICAL OBJECTS
-// =============================
-
-// Lissajous Curve
-function drawLissajousCurve(canvasId) {
-    const canvas = document.getElementById(canvasId);
-    if (!canvas) return;
-    
-    const ctx = canvas.getContext('2d');
-    const width = canvas.width = canvas.offsetWidth;
-    const height = canvas.height = canvas.offsetHeight;
-    
-    ctx.fillStyle = document.body.classList.contains('dark-mode') ? '#111111' : '#c0c0c0';
-    ctx.fillRect(0, 0, width, height);
-    
-    ctx.strokeStyle = document.body.classList.contains('dark-mode') ? '#00ff00' : '#000080';
-    ctx.lineWidth = 2;
-    
-    const a = 3, b = 2, delta = Math.PI / 2;
-    const points = [];
-    
-    for (let t = 0; t < 2 * Math.PI; t += 0.01) {
-        const x = Math.sin(a * t + delta);
-        const y = Math.sin(b * t);
-        points.push({
-            x: (x + 1) * width / 2,
-            y: (y + 1) * height / 2
-        });
-    }
-    
-    ctx.beginPath();
-    ctx.moveTo(points[0].x, points[0].y);
-    for (let i = 1; i < points.length; i++) {
-        ctx.lineTo(points[i].x, points[i].y);
-    }
-    ctx.stroke();
-}
-
-// Butterfly Curve
-function drawButterflyCurve(canvasId) {
-    const canvas = document.getElementById(canvasId);
-    if (!canvas) return;
-    
-    const ctx = canvas.getContext('2d');
-    const width = canvas.width = canvas.offsetWidth;
-    const height = canvas.height = canvas.offsetHeight;
-    
-    ctx.fillStyle = document.body.classList.contains('dark-mode') ? '#111111' : '#c0c0c0';
-    ctx.fillRect(0, 0, width, height);
-    
-    ctx.strokeStyle = document.body.classList.contains('dark-mode') ? '#ff00ff' : '#000080';
-    ctx.lineWidth = 1;
-    
-    const points = [];
-    
-    for (let t = 0; t < 12 * Math.PI; t += 0.01) {
-        const r = Math.exp(Math.cos(t)) - 2 * Math.cos(4 * t);
-        const x = Math.sin(t) * r;
-        const y = Math.cos(t) * r;
-        
-        points.push({
-            x: width / 2 + x * width / 20,
-            y: height / 2 + y * height / 20
-        });
-    }
-    
-    ctx.beginPath();
-    ctx.moveTo(points[0].x, points[0].y);
-    for (let i = 1; i < points.length; i++) {
-        ctx.lineTo(points[i].x, points[i].y);
-    }
-    ctx.stroke();
-}
-
-// Rose Curve
-function drawRoseCurve(canvasId, k = 5) {
-    const canvas = document.getElementById(canvasId);
-    if (!canvas) return;
-    
-    const ctx = canvas.getContext('2d');
-    const width = canvas.width = canvas.offsetWidth;
-    const height = canvas.height = canvas.offsetHeight;
-    
-    ctx.fillStyle = document.body.classList.contains('dark-mode') ? '#111111' : '#c0c0c0';
-    ctx.fillRect(0, 0, width, height);
-    
-    ctx.strokeStyle = document.body.classList.contains('dark-mode') ? '#00ff00' : '#1084d0';
-    ctx.lineWidth = 2;
-    
-    const points = [];
-    
-    for (let theta = 0; theta < 2 * Math.PI; theta += 0.01) {
-        const r = Math.cos(k * theta);
-        if (r >= 0) {
-            const x = r * Math.cos(theta);
-            const y = r * Math.sin(theta);
-            points.push({
-                x: width / 2 + x * width / 4,
-                y: height / 2 + y * height / 4
-            });
-        }
-    }
-    
-    ctx.beginPath();
-    ctx.moveTo(points[0].x, points[0].y);
-    for (let i = 1; i < points.length; i++) {
-        ctx.lineTo(points[i].x, points[i].y);
-    }
-    ctx.stroke();
-}
-
-// Spirograph
-function drawSpirograph(canvasId) {
-    const canvas = document.getElementById(canvasId);
-    if (!canvas) return;
-    
-    const ctx = canvas.getContext('2d');
-    const width = canvas.width = canvas.offsetWidth;
-    const height = canvas.height = canvas.offsetHeight;
-    
-    ctx.fillStyle = document.body.classList.contains('dark-mode') ? '#111111' : '#c0c0c0';
-    ctx.fillRect(0, 0, width, height);
-    
-    ctx.strokeStyle = document.body.classList.contains('dark-mode') ? '#00ff00' : '#ff6600';
-    ctx.lineWidth = 1.5;
-    
-    const R = 80, r = 40, d = 50;
-    const points = [];
-    
-    for (let theta = 0; theta < 2 * Math.PI * 5; theta += 0.01) {
-        const x = (R + r) * Math.cos(theta) - d * Math.cos((R + r) / r * theta);
-        const y = (R + r) * Math.sin(theta) - d * Math.sin((R + r) / r * theta);
-        
-        points.push({
-            x: width / 2 + x,
-            y: height / 2 + y
-        });
-    }
-    
-    ctx.beginPath();
-    ctx.moveTo(points[0].x, points[0].y);
-    for (let i = 1; i < points.length; i++) {
-        ctx.lineTo(points[i].x, points[i].y);
-    }
-    ctx.stroke();
-}
-
-// Initialize all canvases on load
-document.addEventListener('DOMContentLoaded', () => {
-    // Initialize all mathematical objects
-    const canvases = document.querySelectorAll('[data-math-object]');
-    canvases.forEach(canvas => {
-        const type = canvas.getAttribute('data-math-object');
-        switch(type) {
-            case 'lissajous':
-                drawLissajousCurve(canvas.id);
-                break;
-            case 'butterfly':
-                drawButterflyCurve(canvas.id);
-                break;
-            case 'rose':
-                drawRoseCurve(canvas.id);
-                break;
-            case 'spirograph':
-                drawSpirograph(canvas.id);
-                break;
-        }
-    });
-    
-    // Initialize all 3D objects
-    const containers = document.querySelectorAll('[data-3d-object]');
-    containers.forEach(container => {
-        const type = container.getAttribute('data-3d-object');
-        init3DObject(container.id, type);
-    });
-});
-
-// Redraw mathematical objects when dark mode changes
-const observer = new MutationObserver(() => {
-    const canvases = document.querySelectorAll('[data-math-object]');
-    canvases.forEach(canvas => {
-        const type = canvas.getAttribute('data-math-object');
-        switch(type) {
-            case 'lissajous':
-                drawLissajousCurve(canvas.id);
-                break;
-            case 'butterfly':
-                drawButterflyCurve(canvas.id);
-                break;
-            case 'rose':
-                drawRoseCurve(canvas.id);
-                break;
-            case 'spirograph':
-                drawSpirograph(canvas.id);
-                break;
-        }
-    });
-});
-
-observer.observe(document.body, { attributes: true, attributeFilter: ['class'] });
