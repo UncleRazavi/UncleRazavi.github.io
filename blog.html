@@ -1,10 +1,82 @@
----
-layout: default
-title: Blog - Hossein Razavi
----
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog - Hossein Razavi</title>
+    <link rel="stylesheet" href="assets/css/main.css">
+    <style>
+        /* Header buttons */
+        .win98-header {
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+            padding: 10px;
+            background-color: #c0c0c0;
+            border-bottom: 2px solid #fff;
+        }
 
-<main class="container">
-    
+        .win98-button-header {
+            padding: 5px 12px;
+            font-family: 'Courier New', monospace;
+            border: 2px outset #fff;
+            background-color: #e0e0e0;
+            cursor: pointer;
+        }
+
+        /* Dark mode styles */
+        body.dark-mode {
+            background-color: #1a1a1a;
+            color: #f0f0f0;
+        }
+
+        body.dark-mode .win98-window {
+            background-color: #2a2a2a;
+            border-color: #555;
+        }
+
+        body.dark-mode .win98-button,
+        body.dark-mode .win98-button-header {
+            background-color: #444;
+            color: #f0f0f0;
+            border-color: #888;
+        }
+
+        body.dark-mode a {
+            color: #9fcfff;
+        }
+    </style>
+</head>
+<body>
+
+<!-- Header with Home & Dark Mode Toggle -->
+<div class="win98-header">
+    <button class="win98-button-header" onclick="location.href='index.html'">🏠 Home</button>
+    <button class="win98-button-header" id="dark-mode-toggle">🌙 Dark Mode</button>
+</div>
+
+<script>
+    // Dark mode toggle
+    const darkToggle = document.getElementById('dark-mode-toggle');
+    const darkModeKey = 'darkMode';
+
+    // Load saved preference
+    if (localStorage.getItem(darkModeKey) === 'enabled') {
+        document.body.classList.add('dark-mode');
+        darkToggle.textContent = '☀️ Light Mode';
+    }
+
+    darkToggle.addEventListener('click', () => {
+        document.body.classList.toggle('dark-mode');
+        const isDark = document.body.classList.contains('dark-mode');
+        localStorage.setItem(darkModeKey, isDark ? 'enabled' : 'disabled');
+        darkToggle.textContent = isDark ? '☀️ Light Mode' : '🌙 Dark Mode';
+    });
+</script>
+
+<main class="container" style="padding: 2rem; max-width: 1000px; margin: auto;">
+
+    <!-- Blog Header -->
     <section class="blog-header-window win98-window" style="max-width: 900px; margin: 30px auto;">
         <div class="window-title">My Blog Posts</div>
         <div class="window-content" style="text-align: center;">
@@ -17,31 +89,37 @@ title: Blog - Hossein Razavi
         </div>
     </section>
 
+    <!-- Blog Posts Grid -->
     <section class="blog-grid-section" style="max-width: 900px; margin: 20px auto;">
-        <ul class="post-list-grid">
-            {% for post in site.posts %}
-            <li class="post-card win98-bevel-out">
+        <ul class="post-list-grid" style="list-style:none; display:grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; padding:0;">
+
+            <!-- Example Post Card -->
+            <li class="post-card win98-bevel-out" style="padding: 15px; background-color:#c0c0c0;">
                 <article>
                     <h3 class="post-title">
-                        <a href="{{ post.url }}" class="post-title-link">{{ post.title }}</a>
+                        <a href="example-post.html" class="post-title-link">Example Post Title</a>
                     </h3>
                     
                     <p class="post-meta">
-                        Published on: <time datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: "%B %d, %Y" }}</time>
+                        Published on: <time datetime="2025-12-05">December 05, 2025</time>
                     </p>
                     
                     <p class="post-excerpt">
-                        {{ post.excerpt | strip_html | truncatewords: 30 }}
+                        This is a short excerpt of the blog post, giving a quick preview of the content and insights...
                     </p>
                     
-                    <a href="{{ post.url }}" class="win98-button small-button">Read more →</a>
+                    <a href="example-post.html" class="win98-button small-button">Read more →</a>
                 </article>
             </li>
-            {% endfor %}
+            <!-- Repeat for each post -->
         </ul>
 
         <div class="post-grid-footer" style="text-align: center; margin-top: 40px;">
             <a href="/blog.html" class="win98-button primary">View All Posts</a>
         </div>
     </section>
+
 </main>
+
+</body>
+</html>
