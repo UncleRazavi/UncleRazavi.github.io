@@ -6,68 +6,123 @@ title: About - Hossein Razavi
 <main class="container">
 
     <!-- Hero Section -->
-    <section class="about-hero win98-window">
+    <section class="about-hero win98-window" style="margin-bottom:2rem;">
         <div class="window-title">About Me</div>
         <div class="window-content">
-            <div class="profile-summary" style="display: flex; gap: 20px;">
-                <div class="profile-image-placeholder win98-bevel-in" style="width: 150px; height: 150px;">Profile Pic</div>
-                <p>
-                    I am a <strong>K.N. Toosi University undergraduate student</strong>, focusing on signal processing, neuroscience, and data science.
+            <div class="profile-summary" style="display: flex; gap: 20px; align-items: center;">
+                <div class="profile-image-placeholder win98-bevel-in" style="width: 150px; height: 150px; display:flex; justify-content:center; align-items:center; font-weight:bold; background-color:#c0c0c0;">
+                    Profile Pic
+                </div>
+                <p style="max-width:600px; line-height:1.6;">
+                    I am a <strong>K.N. Toosi University undergraduate student</strong> with a passion for exploring 
+                    <em>signal processing, computational neuroscience, and data science</em>. 
+                    I enjoy building projects that bridge technology with real-world applications.
                 </p>
             </div>
         </div>
     </section>
 
     <!-- Education & Focus -->
-    <section class="education win98-window" style="margin-top: 2rem;">
+    <section class="education win98-window" style="margin-bottom:2rem;">
         <div class="window-title">Education & Core Focus</div>
-        <div class="window-content">
-            <p>Currently studying at K.N. Toosi University, with research focus on digital electronics, signal processing, and data science.</p>
+        <div class="window-content" style="line-height:1.6;">
+            <p>
+                I am currently studying at K.N. Toosi University, focusing on <strong>digital electronics, signal processing, and machine learning</strong>. 
+                My academic work emphasizes practical problem-solving and exploring computational methods in neuroscience.
+            </p>
         </div>
     </section>
 
     <!-- Technical Skills -->
-    <section class="technical-skills win98-window" style="margin-top: 2rem;">
+    <section class="technical-skills win98-window" style="margin-bottom:2rem;">
         <div class="window-title">Technical Skills</div>
         <div class="window-content">
-            <ul>
-                <li>Python, C/C++, Verilog/VHDL, AVR Assembly</li>
-                <li>Data Science, Machine Learning, Deep Learning</li>
-                <li>Signal Processing & Digital Electronics</li>
+            <ul style="display:flex; flex-wrap:wrap; gap:10px; list-style:none; padding:0;">
+                <li class="win98-bevel-out" style="padding:5px 10px; background:#e0e0e0; cursor:default;">Python</li>
+                <li class="win98-bevel-out" style="padding:5px 10px; background:#e0e0e0;">C/C++</li>
+                <li class="win98-bevel-out" style="padding:5px 10px; background:#e0e0e0;">Verilog/VHDL</li>
+                <li class="win98-bevel-out" style="padding:5px 10px; background:#e0e0e0;">AVR Assembly</li>
+                <li class="win98-bevel-out" style="padding:5px 10px; background:#e0e0e0;">Data Science</li>
+                <li class="win98-bevel-out" style="padding:5px 10px; background:#e0e0e0;">Machine Learning</li>
+                <li class="win98-bevel-out" style="padding:5px 10px; background:#e0e0e0;">Deep Learning</li>
+                <li class="win98-bevel-out" style="padding:5px 10px; background:#e0e0e0;">Signal Processing</li>
+                <li class="win98-bevel-out" style="padding:5px 10px; background:#e0e0e0;">Digital Electronics</li>
             </ul>
         </div>
     </section>
 
     <!-- Interests -->
-    <section class="interests win98-window" style="margin-top: 2rem;">
+    <section class="interests win98-window" style="margin-bottom:2rem;">
         <div class="window-title">Interests & Hobbies</div>
-        <div class="window-content" style="display: flex; gap: 20px;">
-            <div class="academic win98-bevel-in">
-                <h3>Academic & Philosophical</h3>
+        <div class="window-content" style="display: flex; gap: 20px; flex-wrap:wrap;">
+            <div class="academic win98-bevel-in" style="flex:1; min-width:200px; padding:10px; background:#f0f0f0;">
+                <h3 style="margin-top:0; font-size:1.1rem;">Academic & Philosophical</h3>
                 <ul>
                     <li>Neuroscience</li>
                     <li>Philosophy</li>
-                    <li>Literature</li>
+                    <li>Literature & Linguistics</li>
                 </ul>
             </div>
-            <div class="personal win98-bevel-in">
-                <h3>Personal & Pop Culture</h3>
+            <div class="personal win98-bevel-in" style="flex:1; min-width:200px; padding:10px; background:#f0f0f0;">
+                <h3 style="margin-top:0; font-size:1.1rem;">Personal & Pop Culture</h3>
                 <ul>
-                    <li>Music: Metal</li>
+                    <li>Music: Metal & Hard Rock</li>
                     <li>TV: House, M.D.</li>
-                    <li>Military history & technology</li>
+                    <li>Military History & Technology</li>
                 </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- Featured Projects -->
+    <section class="projects win98-window" style="margin-bottom:2rem;">
+        <div class="window-title">Featured Projects</div>
+        <div class="window-content" style="display:flex; flex-wrap:wrap; gap:15px;">
+            <div class="project-card win98-bevel-out" style="flex:1; min-width:200px; padding:10px; background:#e0e0e0;">
+                <h4>Computational Neuroscience</h4>
+                <p>Exploring brain dynamics and neural signal decoding with Python & ML techniques.</p>
+                <a href="projects.html#neuroscience" class="win98-button small-button">Details</a>
+            </div>
+            <div class="project-card win98-bevel-out" style="flex:1; min-width:200px; padding:10px; background:#e0e0e0;">
+                <h4>Eurogene Analysis</h4>
+                <p>Genome data analysis and ancestry exploration using Python and ML algorithms.</p>
+                <a href="projects.html#eurogene" class="win98-button small-button">Details</a>
+            </div>
+            <div class="project-card win98-bevel-out" style="flex:1; min-width:200px; padding:10px; background:#e0e0e0;">
+                <h4>PINN Library</h4>
+                <p>Physics-Informed Neural Networks for solving PDEs and scientific computation.</p>
+                <a href="projects.html#pinn" class="win98-button small-button">Details</a>
             </div>
         </div>
     </section>
 
     <!-- Links & CTA -->
-    <section class="links-cta win98-window" style="margin-top: 2rem;">
+    <section class="links-cta win98-window" style="margin-bottom:2rem; text-align:center;">
         <div class="window-title">Connect With Me</div>
-        <div class="window-content" style="text-align: center;">
-            <a href="projects.html" class="win98-button primary">View My Projects</a>
+        <div class="window-content">
+            <a href="projects.html" class="win98-button primary" style="margin-right:10px;">View My Projects</a>
             <a href="contact.html" class="win98-button">Get in Touch</a>
         </div>
     </section>
 
 </main>
+
+<script>
+    // Optional: Add typewriter effect for About hero
+    document.addEventListener("DOMContentLoaded", () => {
+        const heroText = document.querySelector(".profile-summary p");
+        if(heroText) {
+            const text = heroText.textContent;
+            heroText.textContent = "";
+            let i = 0;
+            function typeWriter() {
+                if(i < text.length) {
+                    heroText.textContent += text.charAt(i);
+                    i++;
+                    setTimeout(typeWriter, 25);
+                }
+            }
+            typeWriter();
+        }
+    });
+</script>
