@@ -1,12 +1,17 @@
----
-layout: default
-title: Projects - Hossein Razavi
----
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Projects - Hossein Razavi</title>
+    <link rel="stylesheet" href="assets/css/main.css">
+</head>
+<body>
 
-<main class="container">
+<main class="container" style="padding: 2rem; max-width: 1200px; margin: auto;">
 
     <!-- Hero / Introduction -->
-    <section class="projects-hero win98-window">
+    <section class="projects-hero win98-window" style="margin-bottom:2rem;">
         <div class="window-title">My Projects</div>
         <div class="window-content">
             <p>Here are some of the projects I’ve been working on recently:</p>
@@ -17,10 +22,10 @@ title: Projects - Hossein Razavi
     <section class="projects-list win98-window" style="margin-top: 2rem;">
         <div class="window-title">Featured Projects</div>
         <div class="window-content">
-            <div class="grid-container">
+            <div class="grid-container" style="display:grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px;">
 
                 <!-- Project 1 -->
-                <div class="project-card win98-bevel-out">
+                <div class="project-card win98-bevel-out" style="padding:15px;">
                     <h2 class="project-title">Computational Neuroscience</h2>
                     <p class="project-summary">
                         Computational neuroscience project exploring the human brain's robustness to visual noise. I was part of a pod at Neuromatch Academy (pod Lively anat).
@@ -32,7 +37,7 @@ title: Projects - Hossein Razavi
                 </div>
 
                 <!-- Project 2 -->
-                <div class="project-card win98-bevel-out">
+                <div class="project-card win98-bevel-out" style="padding:15px;">
                     <h2 class="project-title">Eurogene Project</h2>
                     <p class="project-summary">An exploration of genomes from diverse ancient and modern populations.</p>
                     <div class="project-links">
@@ -42,7 +47,7 @@ title: Projects - Hossein Razavi
                 </div>
 
                 <!-- Project 3 -->
-                <div class="project-card win98-bevel-out">
+                <div class="project-card win98-bevel-out" style="padding:15px;">
                     <h2 class="project-title">PINN Library</h2>
                     <p class="project-summary">A Python library for solving PDEs with Physics-Informed Neural Networks.</p>
                     <div class="project-links">
@@ -52,7 +57,7 @@ title: Projects - Hossein Razavi
                 </div>
 
                 <!-- Project 4 -->
-                <div class="project-card win98-bevel-out">
+                <div class="project-card win98-bevel-out" style="padding:15px;">
                     <h2 class="project-title">BCI, Motor Imagery</h2>
                     <p class="project-summary">
                         Uses data from BCI Competition IV, Dataset 1, focusing on motor imagery EEG signals.
@@ -71,10 +76,13 @@ title: Projects - Hossein Razavi
     <section class="projects-placeholder win98-window" style="margin-top: 2rem;">
         <div class="window-title">Visualization Placeholder</div>
         <div class="window-content" style="text-align: center;">
-            <div class="spinning-cube-placeholder win98-bevel-in" style="width: 120px; height: 120px; margin: 20px auto;">
+            <div class="spinning-cube-placeholder win98-bevel-in" style="width: 120px; height: 120px; margin: 20px auto; display:flex; justify-content:center; align-items:center; font-weight:bold; background-color:#c0c0c0;">
                 Spinning Cube
             </div>
         </div>
     </section>
 
 </main>
+
+</body>
+</html>
