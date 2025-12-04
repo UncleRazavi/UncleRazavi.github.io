@@ -1,7 +1,7 @@
 // ============================================================
 // 1. GLOBAL CONFIGURATIONS & UTILITIES
 // ============================================================
-<script>
+
 document.addEventListener('DOMContentLoaded', () => {
     const toggleBtn = document.getElementById('dark-mode-toggle');
 
@@ -22,7 +22,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 });
-</script>
 
 // --- Particles.js Configuration ---
 const particleConfig = {
@@ -658,5 +657,6 @@ drawCurve("spirograph-canvas", (ctx, w, h) => {
     }
     ctx.stroke();
 });
+
 
 
