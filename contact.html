@@ -1,53 +1,79 @@
----
-layout: default
-title: Contact - Hossein Razavi
----
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact - Hossein Razavi</title>
+    <link rel="stylesheet" href="assets/css/main.css"> 
+</head>
+<body>
+    
+    <header>
+        <nav>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="project.html">Projects</a></li>
+                <li><a href="contact.html" class="active">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
 
-<main class="container">
+    <main class="container">
+        <section class="contact-links win98-window" style="max-width: 600px; margin: 20px auto;">
+            <div class="window-title">📧 Contact Information</div>
+            <div class="window-content">
+                <header>
+                    <h1>Get In Touch</h1>
+                    <p>I'd love to hear from you! Whether you have a question, collaboration idea, or just want to say hello, feel free to reach out.</p>
+                </header>
 
-    <!-- Hero -->
-    <section class="contact-hero win98-window">
-        <div class="window-title">Get In Touch</div>
-        <div class="window-content">
-            <p>I'd love to hear from you! Questions, collaborations, or general hello are welcome.</p>
-        </div>
-    </section>
+                <div class="links-grid" style="margin-top: 20px;">
+                    <h2>Find me online:</h2>
+                    <div class="win98-bevel-in social-buttons-container" style="padding: 15px; display: flex; flex-wrap: wrap; gap: 8px;">
+                        
+                        <a href="mailto:gildedmath@gmail.com" class="win98-button primary">Email (gildedmath@gmail.com)</a>
+                        
+                        <a href="https://www.linkedin.com/in/hossein-razavi-485a84288" target="_blank" rel="noopener" class="win98-button">LinkedIn</a>
+                        <a href="https://github.com/UncleRazavi" target="_blank" rel="noopener" class="win98-button">GitHub</a>
+                        <a href="https://orcid.org/0009-0000-9511-0736" target="_blank" rel="noopener" class="win98-button">ORCID Profile</a>
+                    </div>
+                </div>
+            </div>
+        </section>
 
-    <!-- Links -->
-    <section class="contact-links win98-window" style="margin-top: 2rem;">
-        <div class="window-title">Find Me Online</div>
-        <div class="window-content" style="text-align: center;">
-            <a href="https://github.com/UncleRazavi" target="_blank" class="win98-button">GitHub</a>
-            <a href="https://orcid.org/0009-0000-9511-0736" target="_blank" class="win98-button">ORCID</a>
-            <a href="https://www.linkedin.com/in/hossein-razavi-485a84288" target="_blank" class="win98-button">LinkedIn</a>
-            <a href="mailto:gildedmath@gmail.com" class="win98-button primary">Email</a>
-        </div>
-    </section>
-
-    <!-- Contact Form -->
-    <section class="contact-form-section win98-window" style="margin-top: 2rem;">
-        <div class="window-title">Send Message</div>
-        <div class="window-content">
-            <form action="https://formspree.io/f/xovnonv" method="POST" class="win98-window" style="padding: 10px;">
-                <div>
-                    <label for="name">Name</label>
-                    <input type="text" id="name" name="name" placeholder="Your Name" required class="win98-bevel-in">
+        <section class="contact-form-window win98-window" style="max-width: 600px; margin: 20px auto;">
+            <div class="window-title">📝 Send Message (Form)</div>
+            <form class="contact-form" action="https://formspree.io/f/xovnonv" method="POST" style="margin-top: 5px;">
+                <div class="window-content form-content">
+                    
+                    <div class="form-group">
+                        <label for="name">Name:</label>
+                        <input type="text" id="name" name="name" placeholder="Your Full Name" required class="win98-bevel-in">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="email">Email:</label>
+                        <input type="email" id="email" name="email" placeholder="you@example.com" required class="win98-bevel-in">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="subject">Subject:</label>
+                        <input type="text" id="subject" name="subject" placeholder="What's this about?" required class="win98-bevel-in">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="message">Message:</label>
+                        <textarea id="message" name="message" placeholder="Your message..." rows="8" maxlength="1000" required class="win98-bevel-in"></textarea>
+                    </div>
+                    
+                    <div style="text-align: right; margin-top: 15px;">
+                        <button type="submit" class="win98-button primary">Send Message</button>
+                    </div>
                 </div>
-                <div>
-                    <label for="email">Email</label>
-                    <input type="email" id="email" name="email" placeholder="you@example.com" required class="win98-bevel-in">
-                </div>
-                <div>
-                    <label for="subject">Subject</label>
-                    <input type="text" id="subject" name="subject" placeholder="What's this about?" required class="win98-bevel-in">
-                </div>
-                <div>
-                    <label for="message">Message</label>
-                    <textarea id="message" name="message" rows="6" required class="win98-bevel-in"></textarea>
-                </div>
-                <button type="submit" class="win98-button primary">Send Message</button>
             </form>
-        </div>
-    </section>
+        </section>
 
-</main>
+    </main>
+    </body>
+</html>
