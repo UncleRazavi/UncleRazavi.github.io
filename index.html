@@ -3,39 +3,51 @@ layout: default
 title: Hossein Razavi - Electrical Engineering, Data Science & Neuroscience
 ---
 
+<!-- Dark Mode Toggle (recommended in header, but can stay in JS only) -->
+<header>
+    <div class="container">
+        <nav>
+            <a href="{{ '/' | relative_url }}">Home</a>
+            <a href="{{ '/projects.html' | relative_url }}">Projects</a>
+            <a href="{{ '/blog.html' | relative_url }}">Blog</a>
+            <a href="{{ '/about.html' | relative_url }}">About</a>
+            <button id="dark-mode-toggle" aria-label="Toggle Dark Mode">Dark Mode</button>
+        </nav>
+    </div>
+</header>
+
 <section class="hero-section">
     <div class="container hero-content">
-
-
-        <!-- 3D Cube Avatar -->
-        <div class="profile-avatar avatar-3d-wrapper" id="avatar-3d" data-3d-object="cube" aria-label="3D spinning cube representing profile"></div>
+        <!-- 3D Rotating Cube Avatar -->
+        <div class="profile-avatar avatar-3d-wrapper" id="avatar-3d" data-3d-object="cube" aria-label="3D spinning cube avatar">
+            <div class="avatar-loading-text">Loading 3D Avatar...</div>
+        </div>
 
         <h1>Hossein Razavi</h1>
         <h2 class="subtitle">Undergraduate Student | Electrical & Electronic Engineering</h2>
-
         <p class="bio-intro">
-            Welcome to my personal website! I am currently pursuing my undergraduate studies at 
-            <strong>K.N. Toosi University</strong>. My academic passion lies at the intersection 
-            of <strong>Electrical Engineering</strong> with <strong>Data Science</strong>, 
+            Welcome to my personal website! I am currently pursuing my undergraduate studies at
+            <strong>K.N. Toosi University</strong>. My academic passion lies at the intersection
+            of <strong>Electrical Engineering</strong> with <strong>Data Science</strong>,
             <strong>Neuroscience</strong>, and <strong>Signal Processing</strong>.
         </p>
 
         <div class="quick-links">
-            <a href="https://github.com/UncleRazavi" target="_blank" rel="noopener" title="GitHub Profile" aria-label="GitHub Profile">GitHub</a>
+            <a href="https://github.com/UncleRazavi" target="_blank" rel="noopener" aria-label="GitHub Profile">GitHub</a>
             <span class="link-separator" aria-hidden="true">|</span>
-            <a href="https://www.linkedin.com/in/hossein-razavi-485a84288" target="_blank" rel="noopener" title="LinkedIn Profile" aria-label="LinkedIn Profile">LinkedIn</a>
+            <a href="https://www.linkedin.com/in/hossein-razavi-485a84288" target="_blank" rel="noopener" aria-label="LinkedIn Profile">LinkedIn</a>
         </div>
 
         <div class="cta-group">
             <a class="cta-btn primary" href="{{ '/projects.html' | relative_url }}">Explore My Projects</a>
-            <a class="cta-btn" href="{{ '/about.html' | relative_url }}">More About Me →</a> 
+            <a class="cta-btn" href="{{ '/about.html' | relative_url }}">More About Me</a>
         </div>
-
     </div>
 </section>
 
+<!-- Key Focus Areas -->
 <section class="container skills-focus-section" aria-labelledby="focus-areas-heading">
-    <h2 id="focus-areas-heading">Key Focus Areas</h2>
+    <h2 id="focus-areas-heading" class="section-heading">Key Focus Areas</h2>
     <ul class="focus-list">
         <li>Data Science & Machine Learning</li>
         <li>Neuroscience & Brain-Computer Interfaces</li>
@@ -44,60 +56,64 @@ title: Hossein Razavi - Electrical Engineering, Data Science & Neuroscience
     </ul>
 </section>
 
+<!-- Interactive Mathematics -->
 <section class="container math-preview-section" aria-labelledby="interactive-math-heading">
     <h2 id="interactive-math-heading" class="section-heading">Interactive Mathematics</h2>
+    <p style="margin-bottom: 1.5rem;">Explore beautiful mathematical curves and fractal patterns:</p>
 
-    <p style="margin-bottom: 1.5rem;">Explore beautiful mathematical curves and patterns:</p>
-
-    <div class="math-object-container">
-        <div class="math-object-title">Lissajous Curve</div>
-        <canvas id="lissajous-canvas" data-math-object="lissajous" class="math-object-canvas"></canvas>
+    <div class="math-grid">
+        <div class="math-object-container">
+            <div class="math-object-title">Lissajous Curve</div>
+            <canvas id="lissajous-canvas" class="math-object-canvas" width="300" height="300"></canvas>
+        </div>
+        <div class="math-object-container">
+            <div class="math-object-title">Rose Curve</div>
+            <canvas id="rose-canvas" class="math-object-canvas" width="300" height="300"></canvas>
+        </div>
+        <div class="math-object-container">
+            <div class="math-object-title">Butterfly Curve</div>
+            <canvas id="butterfly-canvas" class="math-object-canvas" width="300" height="300"></canvas>
+        </div>
+        <div class="math-object-container">
+            <div class="math-object-title">Spirograph</div>
+            <canvas id="spirograph-canvas" class="math-object-canvas" width="300" height="300"></canvas>
+        </div>
     </div>
 
-    <div class="math-object-container">
-        <div class="math-object-title">Rose Curve</div>
-        <canvas id="rose-canvas" data-math-object="rose" class="math-object-canvas"></canvas>
-    </div>
-
-    <div class="math-object-container">
-        <div class="math-object-title">Butterfly Curve</div>
-        <canvas id="butterfly-canvas" data-math-object="butterfly" class="math-object-canvas"></canvas>
-    </div>
-
-    <div class="math-object-container">
-        <div class="math-object-title">Spirograph</div>
-        <canvas id="spirograph-canvas" data-math-object="spirograph" class="math-object-canvas"></canvas>
+    <!-- Interactive Fractal Explorer Button -->
+    <div style="text-align: center; margin-top: 2rem;">
+        <button id="open-interactive-fractal" class="cta-btn primary">
+            Open Interactive Mandelbrot Explorer
+        </button>
     </div>
 </section>
 
-<!-- Fractal Loader Section -->
+<!-- Static Fractal Loader Window (Win98 Style) -->
 <section class="container fractal-section" aria-labelledby="fractal-heading">
-    <h2 id="fractal-heading" class="section-heading">Fractal Loader</h2>
-
-    <div id="fractalWindow" class="win98-window" style="position: relative; width: 320px; height: 240px; margin: auto;">
-        <div id="fractalHeader" class="win98-title">Fractal Loader</div>
-        <canvas id="fractalCanvas" width="300" height="200"></canvas>
+    <h2 id="fractal-heading" class="section-heading">Fractal Loader (Static)</h2>
+    <div id="fractalWindow" class="win98-window">
+        <div id="fractalHeader" class="win98-title">
+            Fractal Loader - Mandelbrot Set
+            <div class="win98-close" onclick="this.parentElement.parentElement.style.display='none'">X</div>
+        </div>
+        <div class="win98-content">
+            <canvas id="fractalCanvas"></canvas>
+        </div>
     </div>
 </section>
 
+<!-- Blog Preview -->
 <section class="container blog-preview-section" aria-labelledby="latest-blog-heading">
     <h2 id="latest-blog-heading" class="section-heading">Latest Insights & Blog Posts</h2>
-
     <ul class="post-list">
         {% for post in site.posts limit:3 %}
         <li class="post-card">
             <a href="{{ post.url | relative_url }}" class="post-title-link">{{ post.title }}</a>
-
             <p class="post-meta">
-                Published on 
-                <time datetime="{{ post.date | date_to_xmlschema }}">
-                    {{ post.date | date: "%B %d, %Y" }}
-                </time>
+                Published on <time datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: "%B %d, %Y" }}</time>
             </p>
-
             <p class="post-excerpt">{{ post.excerpt | strip_html | truncatewords: 25 }}</p>
-
-            <a href="{{ post.url | relative_url }}" class="read-more-link">Read more →</a>
+            <a href="{{ post.url | relative_url }}" class="read-more-link">Read more</a>
         </li>
         {% else %}
         <p class="no-posts">No blog posts published yet. Check back soon!</p>
@@ -116,4 +132,16 @@ title: Hossein Razavi - Electrical Engineering, Data Science & Neuroscience
     </div>
 </section>
 
-
+<!-- Trigger Interactive Fractal Window -->
+<script>
+    // Open the interactive fractal when button is clicked
+    document.getElementById("open-interactive-fractal")?.addEventListener("click", () => {
+        const win = document.getElementById("win-fractal");
+        if (win) {
+            win.style.display = "block";
+            // Bring to front
+            document.querySelectorAll('.win98-window').forEach(w => w.style.zIndex = "999");
+            win.style.zIndex = "1001";
+        }
+    });
+</script>
