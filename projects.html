@@ -1,74 +1,80 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Projects - Hossein Razavi</title>
-    <link rel="stylesheet" href="assets/css/main.css">
-</head>
-<body>
-    <header>
-        <nav>
-            <ul class="nav-links">
-                <li><a href="index.html">Home</a></li>
-                <li><a href="project.html" class="active">Projects</a></li>
-                <!-- add more links if needed -->
-            </ul>
-        </nav>
-    </header>
+---
+layout: default
+title: Projects - Hossein Razavi
+---
 
-    <main class="container">
-        <section class="projects-container">
-            <h1 accesskey="p">My Projects</h1>
+<main class="container">
+
+    <!-- Hero / Introduction -->
+    <section class="projects-hero win98-window">
+        <div class="window-title">My Projects</div>
+        <div class="window-content">
             <p>Here are some of the projects I’ve been working on recently:</p>
+        </div>
+    </section>
 
-            <div class="project-card win98-bevel-out">
-                <h2 class="project-title">Computational Neuroscience</h2>
-                <p class="project-summary">
-                    Computational neuroscience project exploring the human brain's robustness to visual noise. 
-                    I was part of a pod at Neuromatch Academy (pod Lively anat).
-                </p>
-                <div class="project-links">
-                    <a href="https://github.com/UncleRazavi/Visual-robustness-based-on-ECoG-data" 
-                       target="_blank" rel="noopener" class="win98-button">View on GitHub</a>
+    <!-- Projects Grid -->
+    <section class="projects-list win98-window" style="margin-top: 2rem;">
+        <div class="window-title">Featured Projects</div>
+        <div class="window-content">
+            <div class="grid-container">
+
+                <!-- Project 1 -->
+                <div class="project-card win98-bevel-out">
+                    <h2 class="project-title">Computational Neuroscience</h2>
+                    <p class="project-summary">
+                        Computational neuroscience project exploring the human brain's robustness to visual noise. I was part of a pod at Neuromatch Academy (pod Lively anat).
+                    </p>
+                    <div class="project-links">
+                        <a href="https://github.com/UncleRazavi/Visual-robustness-based-on-ECoG-data" 
+                           target="_blank" rel="noopener" class="win98-button">View on GitHub</a>
+                    </div>
                 </div>
-            </div>
 
-            <div class="project-card win98-bevel-out">
-                <h2 class="project-title">Eurogene Project</h2>
-                <p class="project-summary">
-                    An exploration of genomes from diverse ancient and modern populations. 
-                </p>
-                <div class="project-links">
-                    <a href="https://github.com/UncleRazavi/Eurogene-Project" 
-                       target="_blank" rel="noopener" class="win98-button">View on GitHub</a>
+                <!-- Project 2 -->
+                <div class="project-card win98-bevel-out">
+                    <h2 class="project-title">Eurogene Project</h2>
+                    <p class="project-summary">An exploration of genomes from diverse ancient and modern populations.</p>
+                    <div class="project-links">
+                        <a href="https://github.com/UncleRazavi/Eurogene-Project" 
+                           target="_blank" rel="noopener" class="win98-button">View on GitHub</a>
+                    </div>
                 </div>
-            </div>
 
-            <div class="project-card win98-bevel-out">
-                <h2 class="project-title">PINN library</h2>
-                <p class="project-summary">
-                    A small, easy-to-use Python library for solving PDEs with Physics-Informed Neural Networks (PINNs).
-                </p>
-                <div class="project-links">
-                    <a href="https://github.com/UncleRazavi/pinns-lib" 
-                       target="_blank" rel="noopener" class="win98-button">View on GitHub</a>
+                <!-- Project 3 -->
+                <div class="project-card win98-bevel-out">
+                    <h2 class="project-title">PINN Library</h2>
+                    <p class="project-summary">A Python library for solving PDEs with Physics-Informed Neural Networks.</p>
+                    <div class="project-links">
+                        <a href="https://github.com/UncleRazavi/pinns-lib" 
+                           target="_blank" rel="noopener" class="win98-button">View on GitHub</a>
+                    </div>
                 </div>
-            </div>
 
-            <div class="project-card win98-bevel-out">
-                <h2 class="project-title">BCI, Motor Imagery</h2>
-                <p class="project-summary">
-                    This project uses data from the BCI Competition IV, Dataset 1, which focuses on motor imagery EEG signals. 
-                    The dataset was recorded from healthy subjects performing motor imagery tasks (e.g., imagining left hand, right hand, or foot movement) without feedback.
-                </p>
-                <div class="project-links">
-                    <a href="https://github.com/UncleRazavi/Motor-Imagery-EEG-Analysis" 
-                       target="_blank" rel="noopener" class="win98-button">View on GitHub</a>
+                <!-- Project 4 -->
+                <div class="project-card win98-bevel-out">
+                    <h2 class="project-title">BCI, Motor Imagery</h2>
+                    <p class="project-summary">
+                        Uses data from BCI Competition IV, Dataset 1, focusing on motor imagery EEG signals.
+                    </p>
+                    <div class="project-links">
+                        <a href="https://github.com/UncleRazavi/Motor-Imagery-EEG-Analysis" 
+                           target="_blank" rel="noopener" class="win98-button">View on GitHub</a>
+                    </div>
                 </div>
-            </div>
 
-        </section>
-    </main>
-</body>
-</html>
+            </div>
+        </div>
+    </section>
+
+    <!-- Placeholder / Visual Enhancement -->
+    <section class="projects-placeholder win98-window" style="margin-top: 2rem;">
+        <div class="window-title">Visualization Placeholder</div>
+        <div class="window-content" style="text-align: center;">
+            <div class="spinning-cube-placeholder win98-bevel-in" style="width: 120px; height: 120px; margin: 20px auto;">
+                Spinning Cube
+            </div>
+        </div>
+    </section>
+
+</main>
