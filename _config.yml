@@ -1,31 +1,30 @@
-# Site Settings
+# _config.yml
 title: Hossein Razavi | Electrical Engineering & Data Science
 author: Hossein Razavi (Uncle Razavi)
 email: gildedmath@gmail.com
 description: "Hossein Razavi's personal website and blog, exploring the intersection of Electrical Engineering, Data Science, and Neuroscience, presented with a nostalgic Windows 98 aesthetic."
 
-# URL and Build Settings
-baseurl: "" # The subpath of your site, e.g. /blog
-url: "https://UncleRazavi.github.io" # The base hostname & protocol for your site
-permalink: /blog/:title/
+baseurl: ""                             
+url: "https://UncleRazavi.github.io"     
+permalink: pretty                        
 
-# Theme and Plugins
-theme: minima
 plugins:
   - jekyll-feed
   - jekyll-sitemap
   - jekyll-seo-tag
-minima:
-  social_links:
-    github: UncleRazavi
 
 exclude:
   - Gemfile
   - Gemfile.lock
   - node_modules
+  - vendor
   - README.md
   - LICENSE
 
 contact_links:
   telegram_library: https://t.me/HRslibrary
   orcid: https://orcid.org/0009-0000-9511-0736
+
+win98:
+  dark_mode_default: false  
+  scanlines: true          
