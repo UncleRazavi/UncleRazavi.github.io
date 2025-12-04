@@ -6,9 +6,8 @@ title: Hossein Razavi - Electrical Engineering, Data Science & Neuroscience
 <section class="hero-section">
     <div class="container hero-content">
 
-        <!-- Removed profile avatar -->
-
-        <div class="profile-avatar avatar-3d-wrapper" id="avatar-3d" data-3d-object="cube"></div>
+        <!-- 3D Cube Avatar -->
+        <div class="profile-avatar avatar-3d-wrapper" id="avatar-3d" data-3d-object="cube" aria-label="3D spinning cube representing profile"></div>
 
         <h1>Hossein Razavi</h1>
         <h2 class="subtitle">Undergraduate Student | Electrical & Electronic Engineering</h2>
@@ -21,9 +20,9 @@ title: Hossein Razavi - Electrical Engineering, Data Science & Neuroscience
         </p>
 
         <div class="quick-links">
-            <a href="https://github.com/UncleRazavi" target="_blank" title="GitHub Profile" aria-label="GitHub Profile">GitHub</a>
+            <a href="https://github.com/UncleRazavi" target="_blank" rel="noopener" title="GitHub Profile" aria-label="GitHub Profile">GitHub</a>
             <span class="link-separator" aria-hidden="true">|</span>
-            <a href="https://www.linkedin.com/in/hossein-razavi-485a84288" target="_blank" title="LinkedIn Profile" aria-label="LinkedIn Profile">LinkedIn</a>
+            <a href="https://www.linkedin.com/in/hossein-razavi-485a84288" target="_blank" rel="noopener" title="LinkedIn Profile" aria-label="LinkedIn Profile">LinkedIn</a>
         </div>
 
         <div class="cta-group">
@@ -37,15 +36,15 @@ title: Hossein Razavi - Electrical Engineering, Data Science & Neuroscience
 <section class="container skills-focus-section" aria-labelledby="focus-areas-heading">
     <h2 id="focus-areas-heading">Key Focus Areas</h2>
     <ul class="focus-list">
-        <li>Data Science & ML</li>
-        <li>Neuroscience & BCI</li>
+        <li>Data Science & Machine Learning</li>
+        <li>Neuroscience & Brain-Computer Interfaces</li>
         <li>Signal Processing (DSP)</li>
         <li>Digital Electronics</li>
     </ul>
 </section>
 
-<section class="container blog-preview-section">
-    <h2 class="section-heading">Interactive Mathematics</h2>
+<section class="container math-preview-section" aria-labelledby="interactive-math-heading">
+    <h2 id="interactive-math-heading" class="section-heading">Interactive Mathematics</h2>
 
     <p style="margin-bottom: 1.5rem;">Explore beautiful mathematical curves and patterns:</p>
 
@@ -70,15 +69,13 @@ title: Hossein Razavi - Electrical Engineering, Data Science & Neuroscience
     </div>
 </section>
 
-<section class="container blog-preview-section">
-    <h2 class="section-heading">Latest Insights & Blog Posts</h2>
+<section class="container blog-preview-section" aria-labelledby="latest-blog-heading">
+    <h2 id="latest-blog-heading" class="section-heading">Latest Insights & Blog Posts</h2>
 
     <ul class="post-list">
         {% for post in site.posts limit:3 %}
         <li class="post-card">
-            <a href="{{ post.url | relative_url }}" class="post-title-link">
-                {{ post.title }}
-            </a>
+            <a href="{{ post.url | relative_url }}" class="post-title-link">{{ post.title }}</a>
 
             <p class="post-meta">
                 Published on 
@@ -87,13 +84,10 @@ title: Hossein Razavi - Electrical Engineering, Data Science & Neuroscience
                 </time>
             </p>
 
-            <p class="post-excerpt">
-                {{ post.excerpt | strip_html | truncatewords: 25 }}
-            </p>
+            <p class="post-excerpt">{{ post.excerpt | strip_html | truncatewords: 25 }}</p>
 
             <a href="{{ post.url | relative_url }}" class="read-more-link">Read more →</a>
         </li>
-
         {% else %}
         <p class="no-posts">No blog posts published yet. Check back soon!</p>
         {% endfor %}
@@ -106,7 +100,7 @@ title: Hossein Razavi - Electrical Engineering, Data Science & Neuroscience
     <div class="telegram-link-box">
         <p>
             Check out my academic document library on Telegram:
-            <a href="https://t.me/HRslibrary" target="_blank" class="telegram-link">HRs Library</a>
+            <a href="https://t.me/HRslibrary" target="_blank" rel="noopener" class="telegram-link">HRs Library</a>
         </p>
     </div>
 </section>
