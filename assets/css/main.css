@@ -1,328 +1,290 @@
 /* ========================================================= */
-/* TRUE WINDOWS 98 AESTHETIC — Clean, Professional & Retro */
+/* TRUE WINDOWS 98 + VT323 — PERFECT SIZES, AUTHENTIC FEEL   */
 /* ========================================================= */
-
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 :root {
-    /* Core Win98 Colors */
-    --win98-gray: #c0c0c0;
-    --win98-navy: #000080;
-    --win98-blue-hover: #1084d0;
-    --win98-white: #ffffff;
-    --win98-black: #000000;
+    --win98-bg: #c0c0c0;
     --win98-dark: #808080;
+    --win98-darker: #404040;
     --win98-light: #dfdfdf;
-
-    /* Semantic Mapping */
-    --bg-color: var(--win98-gray);
-    --text-color: var(--win98-black);
-    --accent: var(--win98-navy);
-    --accent-hover: var(--win98-blue-hover);
-    --title-bar: var(--win98-navy);
-    --title-text: var(--win98-white);
-    --border-3d-dark: #808080;
-    --border-3d-light: #dfdfdf;
+    --win98-lighter: #ffffff;
+    --win98-blue: #000080;
+    --win98-teal: #008080;
+    --text-color: #000000;
+    --menu-bg: #c0c0c0;
+    --title-bar: #000080;
+    --title-text: #ffffff;
 }
 
-/* Dark Mode — Matrix Green Terminal Style */
+/* Dark Mode — Matrix-style green terminal */
 .dark-mode {
-    --bg-color: #000000;
+    --win98-bg: #000000;
+    --win98-dark: #003300;
+    --win98-light: #001100;
+    --win98-lighter: #003300;
+    --win98-blue: #00c000;
     --text-color: #00ff00;
-    --accent: #00c000;
-    --accent-hover: #00ff00;
     --title-bar: #003300;
     --title-text: #00ff00;
-    --border-3d-dark: #003300;
-    --border-3d-light: #00c000;
+    --menu-bg: #000000;
 }
 
-/* Real Win98 System Font */
+@font-face {
+    font-family: 'VT323';
+    src: url('https://fonts.gstatic.com/s/vt323/v17/6aeZ4LS6l95EATcVG2OS.ttf') format('truetype');
+    font-display: swap;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html {
+    /* This is the magic fix — modern screens need bigger base */
+    font-size: 18px;
+}
+@media (max-width: 768px) { html { font-size: 16px; } }
+@media (min-width: 1440px) { html { font-size: 20px; } }
+
 body {
-    font-family: "MS Sans Serif", "Segoe UI", Tahoma, Arial, sans-serif;
-    font-size: 11px;
-    line-height: 1.5;
-    background: var(--bg-color);
+    font-family: 'VT323', 'MS Sans Serif', Tahoma, sans-serif;
+    font-size: 1rem;
+    line-height: 1.6;
     color: var(--text-color);
-    background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAAFUlEQVR42mN8//HLfwYiADMA8A8pAwBlAQAAf9f9OwAAAABJRU5ErkJggg=='); /* Classic gray dither */
-    overflow-x: hidden;
-}
-
-/* Dither only in light mode */
-.dark-mode { background-image: none; }
-
-/* ========================================================= */
-/* Win98 3D Beveled Borders (The Heart of the Look) */
-/* ========================================================= */
-.win98-bevel-out {
-    border-top: 2px solid var(--border-3d-light);
-    border-left: 2px solid var(--border-3d-light);
-    border-right: 2px solid var(--border-3d-dark);
-    border-bottom: 2px solid var(--border-3d-dark);
-    background: var(--win98-gray);
-}
-.win98-bevel-in {
-    border-top: 2px solid var(--border-3d-dark);
-    border-left: 2px solid var(--border-3d-dark);
-    border-right: 2px solid var(--border-3d-light);
-    border-bottom: 2px solid var(--border-3d-light);
-    background: var(--win98-gray);
-}
-.win98-button {
-    padding: 4px 12px;
-    background: var(--win98-gray);
-    border-top: 1px solid var(--border-3d-light);
-    border-left: 1px solid var(--border-3d-light);
-    border-right: 1px solid var(--border-3d-dark);
-    border-bottom: 1px solid var(--border-3d-dark);
-    cursor: default;
-    font-weight: bold;
-}
-.win98-button:active {
-    border-top: 1px solid var(--border-3d-dark);
-    border-left: 1px solid var(--border-3d-dark);
-    border-right: 1px solid var(--border-3d-light);
-    border-bottom: 1px solid var(--border-3d-light);
-    padding: 5px 11px 3px 13px;
+    background-color: var(--win98-bg);
+    background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAIAAAACCAYAAABytg0kAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAABdJREFUeNpi+P//PwMTAwMDEwMQAAQYABVcA0k1n67xAAAAAElFTkSuQmCC');
+    background-repeat: repeat;
+    padding-top: 40px; /* space for fixed header */
 }
 
 /* ========================================================= */
-/* Header & Navigation */
+/* WINDOWS 98 BEVELED BORDERS — The Real Deal */
+/* ========================================================= */
+.border-out {
+    border: 2px solid;
+    border-color: var(--win98-lighter) var(--win98-darker) var(--win98-darker) var(--win98-lighter);
+}
+.border-in {
+    border: 2px solid;
+    border-color: var(--win98-darker) var(--win98-lighter) var(--win98-lighter) var(--win98-darker);
+}
+
+/* ========================================================= */
+/* HEADER & NAVIGATION */
 /* ========================================================= */
 header {
-    background: var(--win98-gray);
-    padding: 4px 0;
-    position: sticky;
-    top: 0;
+    background: var(--menu-bg);
+    border-bottom: 2px solid var(--win98-darker);
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    height: 38px;
     z-index: 1000;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+    display: flex;
+    align-items: center;
 }
-header nav {
+
+nav {
+    display: flex;
+    justify-content: flex-start;
+    gap: 4px;
+    padding: 0 8px;
+    width: 100%;
+}
+
+nav a,
+nav button,
+.mobile-menu-button {
+    background: var(--win98-bg);
+    color: var(--text-color);
+    font-weight: bold;
+    text-decoration: none;
+    padding: 4px 12px;
+    min-width: 110px;
+    height: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1rem;
+    cursor: default;
+    .border-out;
+}
+nav a:hover,
+nav button:hover {
+    background: var(--win98-light);
+}
+nav a:active,
+nav button:active {
+    .border-in;
+    transform: translate(1px, 1px);
+}
+
+/* Mobile menu */
+.mobile-menu-button { display: none; }
+@media (max-width: 768px) {
+    .mobile-menu-button { display: flex; }
+    nav { flex-wrap: wrap; }
+    .nav-links {
+        order: 99;
+        width: 100%;
+        display: none;
+        flex-direction: column;
+        background: var(--menu-bg);
+        border-top: 2px solid var(--win98-darker);
+    }
+    .nav-links.active { display: flex; }
+    .nav-links a, .nav-links button { width: 100%; text-align: left; }
+}
+
+/* ========================================================= */
+/* MAIN CONTENT & WINDOWS */
+/* ========================================================= */
+main {
+    max-width: 1200px;
+    margin: 2rem auto;
+    padding: 1rem;
+}
+
+.win98-window {
+    background: var(--win98-bg);
+    .border-out;
+    box-shadow: 3px 3px 8px rgba(0,0,0,0.4);
+    margin: 2rem auto;
+    max-width: 900px;
+}
+
+.window-title {
+    background: linear-gradient(to bottom, var(--title-bar), #0000c0);
+    color: var(--title-text);
+    padding: 3px 8px;
+    font-weight: bold;
+    font-size: 1rem;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    flex-wrap: wrap;
-    gap: 8px;
-    max-width: 1000px;
-    margin: 0 auto;
-    padding: 0 1rem;
+    height: 24px;
+    cursor: grab;
 }
-header nav a,
-#dark-mode-toggle {
-    padding: 3px 10px;
-    background: var(--win98-gray);
-    border: 1px solid transparent;
-    font-weight: bold;
-    text-decoration: none;
-    color: var(--text-color);
-}
-header nav a:hover,
-#dark-mode-toggle:hover {
-    border: 1px dotted var(--win98-black);
-}
-header nav a.active {
-    background: var(--win98-navy);
-    color: white;
-}
+.window-title:active { cursor: grabbing; }
 
-/* ========================================================= */
-/* Hero & Layout */
-/* ========================================================= */
-.container {
-    max-width: 1000px;
-    margin: 0 auto;
+.window-controls button {
+    width: 20px; height: 18px;
+    background: var(--win98-bg);
+    .border-in;
+    font-size: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.window-controls button:hover { background: #e0e0e0; }
+.window-controls button:active { .border-out; }
+
+.window-content {
     padding: 1.5rem;
-}
-.hero-section {
-    background: var(--win98-gray);
-    padding: 2rem;
-    margin: 1.5rem auto;
-    text-align: center;
-    box-shadow: inset 0 0 10px rgba(0,0,0,0.2);
-}
-.hero-content h1 {
-    font-size: 2.8rem;
-    color: var(--accent);
-    margin-bottom: 0.5rem;
-}
-.subtitle {
-    font-size: 1.3rem;
-    font-style: italic;
-    color: var(--win98-dark);
-    margin-bottom: 1rem;
+    min-height: 200px;
+    background: var(--win98-bg);
 }
 
-/* 3D Avatar */
+/* ========================================================= */
+/* HERO & PROFILE */
+/* ========================================================= */
+.profile-section {
+    display: grid;
+    grid-template-columns: 380px 1fr;
+    gap: 2rem;
+    padding: 2rem;
+    background: var(--win98-bg);
+    .border-in;
+}
+
 #avatar-3d {
-    width: 300px; height: 300px;
-    margin: 0 auto 1.5rem;
+    width: 100%;
+    height: 380px;
     background: black;
-    overflow: hidden;
+    .border-in;
     position: relative;
+    overflow: hidden;
 }
 .avatar-loading-text {
     position: absolute;
     top: 50%; left: 50%;
     transform: translate(-50%, -50%);
     color: #00ff00;
-    font-weight: bold;
-    text-shadow: 0 0 5px #0f0;
+    font-size: 1.4rem;
+    text-shadow: 0 0 10px #0f0;
 }
 
-/* ========================================================= */
-/* Win98 Draggable Windows — The Real Deal */
-/* ========================================================= */
-.win98-window {
-    position: fixed;
-    background: var(--win98-gray);
-    box-shadow: 3px 3px 10px rgba(0,0,0,0.6);
-    z-index: 999;
-    min-width: 300px;
-    max-width: 95%;
-    user-select: none;
-    border: 1px solid var(--win98-black);
-}
-.win98-title {
-    background: linear-gradient(to bottom, var(--title-bar), #0000d0);
-    color: var(--title-text);
-    padding: 2px 4px;
+/* Buttons */
+.button-98 {
+    background: var(--win98-bg);
+    color: var(--text-color);
+    padding: 10px 20px;
+    font-size: 1.1rem;
     font-weight: bold;
-    font-size: 11px;
-    cursor: grab;
-    display: flex;
-    justify-content: space-between;
+    .border-out;
+    cursor: default;
+    display: inline-flex;
     align-items: center;
-    height: 18px;
+    justify-content: center;
 }
-.win98-title:active { cursor: grabbing; }
-.win98-close {
-    width: 16px; height: 14px;
-    margin-right: 2px;
-    background: var(--win98-gray);
-    border: 1px solid var(--border-3d-dark);
-    font-size: 9px;
-    line-height: 12px;
-    text-align: center;
-}
-.win98-close:hover {
-    background: red !important;
+.button-98:hover { background: var(--win98-light); }
+.button-98:active { .border-in; transform: translate(1px,1px); }
+.button-98.primary {
+    background: var(--win98-blue);
     color: white;
 }
-.win98-content {
-    background: var(--win98-gray);
-    padding: 8px;
-    height: calc(100% - 18px);
-    overflow: hidden;
-}
-.win98-content canvas {
-    display: block;
-    width: 100% !important;
-    height: 100% !important;
-    background: black;
-    cursor: grab;
-}
-.win98-content canvas:active { cursor: grabbing; }
 
-/* Fractal Controls */
-.fractal-controls {
-    background: var(--win98-gray);
-    padding: 6px;
-    border-bottom: 1px solid var(--border-3d-dark);
-    font-size: 11px;
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-    align-items: center;
-}
-.fractal-controls input[type="range"] {
-    height: 20px;
-}
-.fractal-controls select {
-    font-family: "MS Sans Serif", sans-serif;
-    font-size: 11px;
-    padding: 1px;
-}
-
-/* ========================================================= */
-/* Math Grid & Cards */
-/* ========================================================= */
+/* Math Grid */
 .math-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-    gap: 1rem;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 1.5rem;
     margin: 2rem 0;
 }
 .math-object-container {
-    background: var(--win98-gray);
-    padding: 12px;
+    background: var(--win98-bg);
+    padding: 1.5rem;
     text-align: center;
-    box-shadow: inset 1px 1px 0 var(--border-3d-dark), inset -1px -1px 0 var(--border-3d-light);
+    .border-in;
 }
 .math-object-title {
-    font-weight: bold;
-    color: var(--accent);
-    margin-bottom: 8px;
-    font-size: 12px;
+    font-size: 1.3rem;
+    color: var(--win98-blue);
+    margin-bottom: 1rem;
 }
 .math-object-canvas {
+    width: 100%;
+    height: 300px;
     background: black;
     image-rendering: pixelated;
-    width: 100%;
-    height: 240px;
 }
 
-/* ========================================================= */
-/* FAB Menu & Scroll Button */
-/* ========================================================= */
+/* Fractal Windows */
+#fractalWindow,
+.interactive-fractal-window {
+    width: 480px;
+    height: 420px;
+}
+@media (min-width: 768px) {
+    #fractalWindow,
+    .interactive-fractal-window {
+        width: 680px;
+        height: 560px;
+    }
+}
+
+/* FAB & Scroll Button */
 #fab-menu-toggle,
 #scroll-to-top {
-    position: fixed;
-    width: 56px; height: 56px;
+    width: 64px; height: 64px;
     border-radius: 50%;
-    font-size: 28px;
-    font-weight: bold;
+    font-size: 2rem;
+    background: var(--win98-blue);
     color: white;
-    background: var(--accent);
     border: none;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.5);
-    cursor: pointer;
-    z-index: 1000;
-    transition: all 0.2s;
+    box-shadow: 0 6px 15px rgba(0,0,0,0.5);
 }
-#fab-menu-toggle { bottom: 20px; right: 20px; }
-#scroll-to-top { bottom: 20px; left: 20px; opacity: 0; visibility: hidden; }
-#scroll-to-top.show { opacity: 1; visibility: visible; }
-#fab-menu-toggle:hover,
-#scroll-to-top:hover {
-    background: var(--accent-hover);
-    transform: scale(1.1) translateY(-4px);
-}
-.fab-menu {
-    position: fixed;
-    bottom: 90px;
-    right: 20px;
-    background: var(--win98-gray);
-    padding: 10px;
-    border: 1px solid var(--win98-black);
-    box-shadow: 3px 3px 10px rgba(0,0,0,0.6);
-    z-index: 999;
-    display: none;
-}
-.fab-menu button {
-    width: 100%;
-    margin: 4px 0;
-    padding: 6px;
-    font-size: 11px;
-}
+#scroll-to-top { opacity: 0; pointer-events: none; }
+#scroll-to-top.show { opacity: 1; pointer-events: all; }
 
-/* ========================================================= */
-/* Responsive */
-/* ========================================================= */
-@media (max-width: 768px) {
-    .container { padding: 1rem; }
-    .hero-content h1 { font-size: 2.2rem; }
-    .win98-window { width: 94% !important; left: 3% !important; top: 50px !important; }
-    #fab-menu-toggle { width: 50px; height: 50px; font-size: 24px; bottom: 15px; right: 15px; }
-    #scroll-to-top { bottom: 80px; left: 15px; }
-    .fab-menu { bottom: 80px; right: 15px; }
-}
+/* Final polish */
+h1 { font-size: 3rem; color: var(--win98-blue); }
+h2 { font-size: 2rem; color: var(--win98-teal); margin: 2rem 0 1rem; }
+p { margin: 1rem 0; font-size: 1.1rem; }
