@@ -5,43 +5,37 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    /* Consolidate font-family for consistency */
-    font-family: 'Courier New', Courier, monospace, 'Lucida Console', Monaco; 
+    font-family: 'Courier New', Courier, monospace, 'Lucida Console', Monaco;
 }
 
-/* Updated :root variables for better contrast and reusability */
 :root {
-    /* General Colors - Authentic Windows 98 */
-    --bg-color: #dfdfdf; /* Authentic Windows 98 gray */
-    --text-color: #000000; /* Black Text */
-    --primary-color: #000080; /* Windows Blue */
-    --primary-hover: #1084d0; /* Brighter Blue */
-    --secondary-color: #4a4a4a; /* Darker Gray */
+    --bg-color: #dfdfdf;
+    --text-color: #000000;
+    --primary-color: #000080;
+    --primary-hover: #1084d0;
+    --secondary-color: #4a4a4a;
 
-    /* Component Colors */
-    --card-bg: #c0c0c0; /* Win98-style card background */
-    --input-bg: #c0c0c0; /* Win98-style input/highlight */
-    --footer-bg: #dfdfdf; /* Footer/Toolbar Gray */
-    --win98-title-bg: var(--primary-color); /* Title bar blue */
+    --card-bg: #c0c0c0;
+    --input-bg: #c0c0c0;
+    --footer-bg: #dfdfdf;
+    --win98-title-bg: var(--primary-color);
     --win98-title-text: #ffffff;
 
-    /* 3D Border Effects */
     --border-light: #dfdfdf;
     --border-dark: #808080;
     --shadow-inset: inset -1px -1px var(--border-light), inset 1px 1px var(--border-dark);
     --shadow-outset: 1px 1px 0 var(--border-dark);
-    
-    /* Blog Font */
+
     --blog-font: 'Segoe UI', 'Trebuchet MS', sans-serif;
 }
 
 /* Dark Mode */
 .dark-mode {
     --bg-color: #000000;
-    --text-color: #00ff00; /* Neon Green */
-    --primary-color: #00c000; /* Darker Neon Green */
+    --text-color: #00ff00;
+    --primary-color: #00c000;
     --primary-hover: #00ff00;
-    --secondary-color: #007000; /* Very Dark Green */
+    --secondary-color: #007000;
 
     --card-bg: #111111;
     --input-bg: #0a0a0a;
@@ -57,8 +51,7 @@ body {
     line-height: 1.5;
     background-color: var(--bg-color);
     color: var(--text-color);
-    /* Improved text rendering */
-    text-rendering: optimizeLegibility; 
+    text-rendering: optimizeLegibility;
 }
 
 /* ============================= */
@@ -69,12 +62,11 @@ body {
     top: 0; left: 0;
     width: 100%; height: 100%;
     z-index: -1;
-    /* Use transparent background here, or it will override body's bg-color transition */
-    background-color: transparent; 
+    background-color: transparent;
 }
 
 .hero-section, section, footer, header {
-    position: relative; 
+    position: relative;
     z-index: 1;
 }
 
@@ -84,67 +76,52 @@ body {
 a {
     text-decoration: none;
     color: var(--primary-color);
-    transition: color 0.1s ease; /* Smooth color transition */
+    transition: color 0.1s ease;
 }
-
-a:hover {
-    color: var(--primary-hover);
-    text-decoration: underline;
-}
+a:hover { color: var(--primary-hover); text-decoration: underline; }
 
 .section-heading, section h2 {
     text-align: left;
     margin-bottom: 1.5rem;
     font-size: 1.8rem;
-    /* 90s style divider */
-    border-bottom: 3px double var(--secondary-color); 
+    border-bottom: 3px double var(--secondary-color);
     padding-bottom: 0.5rem;
     color: var(--text-color);
 }
-.section-heading + h3 {
-    margin-top: -1rem; /* Adjust for better spacing if a section heading is followed by an h3 */
-}
-
+.section-heading + h3 { margin-top: -1rem; }
 
 /* ============================= */
 /* Profile Avatar                */
 /* ============================= */
 .profile-avatar {
     margin: 0 auto 1.5rem;
-    width: 120px;
-    height: 120px;
+    width: 120px; height: 120px;
     overflow: hidden;
     position: relative;
-    /* Win98-style 3D border */
     border: 3px outset var(--border-light);
     border-right-color: var(--border-dark);
     border-bottom-color: var(--border-dark);
 }
-
 .profile-avatar .avatar-img {
     display: block;
-    width: 100%;
-    height: 100%;
+    width: 100%; height: 100%;
     object-fit: cover;
     border: none;
     transition: filter 0.3s ease-in-out, transform 0.3s ease-in-out;
     filter: grayscale(10%);
 }
-
 .profile-avatar .avatar-img:hover {
-    filter: grayscale(100%) brightness(1.2); /* Enhanced hover effect */
+    filter: grayscale(100%) brightness(1.2);
     transform: scale(1.05);
 }
 
-/* 3D Model Placeholder Styling */
+/* 3D Canvas Placeholder */
 #avatar-3d-canvas {
     display: block;
-    width: 100%;
-    height: 100%;
+    width: 100%; height: 100%;
     border: 1px solid var(--secondary-color);
     background-color: var(--input-bg);
 }
-
 .avatar-loading-text {
     position: absolute;
     top: 50%;
@@ -172,7 +149,6 @@ a:hover {
 header {
     background-color: var(--bg-color);
     padding: 0.5rem 0;
-    /* Win98 3D border */
     border: 3px solid var(--border-dark);
     border-right-color: var(--border-light);
     border-bottom-color: var(--border-light);
@@ -180,46 +156,36 @@ header {
     top: 0;
     z-index: 1000;
 }
-
 header nav {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    gap: 1rem; /* Added gap for better spacing */
+    gap: 1rem;
 }
-
 header nav a {
-    /* Removed redundant margin-right for better flex control */
-    margin-right: 0; 
     padding: 0.5rem 0.75rem;
     font-weight: bold;
     color: var(--text-color);
     border: 1px solid transparent;
-    flex-shrink: 0; /* Prevent links from shrinking */
+    flex-shrink: 0;
 }
-
 header nav a:hover {
     color: var(--primary-color);
-    /* Inset border for "pressed" effect */
     border: 1px inset var(--border-dark);
-    text-decoration: none;
 }
-
 header nav .active {
     background-color: var(--card-bg);
     color: var(--primary-color);
-    /* Inset border for "pressed" effect */
     border: 1px inset var(--border-dark);
 }
 
-/* Dark Mode Toggle Button */
+/* Dark Mode Toggle */
 #dark-mode-toggle {
     display: inline-block;
     padding: 4px 8px;
     font-size: 1.2rem;
     cursor: pointer;
     background-color: var(--bg-color);
-    /* Win98 outset button look */
     border: 2px outset var(--border-light);
     border-right-color: var(--border-dark);
     border-bottom-color: var(--border-dark);
@@ -229,15 +195,12 @@ header nav .active {
     flex-shrink: 0;
     transition: all 0.1s ease;
 }
-
-#dark-mode-toggle:hover,
-#dark-mode-toggle:focus {
-    /* Inset effect for "pressed" state */
+#dark-mode-toggle:hover, #dark-mode-toggle:focus {
     border: 2px inset var(--border-dark);
     border-right-color: var(--border-light);
     border-bottom-color: var(--border-light);
     box-shadow: none;
-    outline: none; /* Remove default focus ring */
+    outline: none;
 }
 
 /* ============================= */
@@ -253,17 +216,14 @@ header nav .active {
     text-transform: uppercase;
     color: var(--text-color);
     background-color: var(--bg-color);
-    /* Win98 outset button look */
     border: 2px outset var(--border-light);
     border-right-color: var(--border-dark);
     border-bottom-color: var(--border-dark);
     box-shadow: 1px 1px 0 var(--border-dark);
     transition: all 0.1s ease;
 }
-
 .cta-btn:hover, .button-link:hover, .cta-link:hover,
-.cta-btn:focus, .button-link:focus, .cta-link:focus { /* Added focus state for accessibility */
-    /* Inset effect for "pressed" state */
+.cta-btn:focus, .button-link:focus, .cta-link:focus {
     border: 2px inset var(--border-dark);
     border-right-color: var(--border-light);
     border-bottom-color: var(--border-light);
@@ -271,17 +231,14 @@ header nav .active {
     text-decoration: none;
     outline: none;
 }
-
 .cta-btn.primary {
     background-color: var(--primary-color);
     color: var(--border-light);
-    /* Primary buttons have a slightly different border color for contrast */
     border-color: var(--primary-color);
     border-top-color: var(--primary-hover);
     border-left-color: var(--primary-hover);
     box-shadow: 1px 1px 0 var(--border-dark);
 }
-
 .cta-btn.primary:hover,
 .cta-btn.primary:focus {
     background-color: var(--primary-hover);
@@ -298,510 +255,41 @@ header nav .active {
     padding: 4rem 0;
     text-align: center;
     background-color: var(--card-bg);
-    /* Win98 3D window/box look */
     border: 3px outset var(--border-light);
     border-right-color: var(--border-dark);
     border-bottom-color: var(--border-dark);
     margin: 2rem auto;
 }
-
 .hero-content h1 {
-    font-size: 2.8rem; /* Slightly larger */
+    font-size: 2.8rem;
     margin-bottom: 0.5rem;
     color: var(--primary-color);
 }
-
 .hero-content .subtitle {
-    font-size: 1.3rem; /* Slightly larger */
+    font-size: 1.3rem;
     margin-bottom: 1.5rem;
     font-style: italic;
     color: var(--secondary-color);
 }
 
-.quick-links {
-    margin: 1.5rem 0;
-    font-size: 1.1rem;
-}
-
-.link-separator {
-    margin: 0 0.75rem;
-    color: var(--secondary-color);
-}
-
-.cta-group {
-    margin-top: 2rem;
-}
-
 /* ============================= */
-/* Cards & Lists                 */
+/* Project Cards & Lists         */
 /* ============================= */
-.skills-focus-section {
-    background-color: var(--input-bg);
-    /* Inset border for a "recessed" panel look */
-    border: 2px inset var(--border-dark);
-    padding: 1.5rem;
-    margin: 2rem auto;
-}
-
-.focus-list {
-    list-style: square;
-    padding-left: 20px;
-    display: flex;
-    flex-wrap: wrap;
-    gap: 15px 30px; /* Adjusted gap */
-    font-size: 1.1rem;
-}
-
 .project-grid {
     display: grid;
-    /* Improved minmax for better flow on mid-size screens */
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); 
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
     gap: 20px;
 }
-
 .project-card {
     background-color: var(--card-bg);
     color: var(--text-color);
     padding: 1.5rem;
-    margin-bottom: 0; /* Removed redundant margin-bottom due to grid gap */
-    /* Inset border for a component look */
     border: 2px inset var(--border-dark);
     transition: transform 0.2s ease;
 }
-
 .project-card:hover {
-    transform: translateY(-2px); /* Subtle lift on hover */
+    transform: translateY(-2px);
     box-shadow: 4px 4px 0 var(--secondary-color);
-}
-
-.project-card h2 {
-    font-size: 1.4rem;
-    color: var(--primary-color);
-    margin-bottom: 0.75rem;
-    /* Dashed divider */
-    border-bottom: 1px dashed var(--secondary-color); 
-    padding-bottom: 0.25rem;
-}
-
-.project-image-placeholder {
-    height: 150px;
-    background-color: var(--input-bg);
-    color: var(--secondary-color);
-    text-align: center;
-    line-height: 150px;
-    margin-top: 1rem;
-    /* Recessed look */
-    border: 2px inset var(--border-dark);
-    font-style: italic;
-}
-
-/* Blog List */
-.post-list {
-    list-style: none;
-    padding: 0;
-    margin-bottom: 2rem;
-}
-
-.post-card {
-    padding: 1rem;
-    margin-bottom: 1rem;
-    border: 1px solid var(--secondary-color);
-    background-color: var(--card-bg);
-    transition: border-color 0.2s ease;
-}
-
-.post-card:hover {
-    border-color: var(--primary-color);
-    box-shadow: 2px 2px 0 var(--secondary-color);
-}
-
-.post-title-link {
-    display: block;
-    font-size: 1.2rem;
-    font-weight: bold;
-    margin-bottom: 0.25rem;
-}
-
-.post-meta {
-    font-size: 0.9rem;
-    color: var(--secondary-color);
-    margin-bottom: 0.5rem;
-}
-
-.read-more-link {
-    font-style: italic;
-    font-size: 0.95rem;
-}
-
-.no-posts {
-    padding: 1rem;
-    border: 1px dashed var(--secondary-color);
-    text-align: center;
-    background-color: var(--input-bg);
-}
-
-.telegram-link-box {
-    text-align: center;
-    margin-top: 2rem;
-    padding: 1rem;
-    border: 2px outset var(--border-light);
-    border-right-color: var(--border-dark);
-    border-bottom-color: var(--border-dark);
-    background-color: var(--input-bg);
-}
-.telegram-link {
-    font-weight: bold;
-}
-
-/* ============================= */
-/* Contact Form & Inputs         */
-/* ============================= */
-.contact-container {
-    max-width: 600px;
-    margin: 40px auto;
-    padding: 40px 32px;
-    background-color: var(--card-bg);
-    /* Win98 3D window/box look */
-    border: 3px outset var(--border-light);
-    border-right-color: var(--border-dark);
-    border-bottom-color: var(--border-dark);
-}
-
-.contact-form label {
-    display: block;
-    margin-bottom: 0.25rem;
-    font-weight: bold;
-}
-
-.contact-form div {
-    margin-bottom: 1rem; /* Added spacing between form elements */
-}
-
-.contact-form input,
-.contact-form textarea {
-    width: 100%;
-    padding: 6px 8px;
-    /* Recessed input field look */
-    border: 2px inset var(--border-dark); 
-    background-color: var(--input-bg);
-    color: var(--text-color);
-    font-size: 1rem;
-    /* Use the same retro font for inputs */
-    font-family: var(--font-family); 
-}
-
-.contact-form input:focus,
-.contact-form textarea:focus {
-    /* Better focus state */
-    background-color: var(--card-bg);
-    outline: 2px dotted var(--primary-color);
-    border-color: var(--primary-color); 
-}
-
-/* ============================= */
-/* Win98 Window Style (for Fractal) */
-/* ============================= */
-
-.win98-window {
-    position: absolute;
-    min-width: 350px;
-    background: var(--bg-color);
-    border: 3px solid;
-    border-style: solid;
-    /* Use the standard 3D border */
-    border-top-color: var(--border-light);
-    border-left-color: var(--border-light);
-    border-right-color: var(--border-dark);
-    border-bottom-color: var(--border-dark);
-    /* Make the window slightly easier to drag */
-    cursor: grab; 
-    z-index: 2000; 
-    box-shadow: 5px 5px 0 var(--border-dark);
-}
-
-.win98-title {
-    background-color: var(--win98-title-bg);
-    color: var(--win98-title-text);
-    padding: 4px 8px;
-    font-weight: bold;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    user-select: none;
-    cursor: inherit; /* Inherit drag cursor */
-}
-
-.win98-close {
-    background-color: var(--bg-color);
-    color: var(--text-color);
-    padding: 0 8px;
-    font-size: 1.1rem;
-    line-height: 1.2;
-    cursor: pointer;
-    /* Win98 outset button look */
-    border: 2px outset var(--border-light);
-    border-right-color: var(--border-dark);
-    border-bottom-color: var(--border-dark);
-    flex-shrink: 0;
-}
-
-.win98-close:active {
-    /* Pressed state */
-    border: 2px inset var(--border-dark);
-    border-right-color: var(--border-light);
-    border-bottom-color: var(--border-light);
-    box-shadow: none;
-}
-
-.win98-content {
-    padding: 1rem;
-    height: 350px; /* Fixed height for the fractal area */
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: #000000;
-}
-
-.win98-content canvas {
-    /* Make the canvas fill the content area */
-    max-width: 100%;
-    max-height: 100%;
-}
-
-
-/* ============================= */
-/* Footer                        */
-/* ============================= */
-footer {
-    text-align: center;
-    padding: 1rem 0;
-    background-color: var(--footer-bg);
-    color: var(--secondary-color);
-    font-size: 0.9rem;
-    /* Replaced double outset with a single top-border line for a 'toolbar' feel */
-    border-top: 2px solid var(--border-dark); 
-    border-bottom: 1px solid var(--border-dark);
-    /* Removed redundant border-bottom-color */
-}
-
-/* ============================= */
-/* Scroll-to-Top Button           */
-/* ============================= */
-#scroll-to-top {
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
-    display: none;
-    width: 40px;
-    height: 40px;
-    padding: 0;
-    font-size: 1.2rem;
-    cursor: pointer;
-    background-color: var(--bg-color);
-    color: var(--text-color);
-    border: 2px outset var(--border-light);
-    border-right-color: var(--border-dark);
-    border-bottom-color: var(--border-dark);
-    box-shadow: 1px 1px 0 var(--border-dark);
-    z-index: 999;
-    transition: all 0.1s ease;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
-}
-
-#scroll-to-top.show {
-    display: flex;
-}
-
-#scroll-to-top:hover,
-#scroll-to-top:focus {
-    border: 2px inset var(--border-dark);
-    border-right-color: var(--border-light);
-    border-bottom-color: var(--border-light);
-    box-shadow: none;
-    outline: none;
-}
-
-#scroll-to-top:active {
-    border: 2px inset var(--border-dark);
-    box-shadow: inset 1px 1px 0 var(--border-dark);
-}
-
-/* ============================= */
-/* Typewriter Effect             */
-/* ============================= */
-.typewriter {
-    overflow: hidden;
-    border-right: 3px solid var(--primary-color);
-    white-space: nowrap;
-    animation: blink-caret 0.75s step-end infinite;
-}
-
-@keyframes blink-caret {
-    from, to { border-right-color: var(--primary-color); }
-    50% { border-right-color: transparent; }
-}
-
-/* ============================= */
-/* Card Hover Enhancements       */
-/* ============================= */
-.project-card,
-.post-card {
-    position: relative;
-    overflow: hidden;
-}
-
-.project-card::before,
-.post-card::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: -100%;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
-    transition: left 0.5s ease;
-}
-
-.project-card:hover::before,
-.post-card:hover::before {
-    left: 100%;
-}
-
-/* ============================= */
-/* Tooltips                      */
-/* ============================= */
-[data-tooltip] {
-    position: relative;
-    cursor: help;
-}
-
-[data-tooltip]:hover::after {
-    content: attr(data-tooltip);
-    position: absolute;
-    bottom: 125%;
-    left: 50%;
-    transform: translateX(-50%);
-    background-color: var(--primary-color);
-    color: var(--border-light);
-    padding: 6px 10px;
-    border-radius: 2px;
-    font-size: 0.85rem;
-    white-space: nowrap;
-    z-index: 1000;
-    border: 1px solid var(--border-dark);
-    box-shadow: 2px 2px 0 var(--border-dark);
-}
-
-[data-tooltip]:hover::before {
-    content: '';
-    position: absolute;
-    bottom: 120%;
-    left: 50%;
-    transform: translateX(-50%);
-    border: 5px solid transparent;
-    border-top-color: var(--primary-color);
-    z-index: 1000;
-}
-
-/* ============================= */
-/* Stats Counter Animation       */
-/* ============================= */
-.stat-card {
-    text-align: center;
-    padding: 1rem;
-    background-color: var(--card-bg);
-    border: 2px inset var(--border-dark);
-    margin: 0.5rem;
-    flex: 1;
-    min-width: 120px;
-}
-
-.stat-number {
-    font-size: 2rem;
-    font-weight: bold;
-    color: var(--primary-color);
-}
-
-.stat-label {
-    font-size: 0.9rem;
-    color: var(--secondary-color);
-    margin-top: 0.25rem;
-}
-
-.stats-container {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 0.5rem;
-    margin: 1.5rem 0;
-}
-
-/* ============================= */
-/* Blog Post Styling             */
-/* ============================= */
-.post-content, .blog-post {
-    font-family: var(--blog-font);
-    line-height: 1.7;
-    color: var(--text-color);
-}
-
-.post-content p, .blog-post p {
-    margin-bottom: 1rem;
-    font-size: 1.05rem;
-}
-
-.post-content h2, .blog-post h2,
-.post-content h3, .blog-post h3 {
-    margin-top: 1.5rem;
-    margin-bottom: 0.75rem;
-    color: var(--primary-color);
-    font-family: var(--blog-font);
-}
-
-.post-content h2, .blog-post h2 {
-    font-size: 1.8rem;
-    border-bottom: 2px solid var(--secondary-color);
-    padding-bottom: 0.5rem;
-}
-
-.post-content h3, .blog-post h3 {
-    font-size: 1.3rem;
-}
-
-.post-content code, .blog-post code {
-    background-color: var(--input-bg);
-    padding: 2px 6px;
-    border-radius: 3px;
-    font-family: 'Courier New', monospace;
-    color: var(--primary-color);
-}
-
-.post-content pre, .blog-post pre {
-    background-color: var(--input-bg);
-    padding: 1rem;
-    border: 1px solid var(--secondary-color);
-    overflow-x: auto;
-    margin: 1rem 0;
-}
-
-.post-content blockquote, .blog-post blockquote {
-    border-left: 4px solid var(--primary-color);
-    margin-left: 0;
-    padding-left: 1rem;
-    color: var(--secondary-color);
-    font-style: italic;
-}
-
-.post-content ul, .post-content ol,
-.blog-post ul, .blog-post ol {
-    margin-left: 2rem;
-    margin-bottom: 1rem;
-}
-
-.post-content li, .blog-post li {
-    margin-bottom: 0.5rem;
 }
 
 /* ============================= */
@@ -818,137 +306,16 @@ footer {
     position: relative;
     overflow: hidden;
 }
-
 .three-d-container canvas {
     display: block;
     width: 100%;
     height: 100%;
 }
-
-.three-d-controls {
-    position: absolute;
-    bottom: 10px;
-    left: 10px;
-    background-color: rgba(192, 192, 192, 0.9);
-    padding: 8px 12px;
-    border: 2px outset var(--border-light);
-    border-right-color: var(--border-dark);
-    border-bottom-color: var(--border-dark);
-    font-size: 0.85rem;
-    color: var(--text-color);
-    z-index: 10;
-}
-
-.three-d-controls button {
-    margin-right: 5px;
-    padding: 4px 8px;
-    background-color: var(--bg-color);
-    border: 2px outset var(--border-light);
-    border-right-color: var(--border-dark);
-    border-bottom-color: var(--border-dark);
-    cursor: pointer;
-    font-size: 0.8rem;
-}
-
-.three-d-controls button:hover {
-    border: 2px inset var(--border-dark);
-    border-right-color: var(--border-light);
-    border-bottom-color: var(--border-light);
-}
-
-.three-d-info {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    background-color: rgba(192, 192, 192, 0.9);
-    padding: 8px 12px;
-    border: 2px outset var(--border-light);
-    border-right-color: var(--border-dark);
-    border-bottom-color: var(--border-dark);
-    font-size: 0.8rem;
-    max-width: 200px;
-    z-index: 10;
-}
-
-/* ============================= */
-/* Interactive Math Objects      */
-/* ============================= */
-.math-object-container {
-    margin: 2rem 0;
-    padding: 1rem;
-    border: 3px outset var(--border-light);
-    border-right-color: var(--border-dark);
-    border-bottom-color: var(--border-dark);
-    background-color: var(--card-bg);
-}
-
-.math-object-title {
-    font-weight: bold;
-    color: var(--primary-color);
-    margin-bottom: 0.5rem;
-}
-
-.math-object-canvas {
-    width: 100%;
-    height: 300px;
-    border: 2px inset var(--border-dark);
-    display: block;
-    margin: 0.5rem 0;
-}
-
-/* ============================= */
-/* Responsive                    */
-/* ============================= */
-@media (max-width: 768px) {
-    .container { width: 95%; padding: 1.5rem 0.5rem; }
-    
-    .hero-section { margin: 1rem auto; padding: 2rem 0; }
-    .hero-content h1 { font-size: 2.2rem; }
-    .hero-content .subtitle { font-size: 1.1rem; }
-
-    header nav { 
-        flex-direction: column; 
-        align-items: stretch; /* Stretch links across the container */
-        gap: 0.25rem;
-    }
-    header nav a { 
-        margin: 0; 
-        text-align: center;
-    }
-    #dark-mode-toggle {
-        margin: 0.5rem 0 0; 
-        order: -1; /* Move toggle to the top for better visibility */
-    }
-
-    .focus-list { 
-        flex-direction: column; /* Stack focus areas vertically */
-        gap: 8px;
-    }
-
-    .project-grid { 
-        grid-template-columns: 1fr; 
-    }
-
-    .contact-container {
-        margin: 20px auto;
-        padding: 20px;
-    }
-
-    .win98-window {
-        min-width: 90%;
-        left: 5%;
-    }
-    .win98-content {
-        height: 250px; /* Shorter height on mobile */
-    }
-}
-
 #avatar-3d {
     position: relative;
-    width: 300px;  /* match cube size */
+    width: 300px;
     height: 300px;
 }
-
 #cubeCanvas {
     position: absolute;
     top: 50%;
@@ -956,3 +323,18 @@ footer {
     transform: translate(-50%, -50%);
 }
 
+/* ============================= */
+/* Responsive Adjustments        */
+/* ============================= */
+@media (max-width: 768px) {
+    .container { width: 95%; padding: 1.5rem 0.5rem; }
+    .hero-section { margin: 1rem auto; padding: 2rem 0; }
+    .hero-content h1 { font-size: 2.2rem; }
+    .hero-content .subtitle { font-size: 1.1rem; }
+    header nav { flex-direction: column; align-items: stretch; gap: 0.25rem; }
+    header nav a { margin: 0; text-align: center; }
+    #dark-mode-toggle { margin: 0.5rem 0 0; order: -1; }
+    .project-grid { grid-template-columns: 1fr; }
+    .win98-window { min-width: 90%; left: 5%; }
+    .win98-content { height: 250px; }
+}
