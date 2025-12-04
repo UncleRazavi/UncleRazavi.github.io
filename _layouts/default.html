@@ -1,59 +1,68 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% if page.title %}{{ page.title }} – {% endif %}{{ site.title }}</title>
     
-    {% seo %} 
-
-    <title>{{ page.title | default: site.title }}</title>
-    
-    {% unless page.description %}
-    <meta name="description" content="{{ site.description }}">
-    {% endunless %}
+    {% seo %}
 
     <link rel="stylesheet" href="{{ "/assets/css/main.css" | relative_url }}">
-    
+
+    {% if site.win98.dark_mode_default %}
+      <script>document.documentElement.classList.add('dark-mode');</script>
+    {% endif %}
+    {% if site.win98.scanlines == false %}
+      <style>:root { --scanline-opacity: 0 !important; }</style>
+    {% endif %}
 </head>
+
 <body>
-    
-    <div id="particles-js"></div> 
-    
-    <header class="win98-window-titlebar">
-        <div class="container"> 
-            <nav class="main-nav-layout" aria-label="Main Navigation">
-                <a href="{{ "/" | relative_url }}" class="site-title-link nav-brand">
-                    {{ site.title }}
-                </a>
-                
-                <div class="nav-links-wrapper">
-                    <a href="{{ "/" | relative_url }}" accesskey="h">Home</a>
-                    <a href="{{ "/about.html" | relative_url }}" accesskey="a">About</a>
-                    <a href="{{ "/projects.html" | relative_url }}" accesskey="p">Projects</a>
-                    <a href="{{ "/blog.html" | relative_url }}" accesskey="b">Blog</a>
-                    <a href="{{ "/contact.html" | relative_url }}" accesskey="c">Contact</a>
-                    
-                    <button id="dark-mode-toggle" aria-label="Toggle Dark Mode" class="win98-button">☾</button>
-                </div>
-            </nav>
-        </div>
+    <!-- ====================== TASKBAR-STYLE HEADER ====================== -->
+    <header>
+        <nav class="nav-links">
+            <a href="{{ "/" | relative_url }}" class="button-98">Start</a>
+            <a href="{{ "/about.html" | relative_url }}" class="button-98">About</a>
+            <a href="{{ "/projects.html" | relative_url }}" class="button-98">Projects</a>
+            <a href="{{ "/blog.html" | relative_url }}" class="button-98">Blog</a>
+            <a href="{{ "/contact.html" | relative_url }}" class="button-98">Contact</a>
+            
+            <button id="dark-mode-toggle" class="button-98" aria-label="Toggle Dark Mode">Dark</button>
+        </nav>
     </header>
-    
+
+    <!-- ====================== MAIN CONTENT ====================== -->
     <main>
-        {{ content }}
-    </main>
-    
-    <footer>
-        <div class="container footer-content">
-             <p>&copy; {{ 'now' | date: "%Y" }} {{ site.author }}. All Rights Reserved. Powered by the spirit of **Windows 98**.</p>
+        <div class="win98-window">
+            <div class="window-title">
+                <span>{{ page.title | default: site.title }}</span>
+                <div class="window-controls">
+                    <button disabled>_</button>
+                    <button disabled>□</button>
+                    <button disabled>×</button>
+                </div>
+            </div>
+            <div class="window-content">
+                {{ content }}
+            </div>
         </div>
+    </main>
+
+    <!-- ====================== FOOTER (optional) ====================== -->
+    <footer style="text-align:center; margin-top:2rem; font-size:0.9rem; color:var(--win98-gray-dark);">
+        © {{ 'now' | date: "%Y" }} {{ site.author }} • Running Windows 98 on the web since 2025
     </footer>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js" defer></script>
-    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js" defer></script>
-    
-    <script src="{{ "/assets/js/main.js" | relative_url }}" defer></script>
-    
+    <!-- ====================== DARK MODE TOGGLE SCRIPT ====================== -->
+    <script>
+      document.getElementById('dark-mode-toggle').addEventListener('click', () => {
+        document.documentElement.classList.toggle('dark-mode');
+        localStorage.setItem('win98-darkmode', document.documentElement.classList.contains('dark-mode'));
+      });
+
+      if (localStorage.getItem('win98-darkmode') === 'true') {
+        document.documentElement.classList.add('dark-mode');
+      }
+    </script>
 </body>
 </html>
