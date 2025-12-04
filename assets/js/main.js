@@ -407,27 +407,190 @@ function initInteractiveFractal() {
     });
 }
 
-function initCurveDrawings() {
-    function drawCurve(canvasId, drawFunc) {
-        const c = document.getElementById(canvasId);
-        if (!c) return;
-        const ctx = c.getContext("2d");
-        c.width = 300;
-        c.height = 300;
-        drawFunc(ctx, c.width, c.height);
-    }
+/**
+ * 4. INTERACTIVE MATHEMATICS FUNCTIONS
+ * Initializes and draws the animated mathematical curves (Lissajous, Rose, Butterfly, Spirograph).
+ */
 
-    drawCurve("lissajous-canvas", (ctx, w, h) => {
-        ctx.strokeStyle = "#ff66ff";
-        ctx.beginPath();
-        for (let t = 0; t < 2 * Math.PI; t += 0.01) {
-            let x = w / 2 + Math.sin(3 * t + Math.PI / 2) * 120;
-            let y = h / 2 + Math.sin(4 * t) * 120;
+// Utility function for greatest common divisor, needed for Spirograph period calculation.
+function gcd(a, b) {
+    while (b) {
+        [a, b] = [b, a % b];
+    }
+    return a;
+}
+
+/**
+ * Core utility function to wrap canvas setup and initiate an animation loop.
+ * @param {string} canvasId - The ID of the canvas element.
+ * @param {function} drawFunc - The curve-specific drawing function (accepts ctx, w, h, t).
+ */
+function drawCurveAnimated(canvasId, drawFunc) {
+    const c = document.getElementById(canvasId);
+    if (!c) return;
+
+    const ctx = c.getContext("2d");
+    // Match the dimensions defined in index.html
+    const w = 300;
+    const h = 240; 
+    c.width = w;
+    c.height = h;
+
+    let t = 0; // Time/animation state variable
+    const DRAWING_SPEED = 0.05; // Control animation speed
+    const BG_COLOR = '#C0C0C0'; // Win98 background color
+
+    const animate = () => {
+        // 1. Clear the canvas for the new frame
+        ctx.fillStyle = BG_COLOR;
+        ctx.fillRect(0, 0, w, h);
+
+        // 2. Execute the specific drawing logic
+        drawFunc(ctx, w, h, t);
+
+        // 3. Update time and schedule next frame
+        t += DRAWING_SPEED;
+        requestAnimationFrame(animate);
+    };
+
+    animate(); // Start the loop
+}
+
+// --------------------------------------------------------------------------
+// Drawing Logic for Specific Curves (passed to drawCurveAnimated)
+// --------------------------------------------------------------------------
+
+// 1. Lissajous Curve (X = sin(A*t + d), Y = sin(B*t))
+const drawLissajous = (ctx, w, h, t) => {
+    ctx.strokeStyle = "#000080"; // Dark Blue
+    ctx.lineWidth = 1.5;
+    ctx.beginPath();
+    
+    // Parameters
+    const A = 3;
+    const B = 4;
+    const amplitude = 110;
+    // Animation: subtle phase shift over time
+    const delta = Math.PI / 2 + Math.sin(t / 20) * 0.5;
+
+    for (let angle = 0; angle <= 2 * Math.PI; angle += 0.01) {
+        let x = w / 2 + Math.sin(A * angle + delta) * amplitude;
+        let y = h / 2 + Math.sin(B * angle) * amplitude;
+        ctx.lineTo(x, y);
+    }
+    ctx.closePath();
+    ctx.stroke();
+};
+
+// 2. Rose Curve (r = a * cos(k * t))
+const drawRoseCurve = (ctx, w, h, t) => {
+    ctx.strokeStyle = "#800080"; // Purple
+    ctx.lineWidth = 1.5;
+    ctx.beginPath();
+    
+    // Parameters (k = 5/7 for multiple petals)
+    const k = 5 / 7;
+    const maxR = Math.min(w, h) * 0.45;
+    const numRotations = Math.ceil(2 * Math.PI * 7 / k); // Ensure full plot
+
+    // Animation: subtle rotation
+    const rotation = t / 40; 
+    const center = { x: w / 2, y: h / 2 };
+
+    for (let angle = 0; angle <= numRotations; angle += 0.01) {
+        const radius = maxR * Math.cos(k * angle);
+
+        const x = center.x + radius * Math.cos(angle + rotation);
+        const y = center.y + radius * Math.sin(angle + rotation);
+
+        if (angle === 0) {
+            ctx.moveTo(x, y);
+        } else {
             ctx.lineTo(x, y);
         }
-        ctx.stroke();
-    });
-    // (Other curves omitted for brevity, logic is fine)
+    }
+    ctx.stroke();
+};
+
+// 3. Butterfly Curve (r = e^cos(t) - 2*cos(4t) + sin^5(t/12))
+const drawButterflyCurve = (ctx, w, h, t) => {
+    ctx.strokeStyle = "#FF0000"; // Red
+    ctx.lineWidth = 1.5;
+    ctx.beginPath();
+    
+    const center = { x: w / 2, y: h / 2 };
+    const scale = Math.min(w, h) * 0.8; 
+    const max_t = 12 * Math.PI; // Range for butterfly curve
+
+    // Animation: subtle pulsing/breathing effect
+    const pulse = 1 + Math.sin(t / 50) * 0.2;
+
+    for (let angle = 0; angle <= max_t; angle += 0.05) {
+        // Butterfly Curve (polar coordinates)
+        const r = (Math.exp(Math.cos(angle)) - 2 * Math.cos(4 * angle) + Math.pow(Math.sin(angle / 12), 5)) * pulse;
+        
+        const x = center.x + r * Math.cos(angle) * scale / 10;
+        const y = center.y + r * Math.sin(angle) * scale / 10;
+
+        if (angle === 0) {
+            ctx.moveTo(x, y);
+        } else {
+            ctx.lineTo(x, y);
+        }
+    }
+    ctx.stroke();
+};
+
+// 4. Spirograph (Uses rolling circles geometry)
+const drawSpirograph = (ctx, w, h, t) => {
+    ctx.strokeStyle = "#008000"; // Green
+    ctx.lineWidth = 1.5;
+    ctx.beginPath();
+    
+    const center = { x: w / 2, y: h / 2 };
+    
+    // Spirograph parameters
+    const R = 60; // Radius of fixed circle
+    const r = 35; // Radius of rolling circle
+    const d = 50; // Distance of pen point from rolling circle center
+    
+    // Calculates the angle required for the pattern to close (LCM)
+    const max_angle = 2 * Math.PI * (R / Math.max(gcd(R, r), 1));
+    const RESOLUTION = 500;
+    
+    // Animation: continuous slow rotation
+    const rotation_offset = t / 100;
+
+    for (let i = 0; i <= RESOLUTION; i++) {
+        const angle = (i / RESOLUTION) * max_angle + rotation_offset;
+        
+        // Spirograph equations
+        const x = (R - r) * Math.cos(angle) + d * Math.cos(((R - r) / r) * angle);
+        const y = (R - r) * Math.sin(angle) - d * Math.sin(((R - r) / r) * angle);
+
+        const scaleFactor = 1.5; 
+        const finalX = center.x + x * scaleFactor;
+        const finalY = center.y + y * scaleFactor;
+
+        if (i === 0) {
+            ctx.moveTo(finalX, finalY);
+        } else {
+            ctx.lineTo(finalX, finalY);
+        }
+    }
+    ctx.stroke();
+};
+
+
+// --------------------------------------------------------------------------
+// Master Initialization Function
+// --------------------------------------------------------------------------
+
+function initCurveDrawings() {
+    drawCurveAnimated("lissajous-canvas", drawLissajous);
+    drawCurveAnimated("rose-canvas", drawRoseCurve);
+    drawCurveAnimated("butterfly-canvas", drawButterflyCurve);
+    drawCurveAnimated("spirograph-canvas", drawSpirograph);
 }
 
 function initUXFeatures() {
@@ -544,3 +707,4 @@ document.addEventListener("DOMContentLoaded", () => {
     // Console Greeting
     console.log("%c Welcome to the Retro Web! ", "background: #000080; color: #fff; font-size: 16px; padding: 4px;");
 });
+
