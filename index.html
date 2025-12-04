@@ -5,75 +5,92 @@ title: Hossein Razavi | Home
 
 <main class="container">
 
-    <!-- Hero / Welcome Section -->
-    <section class="hero win98-window">
-        <div class="window-title">Welcome</div>
+    <section class="hero win98-window" id="welcome-section">
+        <div class="window-title"> Welcome to Hossein's Page</div>
         <div class="window-content" style="text-align: center;">
-            <h1>Hello, I'm Hossein Razavi</h1>
-            <p>Electrical engineering student, data science enthusiast, and explorer of neuroscience and digital electronics.</p>
-            <div class="spinning-cube-placeholder win98-bevel-in" style="width: 120px; height: 120px; margin: 20px auto;">
-                Spinning Cube
-            </div>
+            <header>
+                <h1>Hello, I'm **Hossein Razavi**</h1>
+                <p class="subtitle">
+                    Electrical engineering student, data science enthusiast, and explorer of **neuroscience** and **digital electronics**.
+                </p>
+            </header>
+            <figure class="spinning-cube-placeholder win98-bevel-in" style="width: 120px; height: 120px; margin: 30px auto; display: flex; align-items: center; justify-content: center; font-size: 0.9em; color: #888;">
+                
+                Interactive/Spinning Cube
+            </figure>
+            <a href="about.html" class="win98-button primary">Learn More About My Journey</a>
         </div>
     </section>
 
-    <!-- Latest Blog Posts -->
-    <section class="latest-blog win98-window" style="margin-top: 2rem;">
-        <div class="window-title">Latest Blog Posts</div>
-        <div class="window-content">
-            <ul class="grid-container" style="list-style: none; padding: 0;">
-                {% for post in site.posts limit:3 %}
-                <li class="post-card win98-bevel-out">
-                    <a href="{{ post.url }}" class="post-title-link">{{ post.title }}</a>
-                    <p class="post-meta">{{ post.date | date: "%B %d, %Y" }}</p>
-                    <p class="post-excerpt">{{ post.excerpt | strip_html | truncatewords: 25 }}</p>
-                    <a href="{{ post.url }}" class="win98-button">Read More →</a>
-                </li>
-                {% endfor %}
-            </ul>
-        </div>
-    </section>
-
-    <!-- Projects Overview -->
-    <section class="latest-projects win98-window" style="margin-top: 2rem;">
-        <div class="window-title">Featured Projects</div>
-        <div class="window-content">
-            <div class="grid-container">
-                <div class="project-card win98-bevel-out">
-                    <h2>Computational Neuroscience</h2>
-                    <p>Exploring brain robustness to visual noise (Neuromatch Academy pod Lively anat).</p>
-                    <a href="projects.html" class="win98-button">View Projects</a>
-                </div>
-                <div class="project-card win98-bevel-out">
-                    <h2>Eurogene Project</h2>
-                    <p>Analyzing ancient and modern genomes to trace human ancestry.</p>
-                    <a href="projects.html" class="win98-button">View Projects</a>
-                </div>
-                <div class="project-card win98-bevel-out">
-                    <h2>PINN Library</h2>
-                    <p>Python library for Physics-Informed Neural Networks (PDE solver).</p>
-                    <a href="projects.html" class="win98-button">View Projects</a>
+    <div class="grid-layout-main">
+        <section class="latest-blog win98-window" id="blog-posts">
+            <div class="window-title"> Latest Blog Posts</div>
+            <div class="window-content">
+                <ul class="post-list" style="list-style: none; padding: 0;">
+                    {% for post in site.posts limit:3 %}
+                    <li class="post-card win98-bevel-out" style="margin-bottom: 15px; padding: 10px;">
+                        <article>
+                            <h3 class="post-card-title">
+                                <a href="{{ post.url }}" class="post-title-link">{{ post.title }}</a>
+                            </h3>
+                            <p class="post-meta"> Published on: <time datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: "%B %d, %Y" }}</time></p>
+                            <p class="post-excerpt">{{ post.excerpt | strip_html | truncatewords: 25 }}</p>
+                            <a href="{{ post.url }}" class="win98-button">Read Post →</a>
+                        </article>
+                    </li>
+                    {% endfor %}
+                </ul>
+                {% comment %} Optional: Link to all posts {% endcomment %}
+                <div style="text-align: right; margin-top: 15px;">
+                    <a href="blog.html" class="win98-button">View All Blog Posts</a>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
+        
+        <section class="latest-projects win98-window" id="featured-projects">
+            <div class="window-title">💻 Featured Projects</div>
+            <div class="window-content">
+                <div class="project-grid">
+                    <div class="project-card win98-bevel-out">
+                        <h4>Computational Neuroscience</h4>
+                        <p>Exploring brain robustness to visual noise (Neuromatch Academy pod Lively anat).</p>
+                        <a href="projects.html#neuroscience" class="win98-button small-button">Details</a>
+                    </div>
+                    <div class="project-card win98-bevel-out">
+                        <h4>Eurogene Project</h4>
+                        <p>Analyzing ancient and modern genomes to trace human ancestry.</p>
+                        <a href="projects.html#eurogene" class="win98-button small-button">Details</a>
+                    </div>
+                    <div class="project-card win98-bevel-out">
+                        <h4>PINN Library</h4>
+                        <p>Python library for **Physics-Informed Neural Networks** (PDE solver).</p>
+                        <a href="projects.html#pinn" class="win98-button small-button">Details</a>
+                    </div>
+                </div>
+                <div style="text-align: right; margin-top: 15px;">
+                    <a href="projects.html" class="win98-button">View All Projects</a>
+                </div>
+            </div>
+        </section>
+    </div>
 
-    <!-- About Preview -->
-    <section class="about-preview win98-window" style="margin-top: 2rem;">
-        <div class="window-title">About Me</div>
-        <div class="window-content">
-            <p>I am a K.N. Toosi University undergraduate student exploring signal processing, neuroscience, and data science. </p>
-            <a href="about.html" class="win98-button">Learn More</a>
-        </div>
-    </section>
+    <div class="grid-layout-secondary">
+        <section class="about-preview win98-window" id="about-me">
+            <div class="window-title">👤 About Me Summary</div>
+            <div class="window-content">
+                <p>I am a K.N. Toosi University undergraduate student exploring **signal processing**, **neuroscience**, and **data science**.</p>
+                <div style="text-align: center; margin-top: 15px;">
+                    <a href="about.html" class="win98-button">Full Bio</a>
+                </div>
+            </div>
+        </section>
 
-    <!-- Contact / CTA -->
-    <section class="contact-preview win98-window" style="margin-top: 2rem;">
-        <div class="window-title">Get in Touch</div>
-        <div class="window-content" style="text-align: center;">
-            <p>Questions, collaborations, or just a hello — reach out anytime!</p>
-            <a href="contact.html" class="win98-button primary">Contact Me</a>
-        </div>
-    </section>
-
+        <section class="contact-preview win98-window" id="get-in-touch">
+            <div class="window-title"> Get in Touch</div>
+            <div class="window-content" style="text-align: center;">
+                <p>Questions, collaborations, or just a hello — reach out anytime!</p>
+                <a href="contact.html" class="win98-button primary">Contact Me</a>
+            </div>
+        </section>
+    </div>
 </main>
