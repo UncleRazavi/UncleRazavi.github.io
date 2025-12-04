@@ -3,55 +3,64 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% if page.title %}{{ page.title }} – {% endif %}Hossein Razavi</title>
-    
+    <title>
+        {% if page.title %}
+            {{ page.title }} – Hossein Razavi
+        {% else %}
+            Hossein Razavi
+        {% endif %}
+    </title>
+
     {% seo %}
 
+    <!-- Global Styles -->
     <link rel="stylesheet" href="{{ "/assets/css/main.css" | relative_url }}">
 
-    <!-- Libraries -->
+    <!-- External Libraries -->
     <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/three@0.132.2/build/three.min.js"></script>
 
+    <!-- Configurable Settings -->
     {% if site.win98.dark_mode_default %}
-      <script>document.documentElement.classList.add('dark-mode');</script>
+        <script>document.documentElement.classList.add('dark-mode');</script>
     {% endif %}
-    {% if site.win98.scanlines == false %}
-      <style>:root { --scanline-opacity: 0 !important; }</style>
-    {% endif %}
+    {% unless site.win98.scanlines %}
+        <style>:root { --scanline-opacity: 0 !important; }</style>
+    {% endunless %}
 </head>
 
 <body>
 
-    <!-- Background Particles (MUST BE FIRST) -->
+    <!-- Background Particle Layer -->
     <div id="particles-js"></div>
 
-    <!-- Windows 98 Taskbar Header -->
+    <!-- Top Navigation Bar (Windows 98 style) -->
     <header>
-    <nav class="nav-links">
-        <a href="{{ "/" | relative_url }}" class="win98-button">Start</a>
-        <a href="{{ "/about.html" | relative_url }}" class="win98-button">About</a>
-        <a href="{{ "/projects.html" | relative_url }}" class="win98-button">Projects</a>
-        <a href="{{ "/blog.html" | relative_url }}" class="win98-button">Blog</a>
-        <a href="{{ "/contact.html" | relative_url }}" class="win98-button">Contact</a>
-        
-        <button id="dark-mode-toggle" class="win98-button" aria-label="Toggle Dark Mode">
-            Dark Mode
-        </button>
-</nav>
+        <nav class="nav-links">
+            <a href="{{ "/" | relative_url }}" class="win98-button">Start</a>
+            <a href="{{ "/about.html" | relative_url }}" class="win98-button">About</a>
+            <a href="{{ "/projects.html" | relative_url }}" class="win98-button">Projects</a>
+            <a href="{{ "/blog.html" | relative_url }}" class="win98-button">Blog</a>
+            <a href="{{ "/contact.html" | relative_url }}" class="win98-button">Contact</a>
+
+            <!-- Dark Mode Toggle -->
+            <button id="dark-mode-toggle" class="win98-button" aria-label="Toggle Dark Mode">
+                Dark Mode
+            </button>
+        </nav>
     </header>
 
-    <!-- Main Content (no container, no layout conflict) -->
-    <main>
+    <!-- Main Content (Injected From Each Page) -->
+    <main role="main">
         {{ content }}
     </main>
 
     <!-- Footer -->
-    <footer style="text-align:center; margin:4rem 0 2rem; font-size:0.9rem; color:var(--win98-gray-dark);">
-        © {{ 'now' | date: "%Y" }} Hossein Razavi • Running Windows 98 on the web since 2024
+    <footer class="site-footer">
+        © {{ "now" | date: "%Y" }} Hossein Razavi • Running Windows 98 on the web since 2024
     </footer>
 
+    <!-- Core JavaScript -->
     <script src="{{ "/assets/js/main.js" | relative_url }}"></script>
 </body>
 </html>
-
