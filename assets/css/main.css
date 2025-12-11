@@ -379,7 +379,58 @@ nav {
     font-size: 0.9em;
     color: var(--win98-gray-dark);
 }
+/* ============================= */
+/* SPINNING CUBE — WINDOWS 98    */
+/* ============================= */
 
+.cube-container {
+    width: 120px;
+    height: 120px;
+    margin: 10px auto;
+    perspective: 600px;
+    background: var(--win98-bg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.cube {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    transform-style: preserve-3d;
+    animation: cube-spin 5s linear infinite;
+}
+
+.cube-face {
+    position: absolute;
+    width: 120px;
+    height: 120px;
+    background: var(--win98-gray-light);
+    border: 2px solid var(--win98-gray-dark);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: 'VT323', monospace;
+    color: var(--win98-black);
+    box-shadow:
+        inset 1px 1px 0 var(--win98-white),
+        inset -1px -1px 0 var(--win98-gray-darker);
+}
+
+/* Position each face in 3D */
+.cube-face.front  { transform: rotateY(0deg) translateZ(60px); }
+.cube-face.back   { transform: rotateY(180deg) translateZ(60px); }
+.cube-face.right  { transform: rotateY(90deg) translateZ(60px); }
+.cube-face.left   { transform: rotateY(-90deg) translateZ(60px); }
+.cube-face.top    { transform: rotateX(90deg) translateZ(60px); }
+.cube-face.bottom { transform: rotateX(-90deg) translateZ(60px); }
+
+/* Animation */
+@keyframes cube-spin {
+    from { transform: rotateX(0deg) rotateY(0deg); }
+    to   { transform: rotateX(360deg) rotateY(360deg); }
+}
 
 /* ------------------------- */
 /* RESPONSIVE REFINEMENTS */
@@ -412,3 +463,4 @@ nav {
         grid-template-columns: 2fr 1fr; /* Blog posts (2/3 width) and Projects (1/3 width) */
     }
 }
+
