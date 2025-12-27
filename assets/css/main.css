@@ -464,3 +464,7 @@ nav {
     }
 }
 
+/* Dark mode toggle consistency */
+body.dark-mode {
+    background-color: var(--desktop-bg);
+}
