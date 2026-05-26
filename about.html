@@ -36,14 +36,30 @@
         }
 
         body.dark-mode .win98-button,
-        body.dark-mode .win98-button-header {
-            background-color: #444;
+        body.dark-mode .win98-button-header,
+        body.dark-mode .win98-bevel-out,
+        body.dark-mode .win98-bevel-in {
+            background-color: #444 !important;
             color: #f0f0f0;
             border-color: #888;
         }
 
         body.dark-mode a {
             color: #9fcfff;
+        }
+        
+        .skill-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            list-style: none;
+            padding: 0;
+        }
+        
+        .skill-tag {
+            padding: 4px 8px;
+            background: #e0e0e0;
+            font-size: 0.9rem;
         }
     </style>
 </head>
@@ -56,7 +72,6 @@
 </div>
 
 <script>
-    // Dark mode toggle
     const darkToggle = document.getElementById('dark-mode-toggle');
     const darkModeKey = 'darkMode';
 
@@ -77,96 +92,93 @@
 
     <!-- Hero Section -->
     <section class="about-hero win98-window" style="margin-bottom:2rem;">
-        <div class="window-title">About Me</div>
+        <div class="window-title">System Information - Hossein Razavi</div>
         <div class="window-content">
-            <p style="line-height:1.6; max-width:700px; margin:auto;">
-                I am a <strong>K.N. Toosi University undergraduate student</strong> with a passion for exploring 
-                <em>signal processing, computational neuroscience, and data science</em>. 
-                I enjoy building projects that bridge technology with real-world applications.
+            <p style="line-height:1.6; max-width:850px; margin:auto;">
+                I am an Electrical Engineering student at <strong>K.N. Toosi University of Technology</strong>. 
+                My world revolves around the intersection of <strong>Signal Processing</strong>, <strong>Communication Systems</strong>, and <strong>Artificial Intelligence</strong>. 
+                I am a persistent problem-solver who loves to "dive deep" into complex technical challenges, balancing focused solitary research with effective peer collaboration.
             </p>
         </div>
     </section>
 
-    <!-- Education & Focus -->
+    <!-- Academic Journey & Vision -->
     <section class="education win98-window" style="margin-bottom:2rem;">
-        <div class="window-title">Education & Core Focus</div>
+        <div class="window-title">Academic Journey & Future Goals</div>
         <div class="window-content" style="line-height:1.6;">
             <p>
-                I am currently studying at K.N. Toosi University, focusing on <strong>digital electronics, signal processing, and machine learning</strong>. 
-                My academic work emphasizes practical problem-solving and exploring computational methods in neuroscience.
+                Currently, I am focusing on my undergraduate studies with a heavy emphasis on <strong>Advanced Signal Processing</strong> and <strong>RF Circuits</strong>. 
+                Looking ahead, I plan to pursue my <strong>Master’s in Communication Systems</strong>. My goal is not just to study, but to actively contribute to the advancement of these domains through dedicated research and innovative problem-solving.
             </p>
         </div>
     </section>
 
-    <!-- Technical Skills -->
+    <!-- Technical Skill Matrix -->
     <section class="technical-skills win98-window" style="margin-bottom:2rem;">
-        <div class="window-title">Technical Skills</div>
+        <div class="window-title">Technical Skill Matrix</div>
         <div class="window-content">
-            <ul style="display:flex; flex-wrap:wrap; gap:10px; list-style:none; padding:0;">
-                <li class="win98-bevel-out" style="padding:5px 10px; background:#e0e0e0;">Python</li>
-                <li class="win98-bevel-out" style="padding:5px 10px; background:#e0e0e0;">C/C++</li>
-                <li class="win98-bevel-out" style="padding:5px 10px; background:#e0e0e0;">Verilog/VHDL</li>
-                <li class="win98-bevel-out" style="padding:5px 10px; background:#e0e0e0;">AVR Assembly</li>
-                <li class="win98-bevel-out" style="padding:5px 10px; background:#e0e0e0;">Data Science</li>
-                <li class="win98-bevel-out" style="padding:5px 10px; background:#e0e0e0;">Machine Learning</li>
-                <li class="win98-bevel-out" style="padding:5px 10px; background:#e0e0e0;">Deep Learning</li>
-                <li class="win98-bevel-out" style="padding:5px 10px; background:#e0e0e0;">Signal Processing</li>
-                <li class="win98-bevel-out" style="padding:5px 10px; background:#e0e0e0;">Digital Electronics</li>
+            <h4 style="margin-top:0;">Electronics & Embedded Systems</h4>
+            <ul class="skill-list">
+                <li class="win98-bevel-out skill-tag">Altium Designer (PCB)</li>
+                <li class="win98-bevel-out skill-tag">STM32</li>
+                <li class="win98-bevel-out skill-tag">FreeRTOS</li>
+                <li class="win98-bevel-out skill-tag">ADS (Advanced Design System)</li>
+                <li class="win98-bevel-out skill-tag">Verilog/VHDL</li>
+                <li class="win98-bevel-out skill-tag">AVR Assembly</li>
+            </ul>
+
+            <h4>AI & Signal Processing</h4>
+            <ul class="skill-list">
+                <li class="win98-bevel-out skill-tag">DSP (Digital Signal Processing)</li>
+                <li class="win98-bevel-out skill-tag">Deep Learning</li>
+                <li class="win98-bevel-out skill-tag">Reinforcement Learning (RL)</li>
+                <li class="win98-bevel-out skill-tag">GNN (Graph Neural Networks)</li>
+                <li class="win98-bevel-out skill-tag">Time Series Analysis</li>
+                <li class="win98-bevel-out skill-tag">Matlab</li>
+                <li class="win98-bevel-out skill-tag">Python / C++</li>
+            </ul>
+
+            <h4>Domain Knowledge & Others</h4>
+            <ul class="skill-list">
+                <li class="win98-bevel-out skill-tag">Communication Systems</li>
+                <li class="win98-bevel-out skill-tag">Computational Neuroscience</li>
+                <li class="win98-bevel-out skill-tag">Scientific Writing</li>
+                <li class="win98-bevel-out skill-tag">English (ESL)</li>
             </ul>
         </div>
     </section>
 
-    <!-- Interests -->
+    <!-- Personal & Professional Profile -->
     <section class="interests win98-window" style="margin-bottom:2rem;">
-        <div class="window-title">Interests & Hobbies</div>
+        <div class="window-title">Soft Skills & Personal Interests</div>
         <div class="window-content" style="display: flex; gap: 20px; flex-wrap:wrap;">
-            <div class="academic win98-bevel-in" style="flex:1; min-width:200px; padding:10px; background:#f0f0f0;">
-                <h3 style="margin-top:0; font-size:1.1rem;">Academic & Philosophical</h3>
-                <ul>
-                    <li>Neuroscience</li>
-                    <li>Philosophy</li>
-                    <li>Literature & Linguistics</li>
+            <div class="academic win98-bevel-in" style="flex:1; min-width:280px; padding:10px; background:#f0f0f0;">
+                <h3 style="margin-top:0; font-size:1.1rem;">Working Style</h3>
+                <ul style="padding-left:20px;">
+                    <li><strong>Problem Solver:</strong> I enjoy tackling puzzles and technical "bugs" until they are solved.</li>
+                    <li><strong>Collaborative & Focused:</strong> Efficient in team environments, yet highly disciplined when working independently.</li>
+                    <li><strong>Detail Oriented:</strong> I tend to dive deep into the "how" and "why" of every task.</li>
                 </ul>
             </div>
-            <div class="personal win98-bevel-in" style="flex:1; min-width:200px; padding:10px; background:#f0f0f0;">
-                <h3 style="margin-top:0; font-size:1.1rem;">Personal & Pop Culture</h3>
-                <ul>
-                    <li>Music: Metal & Hard Rock</li>
-                    <li>TV: House, M.D.</li>
-                    <li>Military History & Technology</li>
+            <div class="personal win98-bevel-in" style="flex:1; min-width:280px; padding:10px; background:#f0f0f0;">
+                <h3 style="margin-top:0; font-size:1.1rem;">Beyond the Lab</h3>
+                <ul style="padding-left:20px;">
+                    <li>Western Philosophy & Linguistics</li>
+                    <li>Indie Games & Puzzle Solving</li>
+                    <li>Metal Music & Long Walks</li>
+                    <li>Watching House M.D. (for the logic!)</li>
                 </ul>
             </div>
         </div>
     </section>
 
-    <!-- Featured Projects -->
-    <section class="projects win98-window" style="margin-bottom:2rem;">
-        <div class="window-title">Featured Projects</div>
-        <div class="window-content" style="display:flex; flex-wrap:wrap; gap:15px;">
-            <div class="project-card win98-bevel-out" style="flex:1; min-width:200px; padding:10px; background:#e0e0e0;">
-                <h4>Computational Neuroscience</h4>
-                <p>Exploring brain dynamics and neural signal decoding with Python & ML techniques.</p>
-                <a href="projects.html#neuroscience" class="win98-button small-button">Details</a>
-            </div>
-            <div class="project-card win98-bevel-out" style="flex:1; min-width:200px; padding:10px; background:#e0e0e0;">
-                <h4>Eurogene Analysis</h4>
-                <p>Genome data analysis and ancestry exploration using Python and ML algorithms.</p>
-                <a href="projects.html#eurogene" class="win98-button small-button">Details</a>
-            </div>
-            <div class="project-card win98-bevel-out" style="flex:1; min-width:200px; padding:10px; background:#e0e0e0;">
-                <h4>PINN Library</h4>
-                <p>Physics-Informed Neural Networks for solving PDEs and scientific computation.</p>
-                <a href="projects.html#pinn" class="win98-button small-button">Details</a>
-            </div>
-        </div>
-    </section>
-
-    <!-- Links & CTA -->
+    <!-- CTA -->
     <section class="links-cta win98-window" style="margin-bottom:2rem; text-align:center;">
-        <div class="window-title">Connect With Me</div>
+        <div class="window-title">Connection Established</div>
         <div class="window-content">
-            <a href="projects.html" class="win98-button primary" style="margin-right:10px;">View My Projects</a>
-            <a href="contact.html" class="win98-button">Get in Touch</a>
+            <p>Interested in collaborating on a project or discussing RF circuits?</p>
+            <a href="projects.html" class="win98-button primary" style="margin-right:10px;">Research & Projects</a>
+            <a href="contact.html" class="win98-button">Send a Message</a>
         </div>
     </section>
 
