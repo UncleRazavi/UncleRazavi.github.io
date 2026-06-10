@@ -1,25 +1,34 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=IBM+Plex+Sans:wght@500;600&family=VT323&display=swap');
 
+/* =========================
+   DESIGN TOKENS
+========================= */
 :root {
+    /* Win98 palette */
     --win98-bg: #c0c0c0;
     --win98-text: #000;
 
-    --win98-gray-light: #dfdfdf;
-    --win98-gray-dark: #808080;
-    --win98-gray-darker: #404040;
+    --win98-light: #dfdfdf;
+    --win98-dark: #808080;
+    --win98-darker: #404040;
 
-    --win98-white: #ffffff;
-    --win98-black: #000000;
+    --win98-white: #fff;
+    --win98-black: #000;
 
     --win98-blue: #000080;
     --win98-blue-light: #1084d0;
 
-    --accent-color: #008080;
+    /* accents */
+    --accent: #008080;
     --desktop-bg: #006666;
 
+    /* effects */
     --scanline-opacity: 0.035;
 }
 
+/* =========================
+   RESET
+========================= */
 *,
 *::before,
 *::after {
@@ -28,11 +37,14 @@
     box-sizing: border-box;
 }
 
+/* =========================
+   BASE
+========================= */
 body {
-    font-family: 'Inter', 'Segoe UI', sans-serif;
+    font-family: "Inter", "Segoe UI", sans-serif;
     line-height: 1.7;
     color: var(--win98-text);
-    background-color: var(--desktop-bg);
+    background: var(--desktop-bg);
     min-height: 100vh;
     overflow-x: hidden;
 
@@ -40,34 +52,31 @@ body {
     -moz-osx-font-smoothing: grayscale;
 }
 
-/* CRT scanline effect */
-
+/* CRT scanlines */
 body::after {
     content: "";
     position: fixed;
     inset: 0;
     pointer-events: none;
-    z-index: 100;
+    z-index: 1000;
     opacity: var(--scanline-opacity);
 
     background:
         linear-gradient(rgba(0,0,0,0) 50%, rgba(0,0,0,0.25) 50%),
-        linear-gradient(
-            90deg,
+        linear-gradient(90deg,
             rgba(255,0,0,0.06),
             rgba(0,255,0,0.02),
             rgba(0,0,255,0.06)
         );
 
-    background-size:
-        100% 2px,
-        3px 100%;
+    background-size: 100% 2px, 3px 100%;
 }
 
-/* typography */
-
+/* =========================
+   TYPOGRAPHY
+========================= */
 h1, h2, h3, h4 {
-    font-family: 'IBM Plex Sans', sans-serif;
+    font-family: "IBM Plex Sans", sans-serif;
     font-weight: 600;
     letter-spacing: -0.3px;
 }
@@ -77,21 +86,22 @@ h2 { font-size: 1.7rem; }
 h3 { font-size: 1.35rem; }
 h4 { font-size: 1.15rem; }
 
-p,
-li {
+p, li {
     font-size: 1.05rem;
     letter-spacing: 0.2px;
 }
 
-/* layout */
-
+/* =========================
+   LAYOUT
+========================= */
 .container {
     width: min(1100px, 92%);
-    margin: 60px auto 20px auto;
+    margin: 60px auto 20px;
 }
 
-/* windows 98 window */
-
+/* =========================
+   WIN98 WINDOW SYSTEM
+========================= */
 .win98-window {
     background: var(--win98-bg);
     padding: 1px;
@@ -99,7 +109,7 @@ li {
 
     box-shadow:
         inset 1px 1px 0 var(--win98-white),
-        inset -1px -1px 0 var(--win98-gray-dark),
+        inset -1px -1px 0 var(--win98-dark),
         inset -2px -2px 0 var(--win98-black),
         2px 2px 0 var(--win98-black);
 
@@ -107,105 +117,90 @@ li {
 }
 
 .window-title {
-    font-family: 'VT323', monospace;
-    background: linear-gradient(
-        90deg,
-        var(--win98-blue) 0%,
-        var(--win98-blue-light) 100%
-    );
-
-    color: var(--win98-white);
-    padding: 4px 6px;
-
+    font-family: "VT323", monospace;
     font-size: 1.25rem;
     letter-spacing: 1px;
+
+    color: var(--win98-white);
 
     display: flex;
     justify-content: space-between;
     align-items: center;
 
-    border-bottom: 1px solid var(--win98-black);
+    padding: 4px 8px;
 
+    background: linear-gradient(
+        90deg,
+        var(--win98-blue),
+        var(--win98-blue-light)
+    );
+
+    border-bottom: 1px solid var(--win98-black);
     text-shadow: 1px 1px var(--win98-black);
 }
 
 .window-content {
-    padding: 10px;
+    padding: 12px;
 }
 
-/* buttons */
-.hero-subtitle{
-    margin-top:12px;
-    font-size:1.15rem;
-    color:#333;
-    font-weight:600;
+/* =========================
+   TASKBAR (Win98 style)
+========================= */
+.taskbar {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 34px;
+
+    background: var(--win98-bg);
+    border-top: 2px solid var(--win98-white);
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    padding: 2px 6px;
+    z-index: 9999;
 }
 
-.hero-description{
-    max-width:760px;
-    margin:20px auto;
-    line-height:1.8;
+.start-button {
+    padding: 2px 10px;
+    background: var(--win98-bg);
+    border: 1px solid var(--win98-dark);
+    box-shadow: inset 1px 1px 0 white;
+    font-weight: bold;
+    cursor: pointer;
 }
 
-.stats-grid{
-    display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
-    gap:16px;
+.taskbar-apps {
+    display: flex;
+    gap: 6px;
 }
 
-.stat-card{
-    padding:16px;
-    background:#d8d8d8;
-
-    border:2px solid #808080;
-
-    box-shadow:
-        inset 1px 1px 0 white,
-        inset -1px -1px 0 #808080;
-
-    transition:transform .2s ease;
+.task-item {
+    padding: 2px 8px;
+    background: #d8d8d8;
+    border: 1px solid var(--win98-dark);
+    cursor: pointer;
+    font-size: 0.85rem;
 }
 
-.stat-card:hover{
-    transform:translateY(-3px);
+.clock {
+    font-family: "VT323", monospace;
+    padding: 2px 8px;
 }
-
-.project-grid{
-    display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
-    gap:20px;
-}
-
-.project-card{
-    padding:16px;
-    background:#d8d8d8;
-    border:2px solid #808080;
-
-    transition:.25s;
-}
-
-.project-card:hover{
-    transform:translateY(-4px);
-}
-
-canvas{
-    max-width:100%;
-    height:auto;
-}
-
-.site-footer{
-    text-align:center;
-    margin-top:40px;
-    padding:20px;
-    color:white;
-}
+/* =========================
+   BUTTONS (WIN98 STYLE)
+========================= */
 .win98-button,
 nav a,
 nav button {
-    font-family: 'IBM Plex Sans', sans-serif;
-    padding: 4px 10px;
+    font-family: "IBM Plex Sans", sans-serif;
     font-size: 0.95rem;
     font-weight: 500;
+
+    padding: 5px 10px;
 
     background: var(--win98-bg);
     cursor: pointer;
@@ -218,31 +213,33 @@ nav button {
 
     box-shadow:
         inset 1px 1px 0 var(--win98-white),
-        inset -1px -1px 0 var(--win98-gray-dark),
+        inset -1px -1px 0 var(--win98-dark),
         inset -2px -2px 0 var(--win98-black),
         1px 1px 0 var(--win98-black);
 
-    transition: filter 0.1s ease;
+    transition: transform 0.1s ease, filter 0.15s ease;
 }
 
 .win98-button:hover {
-    filter: brightness(1.05);
+    filter: brightness(1.06);
 }
 
 .win98-button:active {
-    transform: translate(1px,1px);
+    transform: translate(1px, 1px);
 }
 
-/* navigation */
-
+/* =========================
+   NAVIGATION
+========================= */
 nav {
     display: flex;
     gap: 8px;
     flex-wrap: wrap;
 }
 
-/* links */
-
+/* =========================
+   LINKS
+========================= */
 a {
     color: var(--win98-blue);
     text-decoration: none;
@@ -254,14 +251,70 @@ a:hover {
 
 a:focus-visible,
 button:focus-visible {
-    outline: 2px dashed var(--accent-color);
+    outline: 2px dashed var(--accent);
     outline-offset: 3px;
 }
 
-/* dark mode */
+/* =========================
+   CANVAS FIX (IMPORTANT)
+========================= */
+canvas {
+    display: block;
+    max-width: 100%;
+    height: auto;
+}
 
+/* =========================
+   CARDS / GRIDS
+========================= */
+.stats-grid,
+.project-grid {
+    display: grid;
+    gap: 16px;
+}
+
+.stats-grid {
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+}
+
+.project-grid {
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+}
+
+.stat-card,
+.project-card {
+    padding: 16px;
+    background: #d8d8d8;
+    border: 2px solid var(--win98-dark);
+    transition: transform 0.2s ease;
+}
+
+.stat-card {
+    box-shadow:
+        inset 1px 1px 0 var(--win98-white),
+        inset -1px -1px 0 var(--win98-dark);
+}
+
+.stat-card:hover,
+.project-card:hover {
+    transform: translateY(-4px);
+}
+
+/* =========================
+   FOOTER
+========================= */
+.site-footer {
+    text-align: center;
+    margin-top: 40px;
+    padding: 20px;
+    color: white;
+}
+
+/* =========================
+   DARK MODE
+========================= */
 body.dark-mode {
-    background-color: #003f3f;
+    background: #003f3f;
 }
 
 body.dark-mode .win98-window {
@@ -269,10 +322,10 @@ body.dark-mode .win98-window {
     color: #eee;
 }
 
-/* responsive */
-
+/* =========================
+   RESPONSIVE
+========================= */
 @media (max-width: 600px) {
-
     .container {
         margin-top: 30px;
     }
