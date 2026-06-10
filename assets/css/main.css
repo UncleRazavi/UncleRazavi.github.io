@@ -4,7 +4,6 @@
    DESIGN TOKENS
 ========================= */
 :root {
-    /* Win98 palette */
     --win98-bg: #c0c0c0;
     --win98-text: #000;
 
@@ -18,19 +17,22 @@
     --win98-blue: #000080;
     --win98-blue-light: #1084d0;
 
-    /* accents */
     --accent: #008080;
     --desktop-bg: #006666;
 
-    /* effects */
     --scanline-opacity: 0.035;
 }
+
+/* =========================
+   FRACAL VISUAL ENHANCEMENT
+========================= */
 #fractalCanvas {
     filter: contrast(1.2) brightness(1.1);
     box-shadow:
         0 0 8px rgba(0,255,200,0.25),
         inset 0 0 12px rgba(0,0,0,0.6);
 }
+
 /* =========================
    RESET
 ========================= */
@@ -57,7 +59,7 @@ body {
     -moz-osx-font-smoothing: grayscale;
 }
 
-/* CRT scanlines */
+/* CRT SCANLINES */
 body::after {
     content: "";
     position: fixed;
@@ -102,6 +104,7 @@ p, li {
 .container {
     width: min(1100px, 92%);
     margin: 60px auto 20px;
+    padding-bottom: 70px; /* FIX: prevent taskbar overlap */
 }
 
 /* =========================
@@ -142,6 +145,8 @@ p, li {
 
     border-bottom: 1px solid var(--win98-black);
     text-shadow: 1px 1px var(--win98-black);
+
+    user-select: none; /* FIX: prevents drag text selection */
 }
 
 .window-content {
@@ -149,7 +154,7 @@ p, li {
 }
 
 /* =========================
-   TASKBAR (Win98 style)
+   TASKBAR
 ========================= */
 .taskbar {
     position: fixed;
@@ -195,8 +200,9 @@ p, li {
     font-family: "VT323", monospace;
     padding: 2px 8px;
 }
+
 /* =========================
-   BUTTONS (WIN98 STYLE)
+   BUTTONS
 ========================= */
 .win98-button,
 nav a,
@@ -234,15 +240,6 @@ nav button {
 }
 
 /* =========================
-   NAVIGATION
-========================= */
-nav {
-    display: flex;
-    gap: 8px;
-    flex-wrap: wrap;
-}
-
-/* =========================
    LINKS
 ========================= */
 a {
@@ -261,12 +258,11 @@ button:focus-visible {
 }
 
 /* =========================
-   CANVAS FIX (IMPORTANT)
+   CANVAS
 ========================= */
 canvas {
     display: block;
     max-width: 100%;
-    height: auto;
 }
 
 /* =========================
@@ -292,12 +288,6 @@ canvas {
     background: #d8d8d8;
     border: 2px solid var(--win98-dark);
     transition: transform 0.2s ease;
-}
-
-.stat-card {
-    box-shadow:
-        inset 1px 1px 0 var(--win98-white),
-        inset -1px -1px 0 var(--win98-dark);
 }
 
 .stat-card:hover,
@@ -335,7 +325,7 @@ body.dark-mode .win98-window {
         margin-top: 30px;
     }
 
-    nav {
-        justify-content: center;
+    .taskbar-apps {
+        display: none;
     }
 }
