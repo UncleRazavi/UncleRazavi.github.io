@@ -111,30 +111,31 @@ function makeDraggable(win, handle) {
 
 function initDarkMode() {
 
-    const btn = document.getElementById('dark-mode-toggle');
-
+    const btn = document.getElementById("dark-mode-toggle");
     if (!btn) return;
 
-    const update = (dark) => {
+    const root = document.documentElement;
+
+    const update = () => {
+        const dark = root.classList.contains("dark-mode");
         btn.textContent = dark ? "☀ Light Mode" : "🌙 Dark Mode";
-    }
+        btn.setAttribute("aria-pressed", dark);
+    };
 
-    if (localStorage.getItem('darkMode') === 'enabled') {
-        document.body.classList.add('dark-mode');
-        update(true);
-    }
+    update();
 
-    btn.onclick = () => {
+    btn.addEventListener("click", () => {
 
-        document.body.classList.toggle('dark-mode');
+        root.classList.toggle("dark-mode");
 
-        const dark = document.body.classList.contains('dark-mode');
+        const dark = root.classList.contains("dark-mode");
 
-        localStorage.setItem('darkMode', dark ? 'enabled' : 'disabled');
+        localStorage.setItem("darkMode", dark ? "enabled" : "disabled");
 
-        update(dark);
-    }
+        update();
+    });
 }
+
 
 // ============================================================
 // THREE JS CUBE
