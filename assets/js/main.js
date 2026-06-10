@@ -402,3 +402,76 @@ document.addEventListener("DOMContentLoaded", () => {
         "background:#000080;color:#fff;padding:4px;"
     );
 });
+// ============================================================
+// FIX: MISSING INITIALIZERS (CRITICAL PATCH)
+// ============================================================
+
+function updateClock() {
+    const el = document.getElementById("clock");
+    if (!el) return;
+
+    function tick() {
+        const now = new Date();
+        const h = String(now.getHours()).padStart(2, "0");
+        const m = String(now.getMinutes()).padStart(2, "0");
+        el.textContent = `${h}:${m}`;
+    }
+
+    tick();
+    setInterval(tick, 1000);
+}
+
+function initCurveSystem() {
+    if (typeof drawCurveAnimated !== "function") return;
+
+    drawCurveAnimated("lissajous-canvas", drawLissajous);
+    drawCurveAnimated("rose-canvas", drawRose);
+}
+
+// FIX: DSP LAB
+function initAllDSP() {
+    initDSPLab?.();
+    initMicFFT?.();
+    initSpectrogram?.();
+    drawBode?.();
+}
+
+// FIX: TASKBAR INTERACTIONS (optional but makes it feel alive)
+function initTaskbar() {
+    const items = document.querySelectorAll(".task-item");
+
+    items.forEach(item => {
+        item.addEventListener("click", () => {
+            const text = item.textContent;
+
+            const target = document.querySelector(`.${text.toLowerCase().replace(" ", "-")}-lab`);
+            if (target) {
+                target.scrollIntoView({ behavior: "smooth" });
+            }
+        });
+    });
+}
+
+// SCROLL BUTTON FIX
+function initScrollTop() {
+    const btn = document.getElementById("scrollTopBtn");
+    if (!btn) return;
+
+    window.addEventListener("scroll", () => {
+        btn.style.display = window.scrollY > 300 ? "block" : "none";
+    });
+
+    btn.onclick = () => window.scrollTo({ top: 0, behavior: "smooth" });
+}
+
+// ============================================================
+// PATCH INTO DOM LOADED
+// ============================================================
+
+document.addEventListener("DOMContentLoaded", () => {
+    updateClock();
+    initCurveSystem();
+    initAllDSP();
+    initTaskbar();
+    initScrollTop();
+});
