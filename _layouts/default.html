@@ -3,21 +3,38 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% if page.title %}{{ page.title }} – Hossein Razavi{% else %}Hossein Razavi{% endif %}</title>
+
+    <title>
+        {% if page.title %}
+            {{ page.title }} – Hossein Razavi
+        {% else %}
+            Hossein Razavi
+        {% endif %}
+    </title>
 
     {% seo %}
 
     <!-- Global Styles -->
-    <link rel="stylesheet" href="{{ "/assets/css/main.css" | relative_url }}">
+    <link rel="stylesheet" href="{{ '/assets/css/main.css' | relative_url }}">
 
     <!-- Configurable Settings -->
     {% if site.win98.dark_mode_default %}
-        <script>document.documentElement.classList.add('dark-mode');</script>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            document.documentElement.classList.add("dark-mode");
+        });
+    </script>
     {% endif %}
+
     {% unless site.win98.scanlines %}
-        <style>:root { --scanline-opacity: 0 !important; }</style>
+    <style>
+        :root {
+            --scanline-opacity: 0 !important;
+        }
+    </style>
     {% endunless %}
 </head>
+
 <body>
 
     <!-- Background Particle Layer -->
@@ -25,12 +42,13 @@
 
     <!-- Top Navigation Bar -->
     <header>
-        <nav class="nav-links">
-            <a href="{{ "/" | relative_url }}" class="win98-button">Start</a>
-            <a href="{{ "/about.html" | relative_url }}" class="win98-button">About</a>
-            <a href="{{ "/projects.html" | relative_url }}" class="win98-button">Projects</a>
-            <a href="{{ "/blog.html" | relative_url }}" class="win98-button">Blog</a>
-            <a href="{{ "/contact.html" | relative_url }}" class="win98-button">Contact</a>
+        <nav class="nav-links" aria-label="Main navigation">
+            <a href="{{ '/' | relative_url }}" class="win98-button">Start</a>
+            <a href="{{ '/about.html' | relative_url }}" class="win98-button">About</a>
+            <a href="{{ '/projects.html' | relative_url }}" class="win98-button">Projects</a>
+            <a href="{{ '/blog.html' | relative_url }}" class="win98-button">Blog</a>
+            <a href="{{ '/contact.html' | relative_url }}" class="win98-button">Contact</a>
+
             <button id="dark-mode-toggle" class="win98-button" aria-label="Toggle Dark Mode">
                 Dark Mode
             </button>
@@ -48,10 +66,11 @@
     </footer>
 
     <!-- External Libraries -->
-    <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/three@0.132.2/build/three.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/three@0.132.2/build/three.min.js"></script>
 
     <!-- Core JavaScript -->
-    <script src="{{ "/assets/js/main.js" | relative_url }}"></script>
+    <script defer src="{{ '/assets/js/main.js' | relative_url }}"></script>
+
 </body>
 </html>
