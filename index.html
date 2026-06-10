@@ -1,178 +1,306 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>Hossein Razavi - Engineering Portfolio</title>
+---
+layout: default
+title: Hossein Razavi | Home
+---
 
-    <!-- Optional font (clean engineering look) -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+<div id="particles-js" style="position:fixed; top:0; left:0; width:100%; height:100%; z-index:-1;"></div>
 
-    <style>
-        body {
-            margin: 0;
-            font-family: Inter, sans-serif;
-            background: #0e0e12;
-            color: #e6e6e6;
-        }
+<main class="container">
 
-        header {
-            padding: 20px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            background: #151521;
-            position: sticky;
-            top: 0;
-        }
+<section class="hero win98-window" id="welcome-section">
+<div class="window-title">Welcome to Hossein's Page</div>
 
-        button {
-            padding: 8px 12px;
-            border: none;
-            cursor: pointer;
-            background: #2b2b40;
-            color: white;
-            border-radius: 6px;
-        }
+<div class="window-content" style="text-align:center;">
 
-        .section {
-            padding: 40px 20px;
-        }
+<div id="avatar-3d" style="width:150px; height:150px; margin:20px auto;"></div>
 
-        canvas {
-            background: #111;
-            border-radius: 8px;
-            margin: 10px 0;
-        }
+<h1 id="typewriter">Hello! I'm Hossein Razavi</h1>
 
-        .grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-            gap: 20px;
-        }
+<a href="about.html" class="win98-button primary">
+Learn More About My Journey
+</a>
 
-        .card {
-            background: #151521;
-            padding: 15px;
-            border-radius: 10px;
-        }
-
-        #scrollTopBtn {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            display: none;
-        }
-
-        .dark-mode {
-            background: #f5f5f5;
-            color: #111;
-        }
-
-        .dark-mode header {
-            background: #ddd;
-        }
-
-        .dark-mode .card {
-            background: #fff;
-        }
-    </style>
-
-    <!-- Three.js (required by your JS) -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-
-</head>
-
-<body>
-
-<header>
-    <div>
-        <h2>Hossein Razavi</h2>
-        <div id="clock">00:00</div>
-    </div>
-
-    <div>
-        <button id="dark-mode-toggle" style="display:none;">Dark Mode</button>
-    </div>
-</header>
-
-<!-- HERO -->
-<section class="section">
-    <h1 id="typewriter">Engineering. Signal Processing. Systems.</h1>
+</div>
 </section>
 
-<!-- 3D AVATAR -->
-<section class="section card">
-    <h3>3D Avatar</h3>
-    <div id="avatar-3d" style="width:300px;height:300px;"></div>
+<!-- DESKTOP TASKBAR -->
+<div class="taskbar">
+    <div class="start-button">Start</div>
+
+    <div class="taskbar-apps">
+        <div class="task-item">Home</div>
+        <div class="task-item">DSP Lab</div>
+        <div class="task-item">Fractals</div>
+    </div>
+
+    <div class="clock" id="clock">00:00</div>
+</div>
+
+<!-- SIGNAL LAB -->
+<section class="signal-lab win98-window">
+
+<div class="window-title">Signal Processing Lab</div>
+
+<div class="window-content"
+     style="display:flex;flex-wrap:wrap;gap:30px;justify-content:center;align-items:flex-start;">
+
+  <div style="text-align:center;">
+    <p>Oscilloscope</p>
+    <canvas id="signalCanvas" width="320" height="140"
+            style="display:block;margin:0 auto;"></canvas>
+  </div>
+
+  <div style="text-align:center;">
+    <p>Lorenz Attractor</p>
+    <canvas id="lorenzCanvas" width="320" height="200"
+            style="display:block;margin:0 auto;"></canvas>
+  </div>
+
+</div>
+
 </section>
 
 <!-- DSP LAB -->
-<section class="section">
-    <h2>DSP Lab</h2>
+<section class="dsp-lab win98-window">
 
-    <label>Frequency</label>
-    <input id="freqSlider" type="range" min="1" max="20" value="5">
+<div class="window-title">Interactive DSP Lab</div>
 
-    <label>Noise</label>
-    <input id="noiseSlider" type="range" min="0" max="1" step="0.01" value="0.2">
+<div class="window-content">
 
-    <div class="grid">
-        <canvas id="scopeCanvas" width="400" height="200"></canvas>
-        <canvas id="fftCanvas" width="400" height="200"></canvas>
-    </div>
+<div style="display:flex;flex-wrap:wrap;gap:20px;justify-content:center;">
+
+<div>
+<p>Signal</p>
+<canvas id="scopeCanvas" width="320" height="140"></canvas>
+</div>
+
+<div>
+<p>FFT Spectrum</p>
+<canvas id="fftCanvas" width="320" height="140"></canvas>
+</div>
+
+</div>
+
+<div style="margin-top:15px;text-align:center;">
+
+<label>
+Frequency
+<input type="range" id="freqSlider" min="1" max="20" value="5">
+</label>
+
+<label>
+Noise
+<input type="range" id="noiseSlider" min="0" max="1" step="0.01" value="0">
+</label>
+
+<label>
+Band Pass
+<input type="range" id="filterSlider" min="1" max="20" value="5">
+</label>
+
+</div>
+
+</div>
 </section>
 
-<!-- SIGNAL SYSTEMS -->
-<section class="section">
-    <h2>Signal Visualizations</h2>
+<!-- AUDIO ANALYSIS -->
+<section class="audio-lab win98-window">
 
-    <div class="grid">
-        <canvas id="signalCanvas" width="400" height="200"></canvas>
-        <canvas id="lorenzCanvas" width="400" height="200"></canvas>
-        <canvas id="micFFT" width="400" height="200"></canvas>
-        <canvas id="spectrogram" width="400" height="200"></canvas>
-    </div>
+<div class="window-title">Microphone Analyzer</div>
+
+<div class="window-content" style="text-align:center;">
+
+<p>Microphone FFT</p>
+<canvas id="micFFT" width="420" height="150"></canvas>
+
+<p>Spectrogram</p>
+<canvas id="spectrogram" width="420" height="180"></canvas>
+
+</div>
+
 </section>
 
-<!-- BODE PLOT -->
-<section class="section card">
-    <h2>Bode Plot</h2>
+<!-- FILTER DESIGN -->
+<section class="filter-lab win98-window">
 
-    <label>Cutoff Frequency</label>
-    <input id="cutoffSlider" type="range" min="5" max="200" value="50">
+<div class="window-title">Filter Designer</div>
 
-    <select id="filterType">
-        <option value="lowpass">Low Pass</option>
-        <option value="highpass">High Pass</option>
-    </select>
+<div class="window-content" style="text-align:center;">
 
-    <canvas id="bodeCanvas" width="600" height="250"></canvas>
+<canvas id="bodeCanvas" width="420" height="200"></canvas>
+
+<div style="margin-top:15px;">
+
+<label>
+Cutoff
+<input type="range" id="cutoffSlider" min="1" max="100" value="20">
+</label>
+
+<label>
+Type
+<select id="filterType">
+<option value="lowpass">Low Pass</option>
+<option value="highpass">High Pass</option>
+</select>
+</label>
+
+</div>
+
+</div>
+
 </section>
 
 <!-- CURVES -->
-<section class="section">
-    <h2>Mathematical Curves</h2>
+<section class="math-curves win98-window" id="curves">
 
-    <div class="grid">
-        <canvas id="lissajous-canvas" width="250" height="250"></canvas>
-        <canvas id="rose-canvas" width="250" height="250"></canvas>
-        <canvas id="butterfly-canvas" width="250" height="250"></canvas>
-        <canvas id="spirograph-canvas" width="250" height="250"></canvas>
-    </div>
+<div class="window-title">Mathematical Curves</div>
+
+<div class="window-content" style="display:flex;gap:10px;flex-wrap:wrap;">
+
+<canvas id="lissajous-canvas"></canvas>
+<canvas id="rose-canvas"></canvas>
+<canvas id="butterfly-canvas"></canvas>
+<canvas id="spirograph-canvas"></canvas>
+
+</div>
+
 </section>
 
 <!-- FRACTAL -->
-<section class="section card">
-    <h2>Mandelbrot Set</h2>
-    <canvas id="fractalCanvas" width="500" height="300"></canvas>
+<section class="fractal-section win98-window" id="fractalWindow">
+
+<div class="window-title" id="fractalHeader">
+Static Mandelbrot
+</div>
+
+<div class="window-content"
+     style="text-align:center;display:flex;justify-content:center;align-items:center;">
+
+  <canvas
+    id="fractalCanvas"
+    width="300"
+    height="220"
+    style="
+      border:2px solid #808080;
+      display:block;
+      margin:0 auto;
+    ">
+  </canvas>
+
+</div>
+
 </section>
 
-<!-- SCROLL TOP -->
-<button id="scrollTopBtn">Top</button>
+<!-- BLOG -->
+<section class="latest-blog win98-window">
 
-<!-- YOUR SCRIPT -->
-<script src="main.js"></script>
+<div class="window-title">Latest Blog Posts</div>
 
-</body>
-</html>
+<div class="window-content">
+
+<ul class="post-list" style="list-style:none;padding:0;">
+
+{% for post in site.posts limit:3 %}
+
+<li class="post-card win98-bevel-out" style="margin-bottom:15px;padding:10px;">
+
+<article>
+
+<h3 class="post-card-title">
+<a href="{{ post.url }}" class="post-title-link">
+{{ post.title }}
+</a>
+</h3>
+
+<p class="post-meta">
+Published on:
+<time datetime="{{ post.date | date_to_xmlschema }}">
+{{ post.date | date: "%B %d, %Y" }}
+</time>
+</p>
+
+<p class="post-excerpt">
+{{ post.excerpt | strip_html | truncatewords:25 }}
+</p>
+
+<a href="{{ post.url }}" class="win98-button">
+Read Post →
+</a>
+
+</article>
+
+</li>
+
+{% endfor %}
+
+</ul>
+
+<div style="text-align:right;margin-top:15px;">
+<a href="blog.html" class="win98-button">
+View All Blog Posts
+</a>
+</div>
+
+</div>
+
+</section>
+
+<!-- ABOUT + CONTACT -->
+<section class="grid-layout-secondary">
+
+<section class="about-preview win98-window">
+
+<div class="window-title">About Me Summary</div>
+
+<div class="window-content">
+
+<p>
+I am a K.N. Toosi University undergraduate student exploring
+<strong>signal processing</strong>,
+<strong>neuroscience</strong>,
+and
+<strong>data science</strong>.
+</p>
+
+<div style="text-align:center;margin-top:15px;">
+<a href="about.html" class="win98-button">Full Bio</a>
+</div>
+
+</div>
+
+</section>
+
+<section class="contact-preview win98-window">
+
+<div class="window-title">Get in Touch</div>
+
+<div class="window-content" style="text-align:center;">
+
+<p>
+Questions, collaborations, or just a hello — reach out anytime!
+</p>
+
+<a href="contact.html" class="win98-button primary">
+Contact Me
+</a>
+
+</div>
+
+</section>
+
+</section>
+
+</main>
+
+<button id="scrollTopBtn" class="win98-button"
+style="position:fixed;bottom:20px;right:20px;display:none;">
+↑ Top
+</button>
+
+<button id="dark-mode-toggle" style="display:none;">
+Toggle Dark Mode
+</button>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r150/three.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+<script src="/assets/js/main.js"></script>
