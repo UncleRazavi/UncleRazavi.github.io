@@ -1,228 +1,397 @@
----
-layout: default
-title: Hossein Razavi | Home
----
+// ============================================================
+// GLOBAL CONFIG
+// ============================================================
 
-<div id="particles-js" style="position:fixed; top:0; left:0; width:100%; height:100%; z-index:-1;"></div>
+const CONFIG = {
+    SCROLL_THRESHOLD: 200,
+    LAZY_LOADING_ROOT_MARGIN: "0px 0px 200px 0px",
+    VISIBILITY_TITLE: "Come back!",
+    MAX_FPS: 60
+};
 
-<!-- HERO -->
-<section class="hero win98-window" id="welcome-section">
+// ============================================================
+// GLOBAL STATE
+// ============================================================
 
-    <div class="window-title">Welcome to Hossein's Page</div>
+let animationEnabled = true;
+let globalZIndex = 1000;
 
-    <div class="window-content" style="text-align:center;">
+// ============================================================
+// UTILITIES
+// ============================================================
 
-        <div id="avatar-3d" style="width:150px; height:150px; margin:20px auto;"></div>
+function throttle(func, limit) {
+    let inThrottle = false;
 
-        <h1 id="typewriter">Hello! I'm Hossein Razavi</h1>
+    return function (...args) {
+        if (!inThrottle) {
+            func.apply(this, args);
+            inThrottle = true;
+            setTimeout(() => (inThrottle = false), limit);
+        }
+    };
+}
 
-        <a href="about.html" class="win98-button primary">
-            Learn More About My Journey
-        </a>
+function limitFPS(callback) {
+    const interval = 1000 / CONFIG.MAX_FPS;
+    let then = performance.now();
 
-    </div>
-</section>
+    function loop(now) {
+        requestAnimationFrame(loop);
+        if (!animationEnabled) return;
 
-<main class="container">
+        const delta = now - then;
 
-    <!-- SIGNAL LAB -->
-    <section class="signal-lab win98-window">
-        <div class="window-title">Signal Processing Lab</div>
+        if (delta > interval) {
+            then = now - (delta % interval);
+            callback();
+        }
+    }
 
-        <div class="window-content"
-             style="display:flex;flex-wrap:wrap;gap:30px;justify-content:center;align-items:flex-start;">
+    requestAnimationFrame(loop);
+}
 
-            <div style="text-align:center;">
-                <p>Oscilloscope</p>
-                <canvas id="signalCanvas" width="320" height="140"></canvas>
-            </div>
+// ============================================================
+// WINDOW MANAGEMENT
+// ============================================================
 
-            <div style="text-align:center;">
-                <p>Lorenz Attractor</p>
-                <canvas id="lorenzCanvas" width="320" height="200"></canvas>
-            </div>
+function bringToFront(win) {
+    globalZIndex++;
+    win.style.zIndex = globalZIndex;
+}
 
-        </div>
-    </section>
+function makeDraggable(win, handle = null) {
+    const title = handle || win.querySelector(".window-title");
+    if (!title) return;
 
-    <!-- DSP LAB -->
-    <section class="dsp-lab win98-window">
-        <div class="window-title">Interactive DSP Lab</div>
+    let isDown = false;
+    let offsetX = 0;
+    let offsetY = 0;
 
-        <div class="window-content">
+    title.style.cursor = "grab";
 
-            <div style="display:flex;flex-wrap:wrap;gap:20px;justify-content:center;">
-                <div>
-                    <p>Signal</p>
-                    <canvas id="scopeCanvas" width="320" height="140"></canvas>
-                </div>
+    title.addEventListener("mousedown", (e) => {
+        isDown = true;
 
-                <div>
-                    <p>FFT Spectrum</p>
-                    <canvas id="fftCanvas" width="320" height="140"></canvas>
-                </div>
-            </div>
+        bringToFront(win);
 
-            <div style="margin-top:15px;text-align:center;">
-                <label>Frequency <input type="range" id="freqSlider" min="1" max="20" value="5"></label>
-                <label>Noise <input type="range" id="noiseSlider" min="0" max="1" step="0.01" value="0"></label>
-                <label>Band Pass <input type="range" id="filterSlider" min="1" max="20" value="5"></label>
-            </div>
+        const rect = win.getBoundingClientRect();
+        offsetX = e.clientX - rect.left;
+        offsetY = e.clientY - rect.top;
 
-        </div>
-    </section>
+        win.style.position = "fixed";
+        title.style.cursor = "grabbing";
+    });
 
-    <!-- AUDIO -->
-    <section class="audio-lab win98-window">
-        <div class="window-title">Microphone Analyzer</div>
+    window.addEventListener("mouseup", () => {
+        isDown = false;
+        title.style.cursor = "grab";
+    });
 
-        <div class="window-content" style="text-align:center;">
-            <p>Microphone FFT</p>
-            <canvas id="micFFT" width="420" height="150"></canvas>
+    window.addEventListener("mousemove", (e) => {
+        if (!isDown) return;
 
-            <p>Spectrogram</p>
-            <canvas id="spectrogram" width="420" height="180"></canvas>
-        </div>
-    </section>
+        let x = e.clientX - offsetX;
+        let y = e.clientY - offsetY;
 
-    <!-- FILTER -->
-    <section class="filter-lab win98-window">
-        <div class="window-title">Filter Designer</div>
+        x = Math.max(0, Math.min(window.innerWidth - win.offsetWidth, x));
+        y = Math.max(0, Math.min(window.innerHeight - win.offsetHeight, y));
 
-        <div class="window-content" style="text-align:center;">
-            <canvas id="bodeCanvas" width="420" height="200"></canvas>
+        win.style.left = `${x}px`;
+        win.style.top = `${y}px`;
+    });
+}
 
-            <div style="margin-top:15px;">
-                <label>Cutoff <input type="range" id="cutoffSlider" min="1" max="100" value="20"></label>
+// ============================================================
+// DARK MODE
+// ============================================================
 
-                <label>
-                    Type
-                    <select id="filterType">
-                        <option value="lowpass">Low Pass</option>
-                        <option value="highpass">High Pass</option>
-                    </select>
-                </label>
-            </div>
-        </div>
-    </section>
+function initDarkMode() {
+    const btn = document.getElementById("dark-mode-toggle");
+    if (!btn) return;
 
-    <!-- CURVES -->
-    <section class="math-curves win98-window">
-        <div class="window-title">Mathematical Curves</div>
+    const root = document.documentElement;
 
-        <div class="window-content" style="display:flex;gap:10px;flex-wrap:wrap;">
-            <canvas id="lissajous-canvas"></canvas>
-            <canvas id="rose-canvas"></canvas>
-            <canvas id="butterfly-canvas"></canvas>
-            <canvas id="spirograph-canvas"></canvas>
-        </div>
-    </section>
+    function update() {
+        const dark = root.classList.contains("dark-mode");
+        btn.textContent = dark ? "☀ Light Mode" : "🌙 Dark Mode";
+        btn.setAttribute("aria-pressed", dark);
+    }
 
-    <!-- FRACTAL -->
-    <section class="fractal-section win98-window" id="fractalWindow">
+    btn.addEventListener("click", () => {
+        root.classList.toggle("dark-mode");
+        localStorage.setItem(
+            "darkMode",
+            root.classList.contains("dark-mode") ? "enabled" : "disabled"
+        );
+        update();
+    });
 
-        <div class="window-title">Static Mandelbrot</div>
+    update();
+}
 
-        <div class="window-content"
-             style="text-align:center;display:flex;justify-content:center;align-items:center;">
+// ============================================================
+// THREE JS CUBE
+// ============================================================
 
-            <canvas id="fractalCanvas" width="300" height="220"
-                style="border:2px solid #808080;"></canvas>
+function initThreeJSCube() {
+    const avatar = document.getElementById("avatar-3d");
+    if (!avatar || typeof THREE === "undefined") return;
 
-        </div>
-    </section>
+    const canvas = document.createElement("canvas");
+    avatar.appendChild(canvas);
 
-    <!-- BLOG -->
-    <section class="latest-blog win98-window">
-        <div class="window-title">Latest Blog Posts</div>
+    const renderer = new THREE.WebGLRenderer({
+        canvas,
+        alpha: true,
+        antialias: true
+    });
 
-        <div class="window-content">
+    const scene = new THREE.Scene();
 
-            <ul style="list-style:none;padding:0;">
-                {% for post in site.posts limit:3 %}
-                <li style="margin-bottom:15px;padding:10px;" class="win98-bevel-out">
-                    <h3>
-                        <a href="{{ post.url }}">{{ post.title }}</a>
-                    </h3>
+    const camera = new THREE.PerspectiveCamera(
+        70,
+        avatar.clientWidth / avatar.clientHeight,
+        0.1,
+        1000
+    );
 
-                    <p>
-                        <time datetime="{{ post.date | date_to_xmlschema }}">
-                            {{ post.date | date: "%B %d, %Y" }}
-                        </time>
-                    </p>
+    camera.position.z = 3;
 
-                    <p>{{ post.excerpt | strip_html | truncatewords:25 }}</p>
+    const cube = new THREE.Mesh(
+        new THREE.BoxGeometry(1.2, 1.2, 1.2),
+        new THREE.MeshNormalMaterial()
+    );
 
-                    <a href="{{ post.url }}" class="win98-button">Read Post →</a>
-                </li>
-                {% endfor %}
-            </ul>
+    scene.add(cube);
 
-            <div style="text-align:right;margin-top:15px;">
-                <a href="blog.html" class="win98-button">View All</a>
-            </div>
+    function render() {
+        cube.rotation.x += 0.01;
+        cube.rotation.y += 0.015;
 
-        </div>
-    </section>
+        renderer.setSize(avatar.clientWidth, avatar.clientHeight);
+        renderer.render(scene, camera);
+    }
 
-    <!-- ABOUT + CONTACT -->
-    <section class="grid-layout-secondary">
+    limitFPS(render);
+}
 
-        <section class="about-preview win98-window">
-            <div class="window-title">About Me</div>
+// ============================================================
+// MANDELBROT EXPLORER
+// ============================================================
 
-            <div class="window-content">
-                <p>
-                    I study electrical engineering with interest in
-                    signal processing, neuroscience, and data science.
-                </p>
+function initInteractiveFractal() {
+    const win = document.createElement("div");
+    win.className = "win98-window";
 
-                <div style="text-align:center;margin-top:15px;">
-                    <a href="about.html" class="win98-button">Full Bio</a>
-                </div>
-            </div>
-        </section>
+    win.style.position = "fixed";
+    win.style.right = "20px";
+    win.style.top = "60px";
 
-        <section class="contact-preview win98-window">
-            <div class="window-title">Contact</div>
+    const title = document.createElement("div");
+    title.className = "window-title";
+    title.textContent = "Mandelbrot Explorer";
 
-            <div class="window-content" style="text-align:center;">
-                <p>Questions or collaboration ideas are always welcome.</p>
+    const content = document.createElement("div");
+    content.className = "window-content";
 
-                <a href="contact.html" class="win98-button primary">
-                    Contact Me
-                </a>
-            </div>
-        </section>
+    const canvas = document.createElement("canvas");
+    canvas.width = 320;
+    canvas.height = 220;
 
-    </section>
+    const resetBtn = document.createElement("button");
+    resetBtn.textContent = "Reset";
 
-</main>
+    const saveBtn = document.createElement("button");
+    saveBtn.textContent = "Save PNG";
 
-<!-- TASKBAR (must be outside main) -->
-<div class="taskbar">
-    <div class="start-button">Start</div>
+    content.append(canvas, resetBtn, saveBtn);
+    win.append(title, content);
 
-    <div class="taskbar-apps">
-        <div class="task-item">Home</div>
-        <div class="task-item">DSP Lab</div>
-        <div class="task-item">Fractals</div>
-    </div>
+    document.body.appendChild(win);
 
-    <div class="clock" id="clock">00:00</div>
-</div>
+    makeDraggable(win, title);
 
-<!-- UI BUTTONS -->
-<button id="scrollTopBtn" class="win98-button"
-style="position:fixed;bottom:20px;right:20px;display:none;">
-↑ Top
-</button>
+    const ctx = canvas.getContext("2d");
 
-<button id="dark-mode-toggle" style="display:none;">
-Toggle Dark Mode
-</button>
+    let zoom = 1;
+    let panX = -2.5;
+    let panY = -1;
+    let maxIter = 100;
 
-<!-- SCRIPTS -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r150/three.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
-<script src="/assets/js/main.js"></script>
+    function draw() {
+        const w = canvas.width;
+        const h = canvas.height;
+
+        const img = ctx.createImageData(w, h);
+        const data = img.data;
+
+        for (let px = 0; px < w; px++) {
+            for (let py = 0; py < h; py++) {
+                let x0 = panX + (px / w) * 3.5 * zoom;
+                let y0 = panY + (py / h) * 2.0 * zoom;
+
+                let x = 0, y = 0, iter = 0;
+
+                while (x * x + y * y <= 4 && iter < maxIter) {
+                    const xt = x * x - y * y + x0;
+                    y = 2 * x * y + y0;
+                    x = xt;
+                    iter++;
+                }
+
+                const idx = (py * w + px) * 4;
+                const val = iter === maxIter ? 0 : (iter * 255) / maxIter;
+
+                data[idx] = val;
+                data[idx + 1] = val;
+                data[idx + 2] = val;
+                data[idx + 3] = 255;
+            }
+        }
+
+        ctx.putImageData(img, 0, 0);
+    }
+
+    draw();
+
+    resetBtn.onclick = () => {
+        zoom = 1;
+        panX = -2.5;
+        panY = -1;
+        draw();
+    };
+
+    saveBtn.onclick = () => {
+        const a = document.createElement("a");
+        a.download = "mandelbrot.png";
+        a.href = canvas.toDataURL();
+        a.click();
+    };
+
+    canvas.addEventListener("wheel", (e) => {
+        e.preventDefault();
+        zoom *= e.deltaY > 0 ? 1.1 : 0.9;
+        draw();
+    });
+}
+
+// ============================================================
+// LORENZ ATTRACTOR (ONLY ONE VERSION)
+// ============================================================
+
+function initLorenzAttractor() {
+    const canvas = document.getElementById("lorenzCanvas");
+    if (!canvas) return;
+
+    const ctx = canvas.getContext("2d");
+
+    const w = canvas.width;
+    const h = canvas.height;
+
+    let sigma = 10, rho = 28, beta = 8 / 3;
+    let x = 0.1, y = 0, z = 0;
+
+    const dt = 0.01;
+    let points = [];
+
+    function step() {
+        const dx = sigma * (y - x);
+        const dy = x * (rho - z) - y;
+        const dz = x * y - beta * z;
+
+        x += dx * dt;
+        y += dy * dt;
+        z += dz * dt;
+
+        points.push([x, y, z]);
+        if (points.length > 4000) points.shift();
+    }
+
+    function draw() {
+        ctx.fillStyle = "#C0C0C0";
+        ctx.fillRect(0, 0, w, h);
+
+        ctx.beginPath();
+
+        for (let i = 0; i < points.length; i++) {
+            const px = w / 2 + points[i][0] * 6;
+            const py = h / 2 - points[i][2] * 4;
+
+            if (i === 0) ctx.moveTo(px, py);
+            else ctx.lineTo(px, py);
+        }
+
+        ctx.strokeStyle = "#000080";
+        ctx.stroke();
+    }
+
+    function animate() {
+        step();
+        draw();
+        requestAnimationFrame(animate);
+    }
+
+    animate();
+}
+
+// ============================================================
+// OSCILLOSCOPE
+// ============================================================
+
+function initOscilloscope() {
+    const canvas = document.getElementById("signalCanvas");
+    if (!canvas) return;
+
+    const ctx = canvas.getContext("2d");
+
+    const w = canvas.width;
+    const h = canvas.height;
+
+    let t = 0;
+
+    function draw() {
+        ctx.fillStyle = "#000";
+        ctx.fillRect(0, 0, w, h);
+
+        ctx.strokeStyle = "#00FF00";
+        ctx.beginPath();
+
+        for (let x = 0; x < w; x++) {
+            const time = t + x * 0.02;
+
+            const signal =
+                Math.sin(time) +
+                0.5 * Math.sin(3 * time) +
+                0.2 * Math.sin(7 * time);
+
+            const y = h / 2 + signal * 40;
+
+            if (x === 0) ctx.moveTo(x, y);
+            else ctx.lineTo(x, y);
+        }
+
+        ctx.stroke();
+        t += 0.05;
+
+        requestAnimationFrame(draw);
+    }
+
+    draw();
+}
+
+// ============================================================
+// MAIN INIT
+// ============================================================
+
+document.addEventListener("DOMContentLoaded", () => {
+    initDarkMode();
+    initThreeJSCube();
+
+    initLorenzAttractor();
+    initOscilloscope();
+
+    initInteractiveFractal();
+
+    console.log("%cRetro Lab Loaded", "background:#000080;color:#fff;padding:4px;");
+});
