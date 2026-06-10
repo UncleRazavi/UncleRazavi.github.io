@@ -271,9 +271,13 @@ function initInteractiveFractal() {
 
     canvas.addEventListener("wheel", (e) => {
         e.preventDefault();
-        zoom *= e.deltaY > 0 ? 1.1 : 0.9;
+
+        // smoother zoom control
+        const factor = e.deltaY > 0 ? 1.08 : 0.92;
+        zoom *= factor;
+
         draw();
-    });
+    }, { passive: false });
 }
 
 // ============================================================
@@ -393,5 +397,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
     initInteractiveFractal();
 
-    console.log("%cRetro Lab Loaded", "background:#000080;color:#fff;padding:4px;");
+    console.log(
+        "%cRetro Lab Loaded",
+        "background:#000080;color:#fff;padding:4px;"
+    );
 });
