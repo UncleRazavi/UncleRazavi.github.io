@@ -436,12 +436,447 @@ function initVisibility(){
 
     });
 }
+function initLorenzAttractor(){
+
+const canvas = document.getElementById("lorenzCanvas");
+if(!canvas) return;
+
+const ctx = canvas.getContext("2d");
+
+const w = canvas.width;
+const h = canvas.height;
+
+let sigma = 10;
+let rho = 28;
+let beta = 8/3;
+
+let x = 0.1;
+let y = 0;
+let z = 0;
+
+const dt = 0.01;
+
+let points = [];
+
+function step(){
+
+const dx = sigma * (y - x);
+const dy = x * (rho - z) - y;
+const dz = x * y - beta * z;
+
+x += dx * dt;
+y += dy * dt;
+z += dz * dt;
+
+points.push([x,y,z]);
+
+if(points.length > 5000)
+points.shift();
+
+}
+
+function draw(){
+
+ctx.fillStyle = "#C0C0C0";
+ctx.fillRect(0,0,w,h);
+
+ctx.beginPath();
+
+for(let i=0;i<points.length;i++){
+
+const px = w/2 + points[i][0]*6;
+const py = h/2 - points[i][2]*4;
+
+if(i===0)
+ctx.moveTo(px,py);
+else
+ctx.lineTo(px,py);
+
+}
+
+ctx.strokeStyle = "#000080";
+ctx.lineWidth = 1.2;
+
+ctx.stroke();
+
+}
+
+function animate(){
+
+step();
+draw();
+
+requestAnimationFrame(animate);
+
+}
+
+animate();
+
+}
+function initOscilloscope(){
+
+const canvas = document.getElementById("signalCanvas");
+if(!canvas) return;
+
+const ctx = canvas.getContext("2d");
+
+const w = canvas.width;
+const h = canvas.height;
+
+let t = 0;
+
+function draw(){
+
+ctx.fillStyle = "#000";
+ctx.fillRect(0,0,w,h);
+
+ctx.strokeStyle = "#00FF00";
+ctx.lineWidth = 2;
+
+ctx.beginPath();
+
+for(let x=0; x<w; x++){
+
+const time = t + x * 0.02;
+
+const signal =
+Math.sin(time) +
+0.5*Math.sin(3*time) +
+0.2*Math.sin(7*time);
+
+const y = h/2 + signal*40;
+
+if(x===0)
+ctx.moveTo(x,y);
+else
+ctx.lineTo(x,y);
+
+}
+
+ctx.stroke();
+
+t += 0.05;
+
+requestAnimationFrame(draw);
+
+}
+
+draw();
+
+}
+function initDSPLab(){
+
+const scope = document.getElementById("scopeCanvas");
+const fftCanvas = document.getElementById("fftCanvas");
+
+if(!scope || !fftCanvas) return;
+
+const sctx = scope.getContext("2d");
+const fctx = fftCanvas.getContext("2d");
+
+const w = scope.width;
+const h = scope.height;
+
+let t = 0;
+
+const N = 256;
+
+const freqSlider = document.getElementById("freqSlider");
+const noiseSlider = document.getElementById("noiseSlider");
+const filterSlider = document.getElementById("filterSlider");
+
+
+function bandpass(signal, center){
+
+let out = [];
+
+for(let i=0;i<signal.length;i++){
+
+const w = Math.sin(i*0.1*center);
+
+out[i] = signal[i]*w;
+
+}
+
+return out;
+
+}
+
+
+function fft(signal){
+
+const N = signal.length;
+
+let re = new Array(N).fill(0);
+let im = new Array(N).fill(0);
+
+for(let k=0;k<N;k++){
+
+for(let n=0;n<N;n++){
+
+const angle = (2*Math.PI*k*n)/N;
+
+re[k] += signal[n]*Math.cos(angle);
+im[k] -= signal[n]*Math.sin(angle);
+
+}
+
+}
+
+let mag = [];
+
+for(let i=0;i<N/2;i++){
+
+mag[i] = Math.sqrt(re[i]*re[i]+im[i]*im[i]);
+
+}
+
+return mag;
+
+}
+
+
+function draw(){
+
+let signal = [];
+
+const freq = parseFloat(freqSlider.value);
+const noiseLevel = parseFloat(noiseSlider.value);
+const filterCenter = parseFloat(filterSlider.value);
+
+for(let i=0;i<N;i++){
+
+const time = (i/N)*Math.PI*4 + t;
+
+let s = Math.sin(freq*time);
+
+s += noiseLevel*(Math.random()*2-1);
+
+signal.push(s);
+
+}
+
+signal = bandpass(signal,filterCenter);
+
+
+sctx.fillStyle="black";
+sctx.fillRect(0,0,w,h);
+
+sctx.strokeStyle="#00FF00";
+sctx.beginPath();
+
+for(let i=0;i<N;i++){
+
+const x = (i/N)*w;
+const y = h/2 + signal[i]*40;
+
+if(i===0) sctx.moveTo(x,y);
+else sctx.lineTo(x,y);
+
+}
+
+sctx.stroke();
+
+
+const spectrum = fft(signal);
+
+fctx.fillStyle="black";
+fctx.fillRect(0,0,w,h);
+
+fctx.fillStyle="#00FFFF";
+
+for(let i=0;i<spectrum.length;i++){
+
+const x = (i/spectrum.length)*w;
+const y = spectrum[i]*0.1;
+
+fctx.fillRect(x,h-y,2,y);
+
+}
+
+t += 0.05;
+
+requestAnimationFrame(draw);
+
+}
+
+draw();
+
+}
+function fft(signal){
+
+const N = signal.length;
+
+if(N<=1) return signal;
+
+const even = fft(signal.filter((_,i)=>i%2===0));
+const odd = fft(signal.filter((_,i)=>i%2===1));
+
+const T = [];
+
+for(let k=0;k<N/2;k++){
+
+const angle = -2*Math.PI*k/N;
+
+const exp = {
+re:Math.cos(angle),
+im:Math.sin(angle)
+};
+
+T[k]={
+re:exp.re*odd[k].re-exp.im*odd[k].im,
+im:exp.re*odd[k].im+exp.im*odd[k].re
+};
+
+}
+
+let out = new Array(N);
+
+for(let k=0;k<N/2;k++){
+
+out[k]={
+re:even[k].re+T[k].re,
+im:even[k].im+T[k].im
+};
+
+out[k+N/2]={
+re:even[k].re-T[k].re,
+im:even[k].im-T[k].im
+};
+
+}
+
+return out;
+
+}
+async function initMicFFT(){
+
+const canvas=document.getElementById("micFFT");
+if(!canvas) return;
+
+const ctx=canvas.getContext("2d");
+
+const stream = await navigator.mediaDevices.getUserMedia({audio:true});
+
+const audioCtx = new AudioContext();
+
+const source = audioCtx.createMediaStreamSource(stream);
+
+const analyser = audioCtx.createAnalyser();
+
+analyser.fftSize=1024;
+
+source.connect(analyser);
+
+const data = new Uint8Array(analyser.frequencyBinCount);
+
+function draw(){
+
+analyser.getByteFrequencyData(data);
+
+ctx.fillStyle="black";
+ctx.fillRect(0,0,canvas.width,canvas.height);
+
+ctx.fillStyle="#00ffcc";
+
+for(let i=0;i<data.length;i++){
+
+const x=i*2;
+const y=data[i];
+
+ctx.fillRect(x,canvas.height-y,2,y);
+
+}
+
+requestAnimationFrame(draw);
+
+}
+
+draw();
+
+}
+function initSpectrogram(){
+
+const canvas=document.getElementById("spectrogram");
+if(!canvas) return;
+
+const ctx=canvas.getContext("2d");
+
+let x=0;
+
+return function update(data){
+
+ctx.drawImage(canvas,-1,0);
+
+for(let i=0;i<data.length;i++){
+
+const value=data[i];
+
+ctx.fillStyle=`hsl(${value},100%,50%)`;
+
+ctx.fillRect(canvas.width-1,canvas.height-i,1,1);
+
+}
+
+}
+
+}
+function drawBode(){
+
+const canvas=document.getElementById("bodeCanvas");
+if(!canvas) return;
+
+const ctx=canvas.getContext("2d");
+
+const cutoff=document.getElementById("cutoffSlider").value;
+const type=document.getElementById("filterType").value;
+
+ctx.fillStyle="#000";
+ctx.fillRect(0,0,canvas.width,canvas.height);
+
+ctx.strokeStyle="#00ffff";
+ctx.beginPath();
+
+for(let i=1;i<200;i++){
+
+const w=i/10;
+
+let mag;
+
+if(type==="lowpass")
+mag=1/Math.sqrt(1+(w/cutoff)**2);
+else
+mag=(w/cutoff)/Math.sqrt(1+(w/cutoff)**2);
+
+const x=i*2;
+const y=canvas.height-(mag*150);
+
+if(i===1) ctx.moveTo(x,y);
+else ctx.lineTo(x,y);
+
+}
+
+ctx.stroke();
+
+}
+
+document.getElementById("cutoffSlider").oninput = drawBode;
+document.getElementById("filterType").onchange = drawBode;
+
 
 // ============================================================
 // MAIN
 // ============================================================
 
 document.addEventListener("DOMContentLoaded",()=>{
+
+    initDSPLab();
+    initMicFFT();
+    initSpectrogram();
+    drawBode();
+
+    initLorenzAttractor();
+    initOscilloscope();
 
     initDarkMode();
 
