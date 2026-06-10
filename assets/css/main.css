@@ -1,69 +1,331 @@
-body{
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=IBM+Plex+Sans:wght@500;600&family=VT323&display=swap');
 
-font-family: Arial;
-background:#0f172a;
-color:white;
-margin:0;
-overflow:hidden;
+/* =========================
+   DESIGN TOKENS
+========================= */
+:root {
+    --win98-bg: #c0c0c0;
+    --win98-text: #000;
 
+    --win98-light: #dfdfdf;
+    --win98-dark: #808080;
+    --win98-darker: #404040;
+
+    --win98-white: #fff;
+    --win98-black: #000;
+
+    --win98-blue: #000080;
+    --win98-blue-light: #1084d0;
+
+    --accent: #008080;
+    --desktop-bg: #006666;
+
+    --scanline-opacity: 0.035;
 }
 
-body.dark{
-
-background:#020617;
-
+/* =========================
+   FRACAL VISUAL ENHANCEMENT
+========================= */
+#fractalCanvas {
+    filter: contrast(1.2) brightness(1.1);
+    box-shadow:
+        0 0 8px rgba(0,255,200,0.25),
+        inset 0 0 12px rgba(0,0,0,0.6);
 }
 
-#dark-mode-toggle{
-
-position:fixed;
-top:10px;
-right:10px;
-padding:8px 14px;
-border:none;
-background:#334155;
-color:white;
-cursor:pointer;
-
+/* =========================
+   RESET
+========================= */
+*,
+*::before,
+*::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
-.window{
+/* =========================
+   BASE
+========================= */
+body {
+    font-family: "Inter", "Segoe UI", sans-serif;
+    line-height: 1.7;
+    color: var(--win98-text);
+    background: var(--desktop-bg);
+    min-height: 100vh;
+    overflow-x: hidden;
 
-position:absolute;
-background:#1e293b;
-border:1px solid #475569;
-border-radius:8px;
-padding:0;
-width:420px;
-
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 }
 
-.window-title{
+/* CRT SCANLINES */
+body::after {
+    content: "";
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 1000;
+    opacity: var(--scanline-opacity);
 
-background:#334155;
-padding:8px;
-cursor:move;
-font-weight:bold;
+    background:
+        linear-gradient(rgba(0,0,0,0) 50%, rgba(0,0,0,0.25) 50%),
+        linear-gradient(90deg,
+            rgba(255,0,0,0.06),
+            rgba(0,255,0,0.02),
+            rgba(0,0,255,0.06)
+        );
 
+    background-size: 100% 2px, 3px 100%;
 }
 
-.window-content{
-
-padding:10px;
-
+/* =========================
+   TYPOGRAPHY
+========================= */
+h1, h2, h3, h4 {
+    font-family: "IBM Plex Sans", sans-serif;
+    font-weight: 600;
+    letter-spacing: -0.3px;
 }
 
-canvas{
+h1 { font-size: clamp(1.9rem, 3vw, 2.6rem); }
+h2 { font-size: 1.7rem; }
+h3 { font-size: 1.35rem; }
+h4 { font-size: 1.15rem; }
 
-background:black;
-
+p, li {
+    font-size: 1.05rem;
+    letter-spacing: 0.2px;
 }
 
-#particles-js{
+/* =========================
+   LAYOUT
+========================= */
+.container {
+    width: min(1100px, 92%);
+    margin: 60px auto 20px;
+    padding-bottom: 70px; /* FIX: prevent taskbar overlap */
+}
 
-position:fixed;
-width:100%;
-height:100%;
-z-index:-1;
+/* =========================
+   WIN98 WINDOW SYSTEM
+========================= */
+.win98-window {
+    background: var(--win98-bg);
+    padding: 1px;
+    border: 1px solid var(--win98-white);
 
+    box-shadow:
+        inset 1px 1px 0 var(--win98-white),
+        inset -1px -1px 0 var(--win98-dark),
+        inset -2px -2px 0 var(--win98-black),
+        2px 2px 0 var(--win98-black);
+
+    margin-bottom: 2rem;
+}
+
+.window-title {
+    font-family: "VT323", monospace;
+    font-size: 1.25rem;
+    letter-spacing: 1px;
+
+    color: var(--win98-white);
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    padding: 4px 8px;
+
+    background: linear-gradient(
+        90deg,
+        var(--win98-blue),
+        var(--win98-blue-light)
+    );
+
+    border-bottom: 1px solid var(--win98-black);
+    text-shadow: 1px 1px var(--win98-black);
+
+    user-select: none; /* FIX: prevents drag text selection */
+}
+
+.window-content {
+    padding: 12px;
+}
+
+/* =========================
+   TASKBAR
+========================= */
+.taskbar {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 34px;
+
+    background: var(--win98-bg);
+    border-top: 2px solid var(--win98-white);
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    padding: 2px 6px;
+    z-index: 9999;
+}
+
+.start-button {
+    padding: 2px 10px;
+    background: var(--win98-bg);
+    border: 1px solid var(--win98-dark);
+    box-shadow: inset 1px 1px 0 white;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.taskbar-apps {
+    display: flex;
+    gap: 6px;
+}
+
+.task-item {
+    padding: 2px 8px;
+    background: #d8d8d8;
+    border: 1px solid var(--win98-dark);
+    cursor: pointer;
+    font-size: 0.85rem;
+}
+
+.clock {
+    font-family: "VT323", monospace;
+    padding: 2px 8px;
+}
+
+/* =========================
+   BUTTONS
+========================= */
+.win98-button,
+nav a,
+nav button {
+    font-family: "IBM Plex Sans", sans-serif;
+    font-size: 0.95rem;
+    font-weight: 500;
+
+    padding: 5px 10px;
+
+    background: var(--win98-bg);
+    cursor: pointer;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    border: none;
+
+    box-shadow:
+        inset 1px 1px 0 var(--win98-white),
+        inset -1px -1px 0 var(--win98-dark),
+        inset -2px -2px 0 var(--win98-black),
+        1px 1px 0 var(--win98-black);
+
+    transition: transform 0.1s ease, filter 0.15s ease;
+}
+
+.win98-button:hover {
+    filter: brightness(1.06);
+}
+
+.win98-button:active {
+    transform: translate(1px, 1px);
+}
+
+/* =========================
+   LINKS
+========================= */
+a {
+    color: var(--win98-blue);
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+a:focus-visible,
+button:focus-visible {
+    outline: 2px dashed var(--accent);
+    outline-offset: 3px;
+}
+
+/* =========================
+   CANVAS
+========================= */
+canvas {
+    display: block;
+    max-width: 100%;
+}
+
+/* =========================
+   CARDS / GRIDS
+========================= */
+.stats-grid,
+.project-grid {
+    display: grid;
+    gap: 16px;
+}
+
+.stats-grid {
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+}
+
+.project-grid {
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+}
+
+.stat-card,
+.project-card {
+    padding: 16px;
+    background: #d8d8d8;
+    border: 2px solid var(--win98-dark);
+    transition: transform 0.2s ease;
+}
+
+.stat-card:hover,
+.project-card:hover {
+    transform: translateY(-4px);
+}
+
+/* =========================
+   FOOTER
+========================= */
+.site-footer {
+    text-align: center;
+    margin-top: 40px;
+    padding: 20px;
+    color: white;
+}
+
+/* =========================
+   DARK MODE
+========================= */
+body.dark-mode {
+    background: #003f3f;
+}
+
+body.dark-mode .win98-window {
+    background: #1e1e1e;
+    color: #eee;
+}
+
+/* =========================
+   RESPONSIVE
+========================= */
+@media (max-width: 600px) {
+    .container {
+        margin-top: 30px;
+    }
+
+    .taskbar-apps {
+        display: none;
+    }
 }
