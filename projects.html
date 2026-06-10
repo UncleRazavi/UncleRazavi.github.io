@@ -3,155 +3,133 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Projects - Hossein Razavi</title>
-    <link rel="stylesheet" href="assets/css/main.css">
-    <style>
-        /* Header buttons */
-        .win98-header {
-            display: flex;
-            justify-content: flex-end;
-            gap: 10px;
-            padding: 10px;
-            background-color: #c0c0c0;
-            border-bottom: 2px solid #fff;
-        }
 
-        .win98-button-header {
-            padding: 5px 12px;
-            font-family: 'Courier New', monospace;
-            border: 2px outset #fff;
-            background-color: #e0e0e0;
-            cursor: pointer;
-        }
+    <title>Projects | Hossein Razavi</title>
+    <meta name="description"
+          content="Projects by Hossein Razavi — Signal Processing, Computational Neuroscience, AI, and Control Systems.">
 
-        /* Dark mode styles */
-        body.dark-mode {
-            background-color: #1a1a1a;
-            color: #f0f0f0;
-        }
+    <link rel="stylesheet" href="/assets/css/main.css">
+    <link rel="stylesheet" href="/assets/css/projects.css">
 
-        body.dark-mode .win98-window {
-            background-color: #2a2a2a;
-            border-color: #555;
-        }
-
-        body.dark-mode .win98-button,
-        body.dark-mode .win98-button-header {
-            background-color: #444;
-            color: #f0f0f0;
-            border-color: #888;
-        }
-
-        body.dark-mode a {
-            color: #9fcfff;
-        }
-    </style>
+    <!-- Prevent dark-mode flash -->
+    <script>
+        (function () {
+            const saved = localStorage.getItem('darkMode');
+            if (saved === 'enabled' ||
+                (!saved && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+                document.documentElement.classList.add('dark-mode');
+            }
+        })();
+    </script>
 </head>
+
 <body>
 
-<!-- Header with Home & Dark Mode Toggle -->
-<div class="win98-header">
-    <button class="win98-button-header" onclick="location.href='index.html'">🏠 Home</button>
-    <button class="win98-button-header" id="dark-mode-toggle">🌙 Dark Mode</button>
-</div>
+<header class="win98-header" role="navigation" aria-label="Main Navigation">
+    <a href="/index.html" class="win98-button-header" aria-label="Go to Home">
+        🏠 Home
+    </a>
 
-<script>
-    // Dark mode toggle
-    const darkToggle = document.getElementById('dark-mode-toggle');
-    const darkModeKey = 'darkMode';
+    <button class="win98-button-header"
+            id="dark-mode-toggle"
+            aria-pressed="false">
+        🌙 Dark Mode
+    </button>
+</header>
 
-    if (localStorage.getItem(darkModeKey) === 'enabled') {
-        document.body.classList.add('dark-mode');
-        darkToggle.textContent = '☀️ Light Mode';
-    }
+<main class="container projects-page">
 
-    darkToggle.addEventListener('click', () => {
-        document.body.classList.toggle('dark-mode');
-        const isDark = document.body.classList.contains('dark-mode');
-        localStorage.setItem(darkModeKey, isDark ? 'enabled' : 'disabled');
-        darkToggle.textContent = isDark ? '☀️ Light Mode' : '🌙 Dark Mode';
-    });
-</script>
-
-<main class="container" style="padding: 2rem; max-width: 1200px; margin: auto;">
-
-    <!-- Hero / Introduction -->
-    <section class="projects-hero win98-window" style="margin-bottom:2rem;">
-        <div class="window-title">My Projects</div>
+    <!-- HERO -->
+    <section class="projects-hero win98-window">
+        <header class="window-title">My Projects</header>
         <div class="window-content">
-            <p>Here are some of the projects I’ve been working on recently:</p>
+            <p>
+                Selected research and engineering work in
+                <strong>Signal Processing</strong>,
+                <strong>Neuroscience</strong>,
+                and <strong>AI-driven modeling</strong>.
+            </p>
         </div>
     </section>
 
-    <!-- Projects Grid -->
-    <section class="projects-list win98-window" style="margin-top: 2rem;">
-        <div class="window-title">Featured Projects</div>
+    <!-- PROJECT GRID -->
+    <section class="projects-list win98-window">
+        <header class="window-title">Featured Projects</header>
+
         <div class="window-content">
-            <div class="grid-container" style="display:grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px;">
+            <div class="project-grid">
 
-                <!-- Project 1 -->
-                <div class="project-card win98-bevel-out" style="padding:15px;">
-                    <h2 class="project-title">Computational Neuroscience</h2>
-                    <p class="project-summary">
-                        Computational neuroscience project exploring the human brain's robustness to visual noise. I was part of a pod at Neuromatch Academy (pod Lively anat).
+                <article class="project-card win98-bevel-out">
+                    <h2>Computational Neuroscience</h2>
+                    <p>
+                        Investigating visual robustness in ECoG data
+                        (Neuromatch Academy).
                     </p>
-                    <div class="project-links">
-                        <a href="https://github.com/UncleRazavi/Visual-robustness-based-on-ECoG-data" 
-                           target="_blank" rel="noopener" class="win98-button">View on GitHub</a>
-                    </div>
-                </div>
+                    <a href="https://github.com/UncleRazavi/Visual-robustness-based-on-ECoG-data"
+                       target="_blank"
+                       rel="noopener noreferrer"
+                       class="win98-button">
+                        GitHub →
+                    </a>
+                </article>
 
-                <!-- Project 2 -->
-                <div class="project-card win98-bevel-out" style="padding:15px;">
-                    <h2 class="project-title">Eurogene Project</h2>
-                    <p class="project-summary">An exploration of genomes from diverse ancient and modern populations.</p>
-                    <div class="project-links">
-                        <a href="https://github.com/UncleRazavi/Eurogene-Project" 
-                           target="_blank" rel="noopener" class="win98-button">View on GitHub</a>
-                    </div>
-                </div>
-
-                <!-- Project 3 -->
-                <div class="project-card win98-bevel-out" style="padding:15px;">
-                    <h2 class="project-title">PINN Library</h2>
-                    <p class="project-summary">A Python library for solving PDEs with Physics-Informed Neural Networks.</p>
-                    <div class="project-links">
-                        <a href="https://github.com/UncleRazavi/pinns-lib" 
-                           target="_blank" rel="noopener" class="win98-button">View on GitHub</a>
-                    </div>
-                </div>
-
-                <!-- Project 4 -->
-                <div class="project-card win98-bevel-out" style="padding:15px;">
-                    <h2 class="project-title">BCI, Motor Imagery</h2>
-                    <p class="project-summary">
-                        Uses data from BCI Competition IV, Dataset 1, focusing on motor imagery EEG signals.
+                <article class="project-card win98-bevel-out">
+                    <h2>Eurogene Project</h2>
+                    <p>
+                        Comparative genomic analysis of ancient and modern populations.
                     </p>
-                    <div class="project-links">
-                        <a href="https://github.com/UncleRazavi/Motor-Imagery-EEG-Analysis" 
-                           target="_blank" rel="noopener" class="win98-button">View on GitHub</a>
-                    </div>
-                </div>
+                    <a href="https://github.com/UncleRazavi/Eurogene-Project"
+                       target="_blank"
+                       rel="noopener noreferrer"
+                       class="win98-button">
+                        GitHub →
+                    </a>
+                </article>
+
+                <article class="project-card win98-bevel-out">
+                    <h2>PINN Library</h2>
+                    <p>
+                        Python framework for solving PDEs using
+                        Physics-Informed Neural Networks.
+                    </p>
+                    <a href="https://github.com/UncleRazavi/pinns-lib"
+                       target="_blank"
+                       rel="noopener noreferrer"
+                       class="win98-button">
+                        GitHub →
+                    </a>
+                </article>
+
+                <article class="project-card win98-bevel-out">
+                    <h2>Motor Imagery BCI</h2>
+                    <p>
+                        EEG analysis using BCI Competition IV Dataset 1.
+                    </p>
+                    <a href="https://github.com/UncleRazavi/Motor-Imagery-EEG-Analysis"
+                       target="_blank"
+                       rel="noopener noreferrer"
+                       class="win98-button">
+                        GitHub →
+                    </a>
+                </article>
 
             </div>
         </div>
     </section>
 
-    <!-- Spinning Cube (Three.js) -->
-    <section class="projects-placeholder win98-window" style="margin-top:2rem;">
-        <div class="window-title">Visualization</div>
-        <div class="window-content" style="text-align:center;">
-
-            <div id="avatar-3d"
-                 style="width:150px; height:150px; margin:20px auto;">
-                 <!-- Three.js cube appears here -->
-            </div>
-
+    <!-- VISUALIZATION -->
+    <section class="projects-visual win98-window">
+        <header class="window-title">Interactive Visualization</header>
+        <div class="window-content center-content">
+            <div id="avatar-3d" class="avatar-container"
+                 aria-hidden="true"></div>
         </div>
     </section>
+
 </main>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r150/three.min.js" defer></script>
+<script src="/assets/js/projects.js" defer></script>
 
 </body>
 </html>
-
-
