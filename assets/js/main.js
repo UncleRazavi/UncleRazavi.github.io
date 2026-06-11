@@ -1,8 +1,6 @@
-from pathlib import Path
-
-js = r"""
 // ============================================================
-// Hossein Razavi Portfolio - Complete main.js
+// Hossein Razavi Portfolio
+// Main JavaScript
 // ============================================================
 
 const CONFIG = {
@@ -11,9 +9,9 @@ const CONFIG = {
 
 let animationEnabled = true;
 
-// ------------------------------------------------------------
-// Utilities
-// ------------------------------------------------------------
+// ============================================================
+// FPS Limiter
+// ============================================================
 
 function limitFPS(callback) {
     const interval = 1000 / CONFIG.MAX_FPS;
@@ -21,75 +19,82 @@ function limitFPS(callback) {
 
     function loop(now) {
         requestAnimationFrame(loop);
+
         if (!animationEnabled) return;
 
         const delta = now - then;
+
         if (delta > interval) {
             then = now - (delta % interval);
-            callback();
+            callback(now);
         }
     }
+
     requestAnimationFrame(loop);
 }
 
-// ------------------------------------------------------------
+// ============================================================
 // Clock
-// ------------------------------------------------------------
+// ============================================================
 
 function updateClock() {
-    const el = document.getElementById("clock");
-    if (!el) return;
+    const clock = document.getElementById("clock");
 
-    const tick = () => {
+    if (!clock) return;
+
+    function tick() {
         const d = new Date();
-        el.textContent =
-            String(d.getHours()).padStart(2, "0") +
-            ":" +
-            String(d.getMinutes()).padStart(2, "0");
-    };
+
+        const h = String(d.getHours()).padStart(2, "0");
+        const m = String(d.getMinutes()).padStart(2, "0");
+
+        clock.textContent = `${h}:${m}`;
+    }
 
     tick();
     setInterval(tick, 1000);
 }
 
-// ------------------------------------------------------------
+// ============================================================
 // Typewriter
-// ------------------------------------------------------------
+// ============================================================
 
 function initTypewriter() {
     const el = document.getElementById("typewriter");
+
     if (!el) return;
 
-    const text = el.textContent;
+    const text = el.textContent.trim();
+
     el.textContent = "";
 
     let i = 0;
 
     function type() {
         if (i < text.length) {
-            el.textContent += text[i++];
-            setTimeout(type, 60);
+            el.textContent += text.charAt(i);
+            i++;
+            setTimeout(type, 70);
         }
     }
 
     type();
 }
 
-// ------------------------------------------------------------
+// ============================================================
 // Dark Mode
-// ------------------------------------------------------------
+// ============================================================
 
 function initDarkMode() {
     const btn = document.getElementById("dark-mode-toggle");
+
     if (!btn) return;
 
-    const saved = localStorage.getItem("darkMode");
+    const savedMode = localStorage.getItem("darkMode");
 
-    if (saved === "enabled") {
+    if (savedMode === "enabled") {
         document.body.classList.add("dark-mode");
     }
-
-    btn.style.display = "block";
 
     btn.addEventListener("click", () => {
         document.body.classList.toggle("dark-mode");
@@ -103,20 +108,21 @@ function initDarkMode() {
     });
 }
 
-// ------------------------------------------------------------
-// ThreeJS Avatar
-// ------------------------------------------------------------
+// ============================================================
+// Three.js Avatar Cube
+// ============================================================
 
 function initThreeJSCube() {
-    const avatar = document.getElementById("avatar-3d");
+    const container = document.getElementById("avatar-3d");
 
-    if (!avatar || typeof THREE === "undefined") return;
+    if (!container) return;
+    if (typeof THREE === "undefined") return;
 
     const scene = new THREE.Scene();
 
     const camera = new THREE.PerspectiveCamera(
         70,
-        avatar.clientWidth / avatar.clientHeight,
+        container.clientWidth / container.clientHeight,
         0.1,
         1000
     );
@@ -128,33 +134,53 @@ function initThreeJSCube() {
         antialias: true
     });
 
+    renderer.setPixelRatio(window.devicePixelRatio);
+
     renderer.setSize(
-        avatar.clientWidth,
-        avatar.clientHeight
+        container.clientWidth,
+        container.clientHeight
     );
 
-    avatar.appendChild(renderer.domElement);
+    container.appendChild(renderer.domElement);
+
+    const geometry = new THREE.BoxGeometry();
+
+    const material = new THREE.MeshNormalMaterial();
 
     const cube = new THREE.Mesh(
-        new THREE.BoxGeometry(),
-        new THREE.MeshNormalMaterial()
+        geometry,
+        material
     );
 
     scene.add(cube);
 
+    function resizeRenderer() {
+        const width = container.clientWidth;
+        const height = container.clientHeight;
+
+        camera.aspect = width / height;
+        camera.updateProjectionMatrix();
+
+        renderer.setSize(width, height);
+    }
+
+    window.addEventListener("resize", resizeRenderer);
+
     limitFPS(() => {
         cube.rotation.x += 0.01;
         cube.rotation.y += 0.015;
+
         renderer.render(scene, camera);
     });
 }
 
-// ------------------------------------------------------------
-// Oscilloscope
-// ------------------------------------------------------------
+// ============================================================
+// Signal Oscilloscope
+// ============================================================
 
 function initOscilloscope() {
     const canvas = document.getElementById("signalCanvas");
+
     if (!canvas) return;
 
     const ctx = canvas.getContext("2d");
@@ -162,194 +188,294 @@ function initOscilloscope() {
     let t = 0;
 
     function draw() {
-        ctx.fillStyle = "black";
-        ctx.fillRect(0,0,canvas.width,canvas.height);
+        ctx.fillStyle = "#000";
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
 
         ctx.strokeStyle = "#00ff00";
+        ctx.lineWidth = 2;
         ctx.beginPath();
 
-        for(let x=0;x<canvas.width;x++) {
-            const v =
-                Math.sin(t+x*0.03)+
-                0.5*Math.sin(3*(t+x*0.03));
+        for (let x = 0; x < canvas.width; x++) {
+            const signal =
+                Math.sin(t + x * 0.03) +
+                0.5 * Math.sin(3 * (t + x * 0.03));
 
-            const y = canvas.height/2 + v*30;
+            const y =
+                canvas.height / 2 +
+                signal * 35;
 
-            if(x===0) ctx.moveTo(x,y);
-            else ctx.lineTo(x,y);
+            if (x === 0)
+                ctx.moveTo(x, y);
+            else
+                ctx.lineTo(x, y);
         }
 
         ctx.stroke();
+
         t += 0.05;
     }
 
     limitFPS(draw);
 }
 
-// ------------------------------------------------------------
-// Lorenz
-// ------------------------------------------------------------
+// ============================================================
+// Lorenz Attractor
+// ============================================================
 
 function initLorenzAttractor() {
     const canvas = document.getElementById("lorenzCanvas");
+
     if (!canvas) return;
 
     const ctx = canvas.getContext("2d");
 
-    let x=0.1,y=0,z=0;
+    let x = 0.1;
+    let y = 0;
+    let z = 0;
 
-    const sigma=10,rho=28,beta=8/3;
-    const pts=[];
+    const sigma = 10;
+    const rho = 28;
+    const beta = 8 / 3;
 
-    function step(){
-        const dt=0.01;
+    const points = [];
 
-        const dx=sigma*(y-x);
-        const dy=x*(rho-z)-y;
-        const dz=x*y-beta*z;
+    function step() {
+        const dt = 0.01;
 
-        x+=dx*dt;
-        y+=dy*dt;
-        z+=dz*dt;
+        const dx = sigma * (y - x);
+        const dy = x * (rho - z) - y;
+        const dz = x * y - beta * z;
 
-        pts.push([x,z]);
+        x += dx * dt;
+        y += dy * dt;
+        z += dz * dt;
 
-        if(pts.length>3000) pts.shift();
+        points.push([x, z]);
+
+        if (points.length > 2500) {
+            points.shift();
+        }
     }
 
-    function draw(){
+    function draw() {
         step();
 
-        ctx.fillStyle="#c0c0c0";
-        ctx.fillRect(0,0,canvas.width,canvas.height);
+        ctx.fillStyle = "#d0d0d0";
+        ctx.fillRect(
+            0,
+            0,
+            canvas.width,
+            canvas.height
+        );
 
         ctx.beginPath();
 
-        pts.forEach((p,i)=>{
-            const px=canvas.width/2+p[0]*6;
-            const py=canvas.height/2-p[1]*4;
+        points.forEach((p, i) => {
+            const px =
+                canvas.width / 2 + p[0] * 6;
 
-            if(i===0) ctx.moveTo(px,py);
-            else ctx.lineTo(px,py);
+            const py =
+                canvas.height / 2 - p[1] * 4;
+
+            if (i === 0)
+                ctx.moveTo(px, py);
+            else
+                ctx.lineTo(px, py);
         });
 
-        ctx.strokeStyle="#000080";
+        ctx.strokeStyle = "#000080";
         ctx.stroke();
     }
 
     limitFPS(draw);
 }
 
-// ------------------------------------------------------------
+// ============================================================
 // DSP LAB
-// ------------------------------------------------------------
+// ============================================================
 
 function initDSPLab() {
-    const scope=document.getElementById("scopeCanvas");
-    const fft=document.getElementById("fftCanvas");
+    const scopeCanvas =
+        document.getElementById("scopeCanvas");
 
-    if(!scope || !fft) return;
+    const fftCanvas =
+        document.getElementById("fftCanvas");
 
-    const sctx=scope.getContext("2d");
-    const fctx=fft.getContext("2d");
+    const freqSlider =
+        document.getElementById("freqSlider");
 
-    const freqSlider=document.getElementById("freqSlider");
-    const noiseSlider=document.getElementById("noiseSlider");
+    const noiseSlider =
+        document.getElementById("noiseSlider");
 
-    let t=0;
+    if (
+        !scopeCanvas ||
+        !fftCanvas ||
+        !freqSlider ||
+        !noiseSlider
+    )
+        return;
 
-    function draw(){
+    const sctx =
+        scopeCanvas.getContext("2d");
 
-        const freq=+freqSlider.value;
-        const noise=+noiseSlider.value;
+    const fctx =
+        fftCanvas.getContext("2d");
 
-        sctx.clearRect(0,0,scope.width,scope.height);
+    let t = 0;
 
-        const samples=[];
+    function draw() {
+        const freq =
+            Number(freqSlider.value);
+
+        const noise =
+            Number(noiseSlider.value) / 100;
+
+        sctx.clearRect(
+            0,
+            0,
+            scopeCanvas.width,
+            scopeCanvas.height
+        );
+
+        const samples = [];
 
         sctx.beginPath();
 
-        for(let i=0;i<scope.width;i++){
+        for (
+            let i = 0;
+            i < scopeCanvas.width;
+            i++
+        ) {
+            const value =
+                Math.sin(
+                    freq * (i / 100 + t)
+                ) +
+                (Math.random() - 0.5) *
+                    noise;
 
-            const v=
-                Math.sin(freq*(i/50+t))
-                +(Math.random()-0.5)*noise;
+            samples.push(value);
 
-            samples.push(v);
+            const y =
+                scopeCanvas.height / 2 +
+                value * 40;
 
-            const y=scope.height/2+v*40;
-
-            if(i===0) sctx.moveTo(i,y);
-            else sctx.lineTo(i,y);
+            if (i === 0)
+                sctx.moveTo(i, y);
+            else
+                sctx.lineTo(i, y);
         }
 
         sctx.stroke();
 
-        fctx.clearRect(0,0,fft.width,fft.height);
+        fctx.clearRect(
+            0,
+            0,
+            fftCanvas.width,
+            fftCanvas.height
+        );
 
-        for(let k=0;k<50;k++){
+        for (let k = 0; k < 60; k++) {
+            let re = 0;
+            let im = 0;
 
-            let re=0,im=0;
+            for (
+                let n = 0;
+                n < samples.length;
+                n++
+            ) {
+                const angle =
+                    (2 *
+                        Math.PI *
+                        k *
+                        n) /
+                    samples.length;
 
-            for(let n=0;n<samples.length;n++){
-                const angle=(2*Math.PI*k*n)/samples.length;
-                re+=samples[n]*Math.cos(angle);
-                im-=samples[n]*Math.sin(angle);
+                re +=
+                    samples[n] *
+                    Math.cos(angle);
+
+                im -=
+                    samples[n] *
+                    Math.sin(angle);
             }
 
-            const mag=Math.sqrt(re*re+im*im)/50;
+            const magnitude =
+                Math.sqrt(
+                    re * re + im * im
+                ) / 50;
 
             fctx.fillRect(
-                k*6,
-                fft.height-mag,
-                4,
-                mag
+                k * 8,
+                fftCanvas.height -
+                    magnitude,
+                6,
+                magnitude
             );
         }
 
-        t+=0.02;
+        t += 0.01;
     }
 
     limitFPS(draw);
 }
 
-// ------------------------------------------------------------
-// Mic FFT
-// ------------------------------------------------------------
+// ============================================================
+// Microphone FFT
+// ============================================================
 
 async function initMicFFT() {
-    const canvas=document.getElementById("micFFT");
-    if(!canvas) return;
+    const canvas =
+        document.getElementById("micFFT");
 
-    try{
+    if (!canvas) return;
 
-        const stream=await navigator.mediaDevices.getUserMedia({audio:true});
+    try {
+        const stream =
+            await navigator.mediaDevices.getUserMedia({
+                audio: true
+            });
 
-        const audioCtx=new AudioContext();
-        const analyser=audioCtx.createAnalyser();
+        const audioCtx =
+            new AudioContext();
 
-        const source=audioCtx.createMediaStreamSource(stream);
+        const analyser =
+            audioCtx.createAnalyser();
+
+        analyser.fftSize = 256;
+
+        const source =
+            audioCtx.createMediaStreamSource(
+                stream
+            );
 
         source.connect(analyser);
 
-        analyser.fftSize=256;
+        const buffer =
+            new Uint8Array(
+                analyser.frequencyBinCount
+            );
 
-        const data=new Uint8Array(analyser.frequencyBinCount);
+        const ctx =
+            canvas.getContext("2d");
 
-        const ctx=canvas.getContext("2d");
+        function draw() {
+            analyser.getByteFrequencyData(
+                buffer
+            );
 
-        function draw(){
+            ctx.clearRect(
+                0,
+                0,
+                canvas.width,
+                canvas.height
+            );
 
-            analyser.getByteFrequencyData(data);
-
-            ctx.clearRect(0,0,canvas.width,canvas.height);
-
-            data.forEach((v,i)=>{
+            buffer.forEach((v, i) => {
                 ctx.fillRect(
-                    i*3,
-                    canvas.height-v/2,
-                    2,
-                    v/2
+                    i * 4,
+                    canvas.height - v / 2,
+                    3,
+                    v / 2
                 );
             });
 
@@ -357,248 +483,157 @@ async function initMicFFT() {
         }
 
         draw();
-
-    }catch(e){
-        console.log("Mic permission denied");
+    } catch (err) {
+        console.log(
+            "Microphone permission denied."
+        );
     }
 }
 
-// ------------------------------------------------------------
+// ============================================================
 // Spectrogram
-// ------------------------------------------------------------
+// ============================================================
 
-function initSpectrogram(){
-    const canvas=document.getElementById("spectrogram");
-    if(!canvas) return;
+function initSpectrogram() {
+    const canvas =
+        document.getElementById(
+            "spectrogram"
+        );
 
-    const ctx=canvas.getContext("2d");
+    if (!canvas) return;
 
-    let x=0;
+    const ctx =
+        canvas.getContext("2d");
 
-    limitFPS(()=>{
-
-        const img=ctx.getImageData(1,0,canvas.width-1,canvas.height);
-
-        ctx.putImageData(img,0,0);
-
-        for(let y=0;y<canvas.height;y++){
-
-            const v=Math.floor(
-                255*Math.abs(
-                    Math.sin(Date.now()/1000+y/30)
-                )
+    limitFPS(() => {
+        const image =
+            ctx.getImageData(
+                1,
+                0,
+                canvas.width - 1,
+                canvas.height
             );
 
-            ctx.fillStyle=`rgb(${v},${v},0)`;
-            ctx.fillRect(canvas.width-1,y,1,1);
-        }
+        ctx.putImageData(image, 0, 0);
 
-        x++;
+        for (
+            let y = 0;
+            y < canvas.height;
+            y++
+        ) {
+            const value = Math.floor(
+                255 *
+                    Math.abs(
+                        Math.sin(
+                            Date.now() /
+                                1000 +
+                                y / 30
+                        )
+                    )
+            );
+
+            ctx.fillStyle =
+                `rgb(${value},${value},0)`;
+
+            ctx.fillRect(
+                canvas.width - 1,
+                y,
+                1,
+                1
+            );
+        }
     });
 }
 
-// ------------------------------------------------------------
-// Bode Plot
-// ------------------------------------------------------------
+// ============================================================
+// Scroll Top
+// ============================================================
 
-function drawBode(){
+function initScrollTop() {
+    const btn =
+        document.getElementById(
+            "scrollTopBtn"
+        );
 
-    const canvas=document.getElementById("bodeCanvas");
-    if(!canvas) return;
+    if (!btn) return;
 
-    const ctx=canvas.getContext("2d");
+    window.addEventListener(
+        "scroll",
+        () => {
+            btn.style.display =
+                window.scrollY > 300
+                    ? "block"
+                    : "none";
+        }
+    );
 
-    const slider=document.getElementById("cutoffSlider");
-    const type=document.getElementById("filterType");
+    btn.addEventListener(
+        "click",
+        () => {
+            window.scrollTo({
+                top: 0,
+                behavior: "smooth"
+            });
+        }
+    );
+}
 
-    function render(){
+// ============================================================
+// Particles.js
+// ============================================================
 
-        ctx.clearRect(0,0,canvas.width,canvas.height);
+function initParticles() {
+    if (
+        typeof particlesJS === "undefined"
+    )
+        return;
 
-        ctx.beginPath();
-
-        for(let i=0;i<canvas.width;i++){
-
-            const f=i+1;
-            const fc=+slider.value;
-
-            let gain;
-
-            if(type.value==="lowpass"){
-                gain=1/Math.sqrt(1+(f/fc)**2);
-            }else{
-                gain=(f/fc)/Math.sqrt(1+(f/fc)**2);
+    particlesJS("particles-js", {
+        particles: {
+            number: {
+                value: 60
+            },
+            color: {
+                value: "#0080ff"
+            },
+            line_linked: {
+                enable: true,
+                opacity: 0.3
+            },
+            move: {
+                speed: 1.5
             }
-
-            const y=canvas.height-gain*150;
-
-            if(i===0) ctx.moveTo(i,y);
-            else ctx.lineTo(i,y);
         }
+    });
+}
 
-        ctx.stroke();
+// ============================================================
+// Initialize Everything
+// ============================================================
+
+document.addEventListener(
+    "DOMContentLoaded",
+    () => {
+        updateClock();
+        initTypewriter();
+        initDarkMode();
+
+        initParticles();
+
+        initThreeJSCube();
+
+        initOscilloscope();
+        initLorenzAttractor();
+
+        initDSPLab();
+
+        initMicFFT();
+        initSpectrogram();
+
+        initScrollTop();
+
+        console.log(
+            "Hossein Razavi Portfolio Loaded"
+        );
     }
-
-    slider.addEventListener("input",render);
-    type.addEventListener("change",render);
-
-    render();
-}
-
-// ------------------------------------------------------------
-// Curves
-// ------------------------------------------------------------
-
-function curve(canvasId, fn){
-
-    const c=document.getElementById(canvasId);
-    if(!c) return;
-
-    c.width=250;
-    c.height=250;
-
-    const ctx=c.getContext("2d");
-
-    let t=0;
-
-    limitFPS(()=>{
-
-        ctx.clearRect(0,0,c.width,c.height);
-
-        ctx.beginPath();
-
-        for(let a=0;a<Math.PI*20;a+=0.05){
-
-            const p=fn(a,t);
-
-            const x=c.width/2+p.x;
-            const y=c.height/2+p.y;
-
-            if(a===0) ctx.moveTo(x,y);
-            else ctx.lineTo(x,y);
-        }
-
-        ctx.stroke();
-
-        t+=0.01;
-    });
-}
-
-function initCurves(){
-
-    curve("lissajous-canvas",(a,t)=>({
-        x:90*Math.sin(3*a+t),
-        y:90*Math.sin(4*a)
-    }));
-
-    curve("rose-canvas",(a,t)=>({
-        x:80*Math.cos(4*a+t)*Math.cos(a),
-        y:80*Math.cos(4*a+t)*Math.sin(a)
-    }));
-
-    curve("butterfly-canvas",(a)=>({
-        x:30*Math.sin(a)*(Math.exp(Math.cos(a))-2*Math.cos(4*a)),
-        y:30*Math.cos(a)*(Math.exp(Math.cos(a))-2*Math.cos(4*a))
-    }));
-
-    curve("spirograph-canvas",(a,t)=>({
-        x:80*Math.cos(a+t)+30*Math.cos(4*a),
-        y:80*Math.sin(a+t)+30*Math.sin(4*a)
-    }));
-}
-
-// ------------------------------------------------------------
-// Mandelbrot
-// ------------------------------------------------------------
-
-function initMandelbrot(){
-
-    const canvas=document.getElementById("fractalCanvas");
-    if(!canvas) return;
-
-    const ctx=canvas.getContext("2d");
-
-    const img=ctx.createImageData(canvas.width,canvas.height);
-
-    for(let px=0;px<canvas.width;px++){
-
-        for(let py=0;py<canvas.height;py++){
-
-            let x0=(px/canvas.width)*3.5-2.5;
-            let y0=(py/canvas.height)*2-1;
-
-            let x=0,y=0,iter=0;
-
-            while(x*x+y*y<=4 && iter<80){
-
-                const xt=x*x-y*y+x0;
-                y=2*x*y+y0;
-                x=xt;
-
-                iter++;
-            }
-
-            const i=(py*canvas.width+px)*4;
-
-            img.data[i]=iter*3;
-            img.data[i+1]=iter*2;
-            img.data[i+2]=iter*4;
-            img.data[i+3]=255;
-        }
-    }
-
-    ctx.putImageData(img,0,0);
-}
-
-// ------------------------------------------------------------
-// Scroll
-// ------------------------------------------------------------
-
-function initScrollTop(){
-
-    const btn=document.getElementById("scrollTopBtn");
-    if(!btn) return;
-
-    window.addEventListener("scroll",()=>{
-        btn.style.display=window.scrollY>300?"block":"none";
-    });
-
-    btn.onclick=()=>window.scrollTo({
-        top:0,
-        behavior:"smooth"
-    });
-}
-
-// ------------------------------------------------------------
-// Init
-// ------------------------------------------------------------
-
-document.addEventListener("DOMContentLoaded",()=>{
-
-    updateClock();
-    initTypewriter();
-    initDarkMode();
-
-    initThreeJSCube();
-
-    initOscilloscope();
-    initLorenzAttractor();
-
-    initDSPLab();
-    initMicFFT();
-    initSpectrogram();
-    drawBode();
-
-    initCurves();
-    initMandelbrot();
-
-    initScrollTop();
-
-    console.log("Retro Engineering Portfolio Loaded");
-});
-"""
-
-path = "/mnt/data/main.js"
-Path(path).write_text(js, encoding="utf-8")
-
-print(path)
+);
