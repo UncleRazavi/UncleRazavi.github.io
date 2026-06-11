@@ -1,35 +1,38 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>
         {% if page.title %}
-            {{ page.title }} – Hossein Razavi
+            {{ page.title }}
         {% else %}
-            Hossein Razavi
+            {{ site.title }}
         {% endif %}
     </title>
 
+    <meta name="description"
+          content="{{ page.description | default: site.description }}">
+
     {% seo %}
 
-    <!-- Global Styles -->
-    <link rel="stylesheet" href="{{ '/assets/css/main.css' | relative_url }}">
+    <!-- Main Stylesheet -->
+    <link rel="stylesheet"
+          href="{{ '/assets/css/main.css' | relative_url }}">
 
-    <!-- Configurable Settings -->
+    <!-- Optional Win98 Settings -->
     {% if site.win98.dark_mode_default %}
     <script>
-        document.addEventListener("DOMContentLoaded", () => {
-            document.documentElement.classList.add("dark-mode");
-        });
+        document.documentElement.classList.add("dark-mode");
     </script>
     {% endif %}
 
     {% unless site.win98.scanlines %}
     <style>
         :root {
-            --scanline-opacity: 0 !important;
+            --scanline-opacity: 0;
         }
     </style>
     {% endunless %}
@@ -37,40 +40,80 @@
 
 <body>
 
-    <!-- Background Particle Layer -->
+    <!-- Particle Background -->
     <div id="particles-js"></div>
 
-    <!-- Top Navigation Bar -->
-    <header>
+    <!-- Navigation -->
+    <header class="site-header">
         <nav class="nav-links" aria-label="Main navigation">
-            <a href="{{ '/' | relative_url }}" class="win98-button">Start</a>
-            <a href="{{ '/about.html' | relative_url }}" class="win98-button">About</a>
-            <a href="{{ '/projects.html' | relative_url }}" class="win98-button">Projects</a>
-            <a href="{{ '/blog.html' | relative_url }}" class="win98-button">Blog</a>
-            <a href="{{ '/contact.html' | relative_url }}" class="win98-button">Contact</a>
 
-            <button id="dark-mode-toggle" class="win98-button" aria-label="Toggle Dark Mode">
-                Dark Mode
+            <a href="{{ '/' | relative_url }}"
+               class="win98-button">
+                Home
+            </a>
+
+            <a href="{{ '/about.html' | relative_url }}"
+               class="win98-button">
+                About
+            </a>
+
+            <a href="{{ '/projects.html' | relative_url }}"
+               class="win98-button">
+                Projects
+            </a>
+
+            <a href="{{ '/blog.html' | relative_url }}"
+               class="win98-button">
+                Blog
+            </a>
+
+            <a href="{{ '/contact.html' | relative_url }}"
+               class="win98-button">
+                Contact
+            </a>
+
+            <button id="dark-mode-toggle"
+                    class="win98-button"
+                    aria-label="Toggle dark mode">
+                🌙
             </button>
+
         </nav>
     </header>
 
-    <!-- Main Content -->
-    <main role="main" id="content">
+    <!-- Page Content -->
+    <main id="content" role="main">
         {{ content }}
     </main>
 
     <!-- Footer -->
     <footer class="site-footer">
-        © {{ "now" | date: "%Y" }} Hossein Razavi • Running Windows 98 on the web since 2024
+        <p>
+            © {{ "now" | date: "%Y" }}
+            Hossein Razavi
+        </p>
+
+        <p>
+            Electrical Engineering • Signal Processing • AI • FPGA Design
+        </p>
     </footer>
 
     <!-- External Libraries -->
-    <script defer src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
-    <script defer src="https://cdn.jsdelivr.net/npm/three@0.132.2/build/three.min.js"></script>
 
-    <!-- Core JavaScript -->
-    <script defer src="{{ '/assets/js/main.js' | relative_url }}"></script>
+    <script defer
+        src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js">
+    </script>
+
+    <script defer
+        src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r150/three.min.js">
+    </script>
+
+    <!-- Main Script -->
+
+    <script defer
+        src="{{ '/assets/js/main.js' | relative_url }}">
+    </script>
 
 </body>
+
 </html>
