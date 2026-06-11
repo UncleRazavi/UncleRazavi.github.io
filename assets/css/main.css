@@ -4,33 +4,71 @@
    DESIGN TOKENS
 ========================= */
 :root {
+    /* Core palette */
     --win98-bg: #c0c0c0;
-    --win98-text: #000;
+    --win98-text: #000000;
 
     --win98-light: #dfdfdf;
     --win98-dark: #808080;
     --win98-darker: #404040;
 
-    --win98-white: #fff;
-    --win98-black: #000;
+    --win98-white: #ffffff;
+    --win98-black: #000000;
 
     --win98-blue: #000080;
     --win98-blue-light: #1084d0;
 
     --accent: #008080;
+    --accent-bright: #00b3b3;
     --desktop-bg: #006666;
 
-    --scanline-opacity: 0.035;
-}
+    /* Surface colors */
+    --surface-panel: #d8d8d8;
+    --surface-panel-alt: #cfcfcf;
+    --surface-canvas: #ffffff;
 
-/* =========================
-   FRACAL VISUAL ENHANCEMENT
-========================= */
-#fractalCanvas {
-    filter: contrast(1.2) brightness(1.1);
-    box-shadow:
-        0 0 8px rgba(0,255,200,0.25),
-        inset 0 0 12px rgba(0,0,0,0.6);
+    /* Text */
+    --text-muted: #333333;
+    --text-inverse: #ffffff;
+
+    /* Effects */
+    --scanline-opacity: 0.035;
+    --glow-cyan: rgba(0, 255, 200, 0.25);
+    --glow-cyan-strong: rgba(0, 255, 200, 0.4);
+
+    /* Layout */
+    --container-width: 1100px;
+    --container-gutter: 4%;
+    --section-gap: 2rem;
+    --content-pad: 12px;
+    --card-pad: 16px;
+    --taskbar-height: 34px;
+
+    /* Motion */
+    --ease-fast: 120ms cubic-bezier(.4, 0, .2, 1);
+    --ease-smooth: 220ms cubic-bezier(.4, 0, .2, 1);
+
+    /* Shadows */
+    --shadow-window:
+        inset 1px 1px 0 var(--win98-white),
+        inset -1px -1px 0 var(--win98-dark),
+        inset -2px -2px 0 var(--win98-black),
+        2px 2px 0 var(--win98-black);
+
+    --shadow-button:
+        inset 1px 1px 0 var(--win98-white),
+        inset -1px -1px 0 var(--win98-dark),
+        inset -2px -2px 0 var(--win98-black),
+        1px 1px 0 var(--win98-black);
+
+    --shadow-panel:
+        inset 1px 1px 0 var(--win98-white),
+        inset -1px -1px 0 var(--win98-dark);
+
+    --shadow-card-hover:
+        inset 1px 1px 0 var(--win98-white),
+        inset -1px -1px 0 var(--win98-dark),
+        6px 6px 0 rgba(0, 0, 0, 0.5);
 }
 
 /* =========================
@@ -47,6 +85,10 @@
 /* =========================
    BASE
 ========================= */
+html {
+    scroll-behavior: smooth;
+}
+
 body {
     font-family: "Inter", "Segoe UI", sans-serif;
     line-height: 1.7;
@@ -54,12 +96,15 @@ body {
     background: var(--desktop-bg);
     min-height: 100vh;
     overflow-x: hidden;
+    text-rendering: optimizeLegibility;
 
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
 }
 
-/* CRT SCANLINES */
+/* =========================
+   CRT OVERLAY
+========================= */
 body::after {
     content: "";
     position: fixed;
@@ -69,14 +114,27 @@ body::after {
     opacity: var(--scanline-opacity);
 
     background:
-        linear-gradient(rgba(0,0,0,0) 50%, rgba(0,0,0,0.25) 50%),
-        linear-gradient(90deg,
-            rgba(255,0,0,0.06),
-            rgba(0,255,0,0.02),
-            rgba(0,0,255,0.06)
+        repeating-linear-gradient(
+            to bottom,
+            rgba(0, 0, 0, 0.14) 0px,
+            rgba(0, 0, 0, 0.14) 1px,
+            transparent 1px,
+            transparent 3px
         );
 
-    background-size: 100% 2px, 3px 100%;
+    mix-blend-mode: multiply;
+}
+
+/* Optional subtle CRT glow layer */
+body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 999;
+    background:
+        radial-gradient(circle at center, rgba(255,255,255,0.03), transparent 60%);
+    opacity: 0.5;
 }
 
 /* =========================
@@ -86,6 +144,8 @@ h1, h2, h3, h4 {
     font-family: "IBM Plex Sans", sans-serif;
     font-weight: 600;
     letter-spacing: -0.3px;
+    line-height: 1.25;
+    margin-bottom: 0.6rem;
 }
 
 h1 { font-size: clamp(1.9rem, 3vw, 2.6rem); }
@@ -98,13 +158,92 @@ p, li {
     letter-spacing: 0.2px;
 }
 
+p + p {
+    margin-top: 0.9rem;
+}
+
+small,
+.muted {
+    color: var(--text-muted);
+    font-size: 0.92rem;
+}
+
 /* =========================
    LAYOUT
 ========================= */
 .container {
-    width: min(1100px, 92%);
+    width: min(var(--container-width), calc(100% - var(--container-gutter) * 2));
     margin: 60px auto 20px;
-    padding-bottom: 70px; /* FIX: prevent taskbar overlap */
+    padding-bottom: calc(var(--taskbar-height) + 36px);
+}
+
+section + section,
+.win98-window + .win98-window {
+    margin-top: var(--section-gap);
+}
+
+/* =========================
+   HERO SECTION
+========================= */
+.hero-content {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    flex-wrap: wrap;
+}
+
+.avatar-wrap {
+    flex: 0 0 260px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#avatar-3d {
+    width: 260px;
+    height: 260px;
+    margin: 0 auto;
+    filter: drop-shadow(0 6px 12px rgba(0, 0, 0, 0.3));
+}
+
+.hero-text {
+    flex: 1;
+    min-width: 280px;
+}
+
+.subtitle {
+    color: var(--accent);
+    margin-bottom: 1rem;
+    font-weight: 500;
+}
+
+.hero-buttons {
+    display: flex;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+    margin-top: 1rem;
+}
+
+/* =========================
+   FRACTAL VISUAL ENHANCEMENT
+========================= */
+#fractalCanvas {
+    display: block;
+    max-width: 100%;
+    filter: contrast(1.25) brightness(1.15) saturate(1.2);
+    box-shadow:
+        0 0 12px var(--glow-cyan),
+        0 0 40px rgba(0, 255, 200, 0.15),
+        inset 0 0 20px rgba(0, 0, 0, 0.7);
+    transition: filter var(--ease-smooth), box-shadow var(--ease-smooth);
+}
+
+#fractalCanvas:hover {
+    filter: contrast(1.3) brightness(1.2) saturate(1.3);
+    box-shadow:
+        0 0 14px var(--glow-cyan-strong),
+        0 0 48px rgba(0, 255, 200, 0.2),
+        inset 0 0 20px rgba(0, 0, 0, 0.75);
 }
 
 /* =========================
@@ -114,21 +253,20 @@ p, li {
     background: var(--win98-bg);
     padding: 1px;
     border: 1px solid var(--win98-white);
-
-    box-shadow:
-        inset 1px 1px 0 var(--win98-white),
-        inset -1px -1px 0 var(--win98-dark),
-        inset -2px -2px 0 var(--win98-black),
-        2px 2px 0 var(--win98-black);
-
+    box-shadow: var(--shadow-window);
     margin-bottom: 2rem;
+    transition: transform var(--ease-fast), box-shadow var(--ease-fast);
+    position: relative;
+}
+
+.win98-window:hover {
+    transform: translateY(-2px);
 }
 
 .window-title {
     font-family: "VT323", monospace;
     font-size: 1.25rem;
     letter-spacing: 1px;
-
     color: var(--win98-white);
 
     display: flex;
@@ -145,12 +283,56 @@ p, li {
 
     border-bottom: 1px solid var(--win98-black);
     text-shadow: 1px 1px var(--win98-black);
+    user-select: none;
+    min-height: 32px;
+}
 
-    user-select: none; /* FIX: prevents drag text selection */
+.window-title .title-text {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.window-controls {
+    display: flex;
+    gap: 4px;
+    margin-left: 12px;
+}
+
+.window-control {
+    width: 18px;
+    height: 18px;
+    display: inline-grid;
+    place-items: center;
+    background: var(--win98-bg);
+    color: var(--win98-black);
+    font-family: sans-serif;
+    font-size: 0.8rem;
+    line-height: 1;
+    border: none;
+    box-shadow:
+        inset 1px 1px 0 var(--win98-white),
+        inset -1px -1px 0 var(--win98-dark),
+        inset -2px -2px 0 var(--win98-black);
+    cursor: pointer;
+}
+
+.window-control:active {
+    box-shadow:
+        inset -1px -1px 0 var(--win98-white),
+        inset 1px 1px 0 var(--win98-dark);
+    transform: translate(1px, 1px);
 }
 
 .window-content {
-    padding: 12px;
+    padding: var(--content-pad);
+}
+
+/* Inactive window state */
+.win98-window.inactive .window-title {
+    background: linear-gradient(90deg, #666666, #999999);
+    color: #e5e5e5;
+    text-shadow: none;
 }
 
 /* =========================
@@ -161,7 +343,7 @@ p, li {
     bottom: 0;
     left: 0;
     width: 100%;
-    height: 34px;
+    height: var(--taskbar-height);
 
     background: var(--win98-bg);
     border-top: 2px solid var(--win98-white);
@@ -169,36 +351,64 @@ p, li {
     display: flex;
     align-items: center;
     justify-content: space-between;
+    gap: 8px;
 
     padding: 2px 6px;
     z-index: 9999;
 }
 
 .start-button {
+    min-width: 72px;
     padding: 2px 10px;
     background: var(--win98-bg);
-    border: 1px solid var(--win98-dark);
-    box-shadow: inset 1px 1px 0 white;
-    font-weight: bold;
+    border: none;
+    box-shadow: var(--shadow-button);
+    font-weight: 700;
     cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.start-button:active {
+    transform: translate(1px, 1px);
+    box-shadow:
+        inset -1px -1px 0 var(--win98-white),
+        inset 1px 1px 0 var(--win98-dark);
 }
 
 .taskbar-apps {
+    flex: 1;
     display: flex;
     gap: 6px;
+    overflow-x: auto;
+    scrollbar-width: thin;
 }
 
 .task-item {
     padding: 2px 8px;
     background: #d8d8d8;
-    border: 1px solid var(--win98-dark);
+    border: none;
+    box-shadow: var(--shadow-button);
     cursor: pointer;
     font-size: 0.85rem;
+    white-space: nowrap;
+}
+
+.task-item.active {
+    box-shadow:
+        inset -1px -1px 0 var(--win98-white),
+        inset 1px 1px 0 var(--win98-dark);
+    background: #cfcfcf;
 }
 
 .clock {
     font-family: "VT323", monospace;
+    font-size: 1.1rem;
     padding: 2px 8px;
+    min-width: 64px;
+    text-align: center;
+    box-shadow: inset 1px 1px 0 var(--win98-dark), inset -1px -1px 0 var(--win98-white);
 }
 
 /* =========================
@@ -211,32 +421,51 @@ nav button {
     font-size: 0.95rem;
     font-weight: 500;
 
-    padding: 5px 10px;
-
+    padding: 5px 12px;
     background: var(--win98-bg);
+    color: var(--win98-text);
+    text-decoration: none;
     cursor: pointer;
 
     display: inline-flex;
     align-items: center;
     justify-content: center;
+    gap: 0.45rem;
 
     border: none;
+    box-shadow: var(--shadow-button);
 
-    box-shadow:
-        inset 1px 1px 0 var(--win98-white),
-        inset -1px -1px 0 var(--win98-dark),
-        inset -2px -2px 0 var(--win98-black),
-        1px 1px 0 var(--win98-black);
-
-    transition: transform 0.1s ease, filter 0.15s ease;
+    transition:
+        transform var(--ease-fast),
+        filter var(--ease-fast),
+        box-shadow var(--ease-fast),
+        background var(--ease-fast);
 }
 
-.win98-button:hover {
-    filter: brightness(1.06);
+.win98-button:hover,
+nav a:hover,
+nav button:hover {
+    filter: brightness(1.07);
+    text-decoration: none;
 }
 
-.win98-button:active {
+.win98-button:active,
+nav a:active,
+nav button:active {
     transform: translate(1px, 1px);
+    box-shadow:
+        inset -1px -1px 0 var(--win98-white),
+        inset 1px 1px 0 var(--win98-dark);
+}
+
+/* Optional accent button */
+.win98-button.accent {
+    background: var(--accent);
+    color: var(--text-inverse);
+}
+
+.win98-button.accent:hover {
+    background: var(--accent-bright);
 }
 
 /* =========================
@@ -252,15 +481,22 @@ a:hover {
 }
 
 a:focus-visible,
-button:focus-visible {
-    outline: 2px dashed var(--accent);
-    outline-offset: 3px;
+button:focus-visible,
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+    box-shadow: 0 0 0 3px rgba(0, 128, 128, 0.25);
 }
 
 /* =========================
-   CANVAS
+   MEDIA / CANVAS
 ========================= */
-canvas {
+canvas,
+img,
+svg,
+video {
     display: block;
     max-width: 100%;
 }
@@ -269,7 +505,8 @@ canvas {
    CARDS / GRIDS
 ========================= */
 .stats-grid,
-.project-grid {
+.project-grid,
+.research-grid {
     display: grid;
     gap: 16px;
 }
@@ -282,17 +519,148 @@ canvas {
     grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
 }
 
+.research-grid {
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+}
+
 .stat-card,
-.project-card {
-    padding: 16px;
-    background: #d8d8d8;
+.project-card,
+.research-card {
+    padding: var(--card-pad);
+    background: var(--surface-panel);
     border: 2px solid var(--win98-dark);
-    transition: transform 0.2s ease;
+
+    box-shadow:
+        inset 1px 1px 0 var(--win98-white),
+        inset -1px -1px 0 var(--win98-dark),
+        2px 2px 0 rgba(0, 0, 0, 0.4);
+
+    transition:
+        transform var(--ease-smooth),
+        box-shadow var(--ease-smooth),
+        background var(--ease-smooth);
 }
 
 .stat-card:hover,
-.project-card:hover {
-    transform: translateY(-4px);
+.project-card:hover,
+.research-card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-card-hover);
+    background: var(--surface-panel-alt);
+}
+
+.stat-card h3,
+.project-card h3,
+.research-card h3 {
+    margin-bottom: 0.5rem;
+}
+
+/* =========================
+   CONTROLS / FORMS
+========================= */
+.controls {
+    display: grid;
+    grid-template-columns: 120px 1fr;
+    gap: 12px;
+    margin-top: 20px;
+    align-items: center;
+}
+
+.controls label {
+    font-weight: 600;
+}
+
+.controls input[type="range"],
+.controls input[type="text"],
+.controls input[type="number"],
+.controls select {
+    width: 100%;
+}
+
+input,
+select,
+textarea {
+    font: inherit;
+    padding: 6px 8px;
+    border: none;
+    background: var(--win98-white);
+    color: var(--win98-text);
+    box-shadow:
+        inset -1px -1px 0 var(--win98-white),
+        inset 1px 1px 0 var(--win98-darker),
+        inset 2px 2px 0 var(--win98-dark);
+}
+
+input[type="range"] {
+    padding: 0;
+    box-shadow: none;
+    accent-color: var(--accent);
+}
+
+/* =========================
+   LAB / CANVAS LAYOUT
+========================= */
+.lab-section canvas {
+    width: 100%;
+    height: auto;
+    margin-bottom: 18px;
+    border: 2px inset var(--win98-dark);
+    background: var(--surface-canvas);
+}
+
+.lab-section canvas:last-child {
+    margin-bottom: 0;
+}
+
+/* =========================
+   SPEC LIST
+========================= */
+.spec-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    list-style: none;
+}
+
+.spec-list li {
+    padding: 6px 12px;
+    background: var(--surface-panel);
+    border: 2px solid var(--win98-dark);
+    font-size: 0.95rem;
+    box-shadow: var(--shadow-panel);
+}
+
+/* =========================
+   NAV
+========================= */
+.nav-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: center;
+    padding: 1rem;
+}
+
+/* =========================
+   TABLES
+========================= */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    background: var(--win98-bg);
+    margin-top: 1rem;
+}
+
+th,
+td {
+    padding: 8px 10px;
+    text-align: left;
+    border: 1px solid var(--win98-dark);
+}
+
+th {
+    background: var(--surface-panel-alt);
+    font-weight: 600;
 }
 
 /* =========================
@@ -302,30 +670,161 @@ canvas {
     text-align: center;
     margin-top: 40px;
     padding: 20px;
-    color: white;
+    color: var(--text-inverse);
+    opacity: 0.95;
 }
 
 /* =========================
    DARK MODE
 ========================= */
 body.dark-mode {
-    background: #003f3f;
+    --win98-bg: #1e1e1e;
+    --win98-text: #eeeeee;
+
+    --win98-light: #2a2a2a;
+    --win98-dark: #5a5a5a;
+    --win98-darker: #111111;
+
+    --win98-white: #f2f2f2;
+    --win98-black: #000000;
+
+    --win98-blue: #0b3d91;
+    --win98-blue-light: #1c6dd0;
+
+    --accent: #00aaaa;
+    --accent-bright: #19c5c5;
+    --desktop-bg: #002f2f;
+
+    --surface-panel: #2a2a2a;
+    --surface-panel-alt: #333333;
+    --surface-canvas: #fafafa;
+
+    --text-muted: #bbbbbb;
+    --text-inverse: #ffffff;
+
+    --glow-cyan: rgba(0, 255, 200, 0.35);
+    --glow-cyan-strong: rgba(0, 255, 200, 0.5);
 }
 
-body.dark-mode .win98-window {
-    background: #1e1e1e;
-    color: #eee;
+body.dark-mode .site-footer {
+    color: #f5f5f5;
+}
+
+body.dark-mode a {
+    color: #6db8ff;
+}
+
+body.dark-mode .clock {
+    color: var(--win98-text);
+}
+
+/* =========================
+   REDUCED MOTION
+========================= */
+@media (prefers-reduced-motion: reduce) {
+    html {
+        scroll-behavior: auto;
+    }
+
+    *,
+    *::before,
+    *::after {
+        animation: none !important;
+        transition: none !important;
+    }
+
+    .win98-window:hover,
+    .stat-card:hover,
+    .project-card:hover,
+    .research-card:hover {
+        transform: none;
+    }
 }
 
 /* =========================
    RESPONSIVE
 ========================= */
-@media (max-width: 600px) {
+@media (max-width: 768px) {
     .container {
-        margin-top: 30px;
+        margin-top: 36px;
+        width: min(100% - 24px, var(--container-width));
     }
 
-    .taskbar-apps {
-        display: none;
+    .hero-content {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .avatar-wrap {
+        flex: unset;
+        width: 100%;
+    }
+
+    #avatar-3d {
+        width: 200px;
+        height: 200px;
+    }
+
+    .hero-buttons {
+        justify-content: center;
+    }
+
+    .controls {
+        grid-template-columns: 1fr;
+    }
+
+    .project-grid,
+    .research-grid,
+    .stats-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .window-title {
+        font-size: 1.1rem;
+    }
+
+    .taskbar {
+        padding: 2px 4px;
+        gap: 4px;
+    }
+
+    .start-button {
+        min-width: auto;
+        padding: 2px 8px;
+    }
+
+    .clock {
+        min-width: auto;
+        padding-inline: 6px;
+    }
+}
+
+@media (max-width: 480px) {
+    p,
+    li {
+        font-size: 0.98rem;
+    }
+
+    h1 {
+        font-size: 1.7rem;
+    }
+
+    h2 {
+        font-size: 1.45rem;
+    }
+
+    .window-content {
+        padding: 10px;
+    }
+
+    .hero-buttons,
+    .nav-links,
+    .spec-list {
+        gap: 8px;
+    }
+
+    .task-item {
+        font-size: 0.8rem;
+        padding: 2px 6px;
     }
 }
