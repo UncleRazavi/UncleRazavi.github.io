@@ -1,343 +1,113 @@
 ---
 layout: default
-title: Hossein Razavi | Electrical Engineer & Researcher
-description: Electrical Engineering student specializing in Signal Processing, Control Systems, RF Engineering, AI, FPGA Design, and Computational Neuroscience.
+title: Hossein Razavi | Home
 ---
 
 <div id="particles-js"></div>
 
-<div class="container">
-  <!-- HERO -->
-  <section class="hero win98-window" id="welcome-section">
-    <div class="window-title">
-      <span>System Information</span>
-    </div>
-
-    <div class="window-content hero-content">
-
-      <div class="avatar-wrap">
-        <div id="avatar-3d"></div>
-      </div>
-
-      <div class="hero-text">
-
-        <h1 id="typewriter">Hossein Razavi</h1>
-
-        <h2 class="subtitle">
-          Electrical Engineering Student · Signal Processing · AI · FPGA Design
-        </h2>
-
-        <p>
-          Final-year Electrical Engineering student with interests in
-          signal processing, machine learning, RF systems, control engineering,
-          computational neuroscience, embedded systems, and digital hardware design.
-          I enjoy building projects that combine mathematics, engineering,
-          and intelligent systems.
-        </p>
-
-        <div class="hero-buttons">
-          <a href="{{ 'Project.html' | relative_url }}"
-             class="win98-button primary">
-            View Projects
-          </a>
-
-          <a href="{{ 'Contact.html' | relative_url }}"
-             class="win98-button">
-            Contact
-          </a>
-
-          <a href="https://github.com/UncleRazavi"
-             target="_blank"
-             rel="noopener"
-             class="win98-button">
-            GitHub
-          </a>
+<main class="container">
+    <!-- HERO -->
+    <section class="hero win98-window" id="welcome-section">
+        <div class="window-title">
+            <span>Welcome</span>
         </div>
 
-      </div>
-    </div>
-  </section>
+        <div class="window-content hero-content">
+            <div class="avatar-wrap">
+                <div id="avatar-3d"></div>
+            </div>
 
-  <!-- RESEARCH INTERESTS -->
-  <section class="win98-window lab-section">
-    <div class="window-title">
-      <span>Research Interests</span>
-    </div>
+            <div class="hero-text">
+                <h1 id="typewriter">Hossein Razavi</h1>
+                <p>
+                    Electrical Engineering student passionate about signal processing,
+                    communications, control systems, AI, and high-frequency electronics.
+                </p>
 
-    <div class="window-content">
-
-      <div class="research-grid">
-
-        <div class="research-card">
-          <h3>Signal Processing</h3>
-          <p>
-            DSP, EEG/ECoG analysis, Fourier methods,
-            time-frequency analysis and machine learning.
-          </p>
+                <div class="hero-buttons">
+                    <a href="about.html" class="win98-button">About</a>
+                    <a href="projects.html" class="win98-button primary">Projects</a>
+                    <a href="blog.html" class="win98-button">Blog</a>
+                    <a href="contact.html" class="win98-button">Contact Me</a>
+                </div>
+            </div>
         </div>
+    </section>
 
-        <div class="research-card">
-          <h3>Control Systems</h3>
-          <p>
-            Dynamic systems, nonlinear control,
-            optimization and state-space methods.
-          </p>
+    <!-- SIGNAL PROCESSING LAB -->
+    <section class="win98-window lab-section">
+        <div class="window-title">
+            <span>Signal Processing Lab</span>
         </div>
-
-        <div class="research-card">
-          <h3>FPGA & Digital Design</h3>
-          <p>
-            VHDL, RTL design, digital systems,
-            hardware acceleration and AI deployment.
-          </p>
+        <div class="window-content">
+            <p>Interactive visualizations for nonlinear dynamics and signal behavior.</p>
+            <canvas id="signalCanvas" width="800" height="220"></canvas>
+            <canvas id="lorenzCanvas" width="800" height="220"></canvas>
         </div>
+    </section>
 
-        <div class="research-card">
-          <h3>Computational Neuroscience</h3>
-          <p>
-            Neural dynamics, brain signals(EEG abnd EcoG),
-            network analysis and machine learning.
-          </p>
+    <!-- DSP LAB -->
+    <section class="win98-window lab-section">
+        <div class="window-title">
+            <span>DSP Lab</span>
         </div>
+        <div class="window-content">
+            <p>Real-time waveform, FFT, and filtering experiments.</p>
 
-      </div>
+            <canvas id="scopeCanvas" width="800" height="180"></canvas>
+            <canvas id="fftCanvas" width="800" height="180"></canvas>
 
-    </div>
-  </section>
+            <div class="controls" style="margin-top: 1rem;">
+                <label for="freqSlider">Frequency</label>
+                <input id="freqSlider" type="range" min="1" max="50" value="10" />
 
-  <!-- SIGNAL VISUALIZATION LAB -->
-  <section class="win98-window lab-section">
-    <div class="window-title">
-      <span>Signal Visualization and chaotic attractor</span>
-    </div>
+                <label for="noiseSlider">Noise</label>
+                <input id="noiseSlider" type="range" min="0" max="100" value="20" />
 
-    <div class="window-content">
-
-      <canvas id="signalCanvas" width="800" height="220"></canvas>
-
-      <canvas id="lorenzCanvas" width="800" height="220"></canvas>
-
-      <p class="canvas-caption">
-        Interactive visualizations generated by JavaScript.
-      </p>
-
-    </div>
-  </section>
-
-  <!-- DSP LAB -->
-  <section class="win98-window lab-section">
-    <div class="window-title">
-      <span>DSP Playground</span>
-    </div>
-
-    <div class="window-content">
-
-      <canvas id="scopeCanvas" width="800" height="180"></canvas>
-
-      <canvas id="fftCanvas" width="800" height="180"></canvas>
-
-      <div class="controls">
-
-        <label for="freqSlider">
-          Frequency
-        </label>
-
-        <input
-          id="freqSlider"
-          type="range"
-          min="1"
-          max="50"
-          value="10"
-        />
-
-        <label for="noiseSlider">
-          Noise
-        </label>
-
-        <input
-          id="noiseSlider"
-          type="range"
-          min="0"
-          max="100"
-          value="20"
-        />
-
-        <label for="filterSlider">
-          Filter
-        </label>
-
-        <input
-          id="filterSlider"
-          type="range"
-          min="1"
-          max="100"
-          value="50"
-        />
-
-      </div>
-
-    </div>
-  </section>
-
-  <!-- AUDIO ANALYSIS -->
-  <section class="win98-window lab-section">
-    <div class="window-title">
-      <span>Real-Time Audio Analysis</span>
-    </div>
-
-    <div class="window-content">
-
-      <canvas id="micFFT" width="800" height="180"></canvas>
-
-      <canvas id="spectrogram" width="800" height="180"></canvas>
-
-      <p>
-        Real-time FFT and spectrogram visualization using the Web Audio API.
-      </p>
-
-    </div>
-  </section>
-
-  <!-- FEATURED PROJECTS -->
-  <section class="win98-window lab-section">
-    <div class="window-title">
-      <span>Featured Projects</span>
-    </div>
-
-    <div class="window-content">
-
-      <div class="project-grid">
-
-        <div class="project-card">
-          <h3>Eurogenes G25 Telegram Bot,Eurogen Project</h3>
-          <p>
-            Population matching and ancestry decomposition
-            using G25 coordinates and NNLS optimization.
-          </p>
+                <label for="filterSlider">Filter</label>
+                <input id="filterSlider" type="range" min="1" max="100" value="50" />
+            </div>
         </div>
+    </section>
 
-        <div class="project-card">
-          <h3>EEG / ECoG Analysis</h3>
-          <p>
-            Neural signal processing and multivariate pattern
-            analysis using various ML , preprocessing methods 
-          </p>
+    <!-- AUDIO ANALYSIS -->
+    <section class="win98-window lab-section">
+        <div class="window-title">
+            <span>Audio Analysis</span>
         </div>
+        <div class="window-content">
+            <p>Microphone FFT and spectrogram visualization.</p>
+            <canvas id="micFFT" width="800" height="180"></canvas>
+            <canvas id="spectrogram" width="800" height="180"></canvas>
+        </div>
+    </section>
 
-      </div>
+    <!-- QUICK LINKS -->
+    <section class="win98-window lab-section">
+        <div class="window-title">
+            <span>Quick Links</span>
+        </div>
+        <div class="window-content">
+            <p>You can explore more sections of the site here:</p>
+            <div class="hero-buttons">
+                <a href="about.html" class="win98-button">About</a>
+                <a href="projects.html" class="win98-button">Projects</a>
+                <a href="blog.html" class="win98-button">Blog</a>
+                <a href="contact.html" class="win98-button primary">Contact</a>
+            </div>
+        </div>
+    </section>
 
-      <br>
-
-      <a href="{{ 'Project.html' | relative_url }}"
-         class="win98-button primary">
-        View All Projects
-      </a>
-
+    <!-- TASKBAR -->
+    <div class="taskbar">
+        <button class="start-button">Start</button>
+        <div id="clock">--:--</div>
     </div>
-  </section>
+</main>
 
-  <!-- SKILLS -->
-  <section class="win98-window lab-section">
-    <div class="window-title">
-      <span>Technical Specifications</span>
-    </div>
-
-    <div class="window-content">
-
-      <ul class="spec-list">
-        <li>Python</li>
-        <li>MATLAB</li>
-        <li>VHDL</li>
-        <li>GNU Radio</li>
-        <li>Signal Processing</li>
-        <li>Machine Learning</li>
-        <li>FPGA Design</li>
-        <li>Control Systems</li>
-        <li>PCB Design</li>
-        <li>RF Engineering</li>
-      </ul>
-
-    </div>
-  </section>
-
-  <!-- ABOUT -->
-  <section class="win98-window lab-section">
-    <div class="window-title">
-      <span>About</span>
-    </div>
-
-    <div class="window-content">
-
-      <p>
-        I am passionate about combining mathematics,
-        electrical engineering, neuroscience and AI.
-        My long-term goal is to pursue graduate research
-        in computational neuroscience and intelligent systems.
-      </p>
-
-    </div>
-  </section>
-
-  <!-- CONTACT -->
-  <section class="win98-window lab-section">
-    <div class="window-title">
-      <span>Contact</span>
-    </div>
-
-    <div class="window-content">
-
-      <p>
-        Interested in collaborating, discussing research,
-        or talking about engineering projects?
-      </p>
-
-      <div class="hero-buttons">
-
-        <a href="{{ 'Contact.html' | relative_url }}"
-           class="win98-button primary">
-          Contact Me
-        </a>
-
-        <a href="https://github.com/UncleRazavi"
-           target="_blank"
-           rel="noopener"
-           class="win98-button">
-          GitHub
-        </a>
-
-      </div>
-
-    </div>
-  </section>
-
-  <!-- TASKBAR -->
-  <div class="taskbar">
-    <button class="start-button">
-      Start
-    </button>
-
-    <div id="clock">
-      --:--
-    </div>
-  </div>
-
-</div>
-
-<button
-  id="scrollTopBtn"
-  class="win98-button"
-  aria-label="Scroll to top">
-  ↑
-</button>
-
-<button
-  id="dark-mode-toggle"
-  class="win98-button"
-  aria-label="Toggle dark mode">
-  🌙
-</button>
+<button id="scrollTopBtn" class="win98-button">Top</button>
+<button id="dark-mode-toggle" class="win98-button">🌙</button>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r150/three.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
-
-<script src="{{ '/assets/js/main.js' | relative_url }}"></script>
+<script src="assets/js/main.js"></script>
