@@ -637,3 +637,33 @@ document.addEventListener(
         );
     }
 );
+
+
+// Accessibility improvement for dark mode toggle
+const darkToggle = document.getElementById('dark-mode-toggle');
+if (darkToggle) {
+  darkToggle.setAttribute('aria-pressed', document.body.classList.contains('dark-mode'));
+  darkToggle.addEventListener('click', () => {
+    const isDark = document.body.classList.toggle('dark-mode');
+    darkToggle.setAttribute('aria-pressed', isDark);
+    localStorage.setItem('theme', isDark ? 'dark' : 'light');
+  });
+}
+
+
+// Basic filter functionality
+function setupFilter(inputId, itemSelector) {
+  const input = document.getElementById(inputId);
+  if (!input) return;
+  input.addEventListener('input', () => {
+    const value = input.value.toLowerCase();
+    document.querySelectorAll(itemSelector).forEach(el => {
+      el.style.display = el.textContent.toLowerCase().includes(value) ? '' : 'none';
+    });
+  });
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  setupFilter('projectFilter', '.project-card');
+  setupFilter('blogFilter', 'article');
+});
