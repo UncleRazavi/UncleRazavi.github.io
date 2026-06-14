@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en" class="no-js">
-
 <head>
 
 <meta charset="UTF-8">
@@ -18,33 +17,37 @@
 
 {% seo %}
 
-<!-- Performance: DNS + preconnect -->
+<!-- Performance -->
 <link rel="preconnect" href="https://cdn.jsdelivr.net">
 <link rel="preconnect" href="https://cdnjs.cloudflare.com">
 <link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
 <link rel="dns-prefetch" href="https://cdnjs.cloudflare.com">
 
-<!-- Main Stylesheet -->
+<!-- Styles -->
 <link rel="stylesheet" href="{{ '/assets/css/main.css' | relative_url }}">
 
-<!-- Theme color for browsers -->
 <meta name="theme-color" content="#c0c0c0">
 
-<!-- Dark mode default -->
-{% if site.win98.dark_mode_default %}
+<!-- Prevent Flash of Wrong Theme -->
 <script>
+(function() {
+try {
+const stored = localStorage.getItem("dark-mode");
+if (stored === "true") {
 document.documentElement.classList.add("dark-mode");
+}
+} catch(e) {}
+})();
 </script>
-{% endif %}
 
-<!-- Disable scanlines if configured -->
+<!-- Optional scanline disable -->
 {% unless site.win98.scanlines %}
 <style>
 :root { --scanline-opacity: 0; }
 </style>
 {% endunless %}
 
-<!-- Reduce motion accessibility -->
+<!-- Reduced motion -->
 <style>
 @media (prefers-reduced-motion: reduce) {
 * {
@@ -63,10 +66,8 @@ document.documentElement.classList.remove("no-js");
 
 <body>
 
-<!-- Skip link for accessibility -->
 <a href="#content" class="skip-link">Skip to content</a>
 
-<!-- Particle Background -->
 <div id="particles-js" aria-hidden="true"></div>
 
 <header class="site-header">
@@ -90,7 +91,8 @@ class="win98-button">
 GitHub
 </a>
 
-<button id="dark-mode-toggle"
+<button
+id="dark-mode-toggle"
 class="win98-button"
 aria-label="Toggle dark mode"
 aria-pressed="false">
@@ -111,18 +113,15 @@ aria-pressed="false">
 © {{ "now" | date: "%Y" }} Hossein Razavi
 </p>
 
-<p>
+<p class="muted">
 Electrical Engineering • Signal Processing • AI • FPGA Design
 </p>
 
 <div class="footer-links">
 
 <a href="{{ '/' | relative_url }}" class="win98-button">Home</a>
-
 <a href="{{ '/projects.html' | relative_url }}" class="win98-button">Projects</a>
-
 <a href="{{ '/blog.html' | relative_url }}" class="win98-button">Blog</a>
-
 <a href="{{ '/contact.html' | relative_url }}" class="win98-button">Contact</a>
 
 <a href="https://github.com/UncleRazavi"
@@ -136,15 +135,12 @@ GitHub
 
 </footer>
 
-<!-- Libraries (deferred for performance) -->
-
+<!-- Libraries -->
 <script defer src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
-
 <script defer src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r150/three.min.js"></script>
 
 <!-- Main Script -->
 <script defer src="{{ '/assets/js/main.js' | relative_url }}"></script>
 
 </body>
-
 </html>
