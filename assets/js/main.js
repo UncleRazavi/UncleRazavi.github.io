@@ -1,6 +1,6 @@
 // ============================================================
-// Hossein Razavi Portfolio
-
+// Hossein Razavi Portfolio - Lightweight Edition
+// ============================================================
 
 const CONFIG = {
     MAX_FPS: 60
@@ -18,17 +18,13 @@ function limitFPS(callback) {
 
     function loop(now) {
         requestAnimationFrame(loop);
-
         if (!animationEnabled) return;
-
         const delta = now - then;
-
         if (delta > interval) {
             then = now - (delta % interval);
             callback(now);
         }
     }
-
     requestAnimationFrame(loop);
 }
 
@@ -38,18 +34,14 @@ function limitFPS(callback) {
 
 function updateClock() {
     const clock = document.getElementById("clock");
-
     if (!clock) return;
 
     function tick() {
         const d = new Date();
-
         const h = String(d.getHours()).padStart(2, "0");
         const m = String(d.getMinutes()).padStart(2, "0");
-
         clock.textContent = `${h}:${m}`;
     }
-
     tick();
     setInterval(tick, 1000);
 }
@@ -60,12 +52,10 @@ function updateClock() {
 
 function initTypewriter() {
     const el = document.getElementById("typewriter");
-
     if (!el) return;
 
     const text = el.textContent.trim();
     el.textContent = "";
-
     let i = 0;
 
     function type() {
@@ -75,7 +65,6 @@ function initTypewriter() {
             setTimeout(type, 70);
         }
     }
-
     type();
 }
 
@@ -85,24 +74,13 @@ function initTypewriter() {
 
 function initThreeJSCube() {
     const container = document.getElementById("avatar-3d");
-
     if (!container || typeof THREE === "undefined") return;
 
     const scene = new THREE.Scene();
-    const camera = new THREE.PerspectiveCamera(
-        70,
-        container.clientWidth / container.clientHeight,
-        0.1,
-        1000
-    );
-
+    const camera = new THREE.PerspectiveCamera(70, container.clientWidth / container.clientHeight, 0.1, 1000);
     camera.position.z = 3;
 
-    const renderer = new THREE.WebGLRenderer({
-        alpha: true,
-        antialias: true
-    });
-
+    const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
     renderer.setPixelRatio(window.devicePixelRatio);
     renderer.setSize(container.clientWidth, container.clientHeight);
     container.appendChild(renderer.domElement);
@@ -110,20 +88,13 @@ function initThreeJSCube() {
     const geometry = new THREE.BoxGeometry();
     const material = new THREE.MeshNormalMaterial();
     const cube = new THREE.Mesh(geometry, material);
-
     scene.add(cube);
 
-    function resizeRenderer() {
-        const width = container.clientWidth;
-        const height = container.clientHeight;
-
-        camera.aspect = width / height;
+    window.addEventListener("resize", () => {
+        camera.aspect = container.clientWidth / container.clientHeight;
         camera.updateProjectionMatrix();
-
-        renderer.setSize(width, height);
-    }
-
-    window.addEventListener("resize", resizeRenderer);
+        renderer.setSize(container.clientWidth, container.clientHeight);
+    });
 
     limitFPS(() => {
         cube.rotation.x += 0.01;
@@ -133,12 +104,11 @@ function initThreeJSCube() {
 }
 
 // ============================================================
-// Scroll Top
+// Scroll Top Button
 // ============================================================
 
 function initScrollTop() {
     const btn = document.getElementById("scrollTopBtn");
-
     if (!btn) return;
 
     window.addEventListener("scroll", () => {
@@ -146,10 +116,7 @@ function initScrollTop() {
     });
 
     btn.addEventListener("click", () => {
-        window.scrollTo({
-            top: 0,
-            behavior: "smooth"
-        });
+        window.scrollTo({ top: 0, behavior: "smooth" });
     });
 }
 
